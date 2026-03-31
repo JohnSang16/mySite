@@ -1,5 +1,5 @@
+import { motion } from 'framer-motion'
 import CustomCursor from '@/components/CustomCursor'
-import StatusScreen from '@/components/StatusScreen'
 import MangaPanel from '@/components/MangaPanel'
 
 export default function App() {
@@ -8,60 +8,67 @@ export default function App() {
       <CustomCursor />
       <main className="relative min-h-screen" style={{ zIndex: 2 }}>
 
-        {/* Panels — absolutely centered horizontally */}
-        <div className="absolute inset-0 flex flex-col items-center gap-3 pt-8 pointer-events-none" style={{ zIndex: 3 }}>
-          <div className="flex flex-col gap-3 w-80 pointer-events-auto">
-
-          <StatusScreen />
+        {/* Panels — fixed horizontal row at bottom right */}
+        <div className="fixed bottom-0 right-0 flex flex-row gap-2 px-4 pb-4" style={{ zIndex: 10 }}>
 
           <MangaPanel sfx="ドン！">
-            <h2 className="font-display text-2xl tracking-widest mb-2 text-center">POWER LEVEL</h2>
-            <ul className="font-mono text-xs space-y-1 text-white/80 text-center">
-              <li><span className="text-accent">WPM</span> — 195</li>
-              <li><span className="text-accent">GAME</span> — LoL · Mid · Challenger</li>
-              <li><span className="text-accent">EDU</span> — GSU → Georgia Tech</li>
-              <li><span className="text-accent">EXP</span> — Search Quality Rater</li>
-            </ul>
+            <h2 className="font-display text-sm tracking-widest mb-1 text-center">stats</h2>
+            <p className="font-mono text-xs text-white/80 text-center">
+              wpm 155 · lol midlane d2 · gsu → georgia tech · search quality rater
+            </p>
           </MangaPanel>
 
           <MangaPanel sfx="バン！">
-            <h2 className="font-display text-2xl tracking-widest mb-2 text-center">TRAINING ARC</h2>
-            <ul className="font-mono text-xs space-y-1 text-white/80 text-center">
-              <li>☐ Land a SWE Internship</li>
-              <li>☐ Complete PitchPulse MVP</li>
-              <li>☐ Master C++ (Demon-rank)</li>
-              <li>☐ Financial Literacy arc</li>
-            </ul>
-          </MangaPanel>
-
-          <MangaPanel sfx="ザワ">
-            <h2 className="font-display text-2xl tracking-widest mb-2 text-center">INVENTORY</h2>
-            <ul className="font-mono text-xs space-y-2 text-white/80 text-center">
-              <li><span className="text-accent">PitchPulse</span> — Soccer analytics</li>
-              <li><span className="text-accent">DSA Quest</span> — Gamified DSA platform</li>
-              <li><span className="text-accent">CounterStack</span> — Cyber poker/RPG</li>
-            </ul>
+            <h2 className="font-display text-sm tracking-widest mb-1 text-center">training arc</h2>
+            <p className="font-mono text-xs text-white/80 text-center">
+              land a swe internship · complete pitchpulse mvp · master c++ demon-rank · financial literacy arc
+            </p>
           </MangaPanel>
 
           <MangaPanel sfx="スゥ">
-            <h2 className="font-display text-2xl tracking-widest mb-2 text-center">THE LIBRARY</h2>
-            <ul className="font-mono text-xs space-y-1 text-white/80 text-center">
-              <li>📖 Linear Algebra Done Right</li>
-              <li>📖 Option Volatility &amp; Pricing</li>
-              <li>⚔️ LeetCode Grind (daily)</li>
-              <li>🎸 Guitar — Ultimate Guitar PRO</li>
-            </ul>
+            <h2 className="font-display text-sm tracking-widest mb-1 text-center">knowledge</h2>
+            <p className="font-mono text-xs text-white/80 text-center">
+              linear algebra done right · option volatility & pricing · leetcode grind daily · guitar ultimate guitar pro
+            </p>
           </MangaPanel>
 
-          </div>
         </div>
+
+        {/* Center title + text */}
+        <div className="fixed inset-0 flex flex-col items-center justify-center gap-4" style={{ zIndex: 5, pointerEvents: 'none' }}>
+          <motion.div
+            animate={{ y: [0, -4, 0] }}
+            transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut', delay: 1.5 }}
+            style={{ pointerEvents: 'auto' }}
+          >
+            <img
+              src="/other/nameTitleFinal.png"
+              alt="John Sang"
+              className="name-hover"
+              style={{ width: 420, objectFit: 'contain', display: 'block' }}
+            />
+          </motion.div>
+          <p style={{ fontFamily: "'Playfair Display', serif", fontSize: '1rem', color: 'grey', letterSpacing: '0.1em' }}>
+            what is 1000-7?
+          </p>
+        </div>
+
+        {/* Floating ichigo mask — independently centered */}
+        <motion.img
+          src="/other/ichigoMaskNoBG.png"
+          alt="ichigo mask"
+          className="fixed pointer-events-none"
+          style={{ width: 160, height: 160, objectFit: 'contain', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', zIndex: 6 }}
+          animate={{ y: [0, -14, 0] }}
+          transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut', delay: 0 }}
+        />
 
         {/* Image — fixed to right edge */}
         <div className="fixed top-0 right-0 h-screen w-auto pointer-events-none">
           <img
-            src="/manga/ichigoatSavingRukia.jpg"
-            alt="Ichigo saving Rukia"
-            style={{ height: '100%', width: 'auto', objectFit: 'contain', objectPosition: 'right center', display: 'block' }}
+            src="/background/selfieTYPSESHIT.png"
+            alt="selfie"
+            style={{ height: '55%', width: 'auto', objectFit: 'contain', objectPosition: 'right center', display: 'block' }}
           />
         </div>
 

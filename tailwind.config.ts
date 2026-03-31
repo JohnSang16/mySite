@@ -14,9 +14,9 @@ const config: Config = {
         gold: '#B3A369',
       },
       fontFamily: {
-        display: ['var(--font-anime-ace)', 'sans-serif'],
-        mono: ['var(--font-anime-ace)', 'sans-serif'],
-        sans: ['var(--font-anime-ace)', 'sans-serif'],
+        display: ['JetBrains Mono', 'monospace'],
+        mono: ['JetBrains Mono', 'monospace'],
+        sans: ['JetBrains Mono', 'monospace'],
       },
     },
   },
