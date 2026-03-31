@@ -1,17 +1,27 @@
 import type { Metadata } from 'next'
-import { Bebas_Neue, JetBrains_Mono } from 'next/font/google'
+import localFont from 'next/font/local'
 import './globals.css'
 import CustomCursor from '@/components/CustomCursor'
 
-const bebasNeue = Bebas_Neue({
-  weight: '400',
-  subsets: ['latin'],
-  variable: '--font-bebas',
-})
-
-const jetbrainsMono = JetBrains_Mono({
-  subsets: ['latin'],
-  variable: '--font-jetbrains',
+const animeAce = localFont({
+  src: [
+    {
+      path: '../public/fonts/anime_ace_bb/animeace2bb_tt/animeace2_reg.ttf',
+      weight: '400',
+      style: 'normal',
+    },
+    {
+      path: '../public/fonts/anime_ace_bb/animeace2bb_tt/animeace2_bld.ttf',
+      weight: '700',
+      style: 'normal',
+    },
+    {
+      path: '../public/fonts/anime_ace_bb/animeace2bb_tt/animeace2_ital.ttf',
+      weight: '400',
+      style: 'italic',
+    },
+  ],
+  variable: '--font-anime-ace',
 })
 
 export const metadata: Metadata = {
@@ -25,7 +35,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className={`${bebasNeue.variable} ${jetbrainsMono.variable}`}>
+    <html lang="en" className={animeAce.variable}>
       <body>
         <CustomCursor />
         {children}
