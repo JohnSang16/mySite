@@ -3,36 +3,30 @@
 import { motion } from 'framer-motion'
 
 const stats = [
-  { label: 'NAME', value: 'JOHN SANG' },
-  { label: 'CLASS', value: 'SOFTWARE ENGINEER' },
-  { label: 'LEVEL', value: 'soph → GT transfer' },
-  { label: 'ARC', value: 'SWE Internship Hunt' },
+  { label: 'NAME',   value: 'JOHN SANG' },
+  { label: 'CLASS',  value: 'SOFTWARE ENGINEER' },
+  { label: 'LEVEL',  value: 'soph → GT transfer' },
+  { label: 'ARC',    value: 'SWE Internship Hunt' },
   { label: 'SKILLS', value: 'React · C++ · LoL Mid' },
 ]
 
 export default function StatusScreen() {
   return (
     <motion.div
-      className="panel p-4 border-2 border-white relative"
+      className="panel p-4 w-full text-center"
       initial={{ opacity: 0, scale: 0.96 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.5, ease: 'easeOut' }}
     >
-      <span className="absolute top-1 left-1 font-display text-accent text-sm">▸</span>
-      <span className="absolute top-1 right-1 font-display text-accent text-sm">◂</span>
-      <span className="absolute bottom-1 left-1 font-display text-accent text-sm">▸</span>
-      <span className="absolute bottom-1 right-1 font-display text-accent text-sm">◂</span>
-
-      <h1 className="font-display text-3xl tracking-widest mb-3 glow-hover text-center">
+      <h1 className="font-display text-3xl tracking-widest mb-3 glow-hover">
         STATUS SCREEN
       </h1>
 
-      <div className="flex flex-col gap-1.5 font-mono text-xs">
+      <div className="flex flex-col gap-1.5 font-mono text-xs items-center">
         {stats.map(({ label, value }) => (
-          <div key={label} className="flex gap-2 items-baseline">
-            <span className="text-accent tracking-widest shrink-0 w-14">{label}</span>
-            <span className="border-b border-white/20 flex-1" />
-            <span className="text-white/90 text-right">{value}</span>
+          <div key={label} className="flex gap-2 items-baseline w-full justify-center">
+            <span className="text-accent tracking-widest shrink-0">{label}</span>
+            <span className="text-white/90">{value}</span>
           </div>
         ))}
       </div>

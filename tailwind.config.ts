@@ -10,7 +10,7 @@ const config: Config = {
       colors: {
         background: '#000000',
         foreground: '#FFFFFF',
-        accent: '#39FF14',
+        accent: '#16a34a',
         gold: '#B3A369',
       },
       fontFamily: {
