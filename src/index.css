@@ -38,22 +38,35 @@ html {
 body {
   background-color: #000000;
   color: #ffffff;
-  font-family: 'Anime Ace', sans-serif;
+  font-family: 'JetBrains Mono', monospace;
   overflow-x: hidden;
   margin: 0;
   padding: 0;
 }
 
-/* Halftone dot texture */
+/* Centipede center background */
+body::after {
+  content: '';
+  position: fixed;
+  height: 50%;
+  width: 50%;
+  inset: 0;
+  background-image: url('/background/centipedeBG.jpg');
+  background-size: contain;
+  background-position: center center;
+  background-repeat: no-repeat;
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* Full-screen grey border */
 body::before {
   content: '';
   position: fixed;
   inset: 0;
-  background-image: radial-gradient(circle, #ffffff 1px, transparent 1px);
-  background-size: 20px 20px;
-  opacity: 0.08;
+  border: 10px solid #363333;
   pointer-events: none;
-  z-index: -1;
+  z-index: 9998;
 }
 
 /* Info panels — no border */
@@ -90,4 +103,16 @@ body::before {
 
 .panel:hover .sfx {
   opacity: 1;
+}
+
+.name-hover:hover {
+  animation: wiggle 0.4s ease !important;
+}
+
+@keyframes wiggle {
+  0%   { transform: rotate(0deg); }
+  25%  { transform: rotate(-1deg); }
+  50%  { transform: rotate(1deg); }
+  75%  { transform: rotate(-0.5deg); }
+  100% { transform: rotate(0deg); }
 }
