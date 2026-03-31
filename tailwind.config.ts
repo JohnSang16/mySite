@@ -2,8 +2,8 @@ import type { Config } from 'tailwindcss'
 
 const config: Config = {
   content: [
-    './app/**/*.{js,ts,jsx,tsx,mdx}',
-    './components/**/*.{js,ts,jsx,tsx,mdx}',
+    './index.html',
+    './src/**/*.{js,ts,jsx,tsx}',
   ],
   theme: {
     extend: {
@@ -14,8 +14,9 @@ const config: Config = {
         gold: '#B3A369',
       },
       fontFamily: {
-        display: ['var(--font-bebas)', 'Impact', 'sans-serif'],
-        mono: ['var(--font-jetbrains)', 'monospace'],
+        display: ['var(--font-anime-ace)', 'sans-serif'],
+        mono: ['var(--font-anime-ace)', 'sans-serif'],
+        sans: ['var(--font-anime-ace)', 'sans-serif'],
       },
     },
   },
