@@ -11,6 +11,14 @@
   cursor: none;
 }
 
+html {
+  scrollbar-width: none;
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
+
 body {
   background-color: #000000;
   color: #ffffff;
@@ -20,9 +28,7 @@ body {
   padding: 0;
 }
 
-/* Pure black base — image is rendered inline on the page */
-
-/* Halftone dot texture — ≤8% opacity */
+/* Halftone dot texture */
 body::before {
   content: '';
   position: fixed;
@@ -34,22 +40,29 @@ body::before {
   z-index: -1;
 }
 
-/* Manga panel base — transparent */
+/* Info panels — no border */
 .panel {
-  @apply border-2 border-white relative overflow-hidden;
+  @apply relative overflow-hidden;
+  background: transparent;
+  border: none;
+}
+
+/* Image panel — keeps a visible border */
+.panel-bordered {
+  @apply relative overflow-hidden border-2 border-white;
   background: transparent;
   backdrop-filter: blur(2px);
 }
 
-.panel:hover {
-  @apply border-4;
-  box-shadow: 0 0 0 2px #39FF14;
+.panel-bordered:hover {
+  border-width: 3px;
+  box-shadow: 0 0 0 2px #166534;
 }
 
 /* Neon glow on hover */
 .glow-hover:hover {
-  text-shadow: 0 0 8px #39FF14, 0 0 20px #39FF14;
-  color: #39FF14;
+  text-shadow: 0 0 8px #166534, 0 0 20px #166534;
+  color: #16a34a;
   transition: all 0.15s ease;
 }
 
@@ -61,15 +74,4 @@ body::before {
 
 .panel:hover .sfx {
   opacity: 1;
-}
-
-/* Scrollbar */
-::-webkit-scrollbar {
-  width: 4px;
-}
-::-webkit-scrollbar-track {
-  background: #000;
-}
-::-webkit-scrollbar-thumb {
-  background: #39FF14;
 }

@@ -17,7 +17,7 @@ export default function MangaPanel({
 }: MangaPanelProps) {
   return (
     <motion.div
-      className={`panel p-6 ${className}`}
+      className={`panel p-4 w-full ${className}`}
       style={{ rotate: angle }}
       initial={{ opacity: 0, y: 24 }}
       whileInView={{ opacity: 1, y: 0 }}
