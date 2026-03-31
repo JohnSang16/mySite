@@ -6,10 +6,11 @@ export default function App() {
   return (
     <>
       <CustomCursor />
-      <main className="relative min-h-screen flex gap-8 p-8 justify-center items-start" style={{ zIndex: 2 }}>
+      <main className="relative min-h-screen" style={{ zIndex: 2 }}>
 
-        {/* Center — all panels stacked */}
-        <div className="flex flex-col gap-3 w-80 items-center">
+        {/* Panels — absolutely centered horizontally */}
+        <div className="absolute inset-0 flex flex-col items-center gap-3 pt-8 pointer-events-none" style={{ zIndex: 3 }}>
+          <div className="flex flex-col gap-3 w-80 pointer-events-auto">
 
           <StatusScreen />
 
@@ -52,17 +53,16 @@ export default function App() {
             </ul>
           </MangaPanel>
 
+          </div>
         </div>
 
-        {/* Right — manga image */}
-        <div className="flex items-start pt-2">
-          <div className="panel-bordered relative" style={{ width: 420, height: 600 }}>
-            <img
-              src="/manga/ichigoatSavingRukia.jpg"
-              alt="Ichigo saving Rukia"
-              style={{ width: '100%', height: '100%', objectFit: 'contain', objectPosition: 'center' }}
-            />
-          </div>
+        {/* Image — fixed to right edge */}
+        <div className="fixed top-0 right-0 h-screen w-auto pointer-events-none">
+          <img
+            src="/manga/ichigoatSavingRukia.jpg"
+            alt="Ichigo saving Rukia"
+            style={{ height: '100%', width: 'auto', objectFit: 'contain', objectPosition: 'right center', display: 'block' }}
+          />
         </div>
 
       </main>
