@@ -1,11 +1,28 @@
+import { useState, useRef } from 'react'
 import { motion } from 'framer-motion'
 import CustomCursor from '@/components/CustomCursor'
 import MangaPanel from '@/components/MangaPanel'
+import BrutalistNoise from '@/components/BrutalistNoise'
+import Intro from '@/components/Intro'
+import { useAlphaHover } from '@/hooks/useAlphaHover'
 
 export default function App() {
+  const [showIntro, setShowIntro] = useState(true)
+  const audioRef = useRef<HTMLAudioElement>(null)
+
+  const handleIntroDone = () => {
+    audioRef.current?.play()
+    setShowIntro(false)
+  }
+  const { imgRef: nameRef, hovered: nameHovered } = useAlphaHover()
+  const { imgRef: d4Ref, hovered: d4Hovered } = useAlphaHover()
+
   return (
     <>
+      {showIntro && <Intro onDone={handleIntroDone} />}
+      <audio ref={audioRef} src="/sfx/Bleach OST On the Precipice of Defeat.mp3" loop />
       <CustomCursor />
+      <BrutalistNoise />
       <main className="relative min-h-screen" style={{ zIndex: 2 }}>
 
         {/* Panels — fixed horizontal row at bottom right */}
@@ -42,14 +59,20 @@ export default function App() {
             style={{ pointerEvents: 'auto' }}
           >
             <img
+              ref={nameRef}
               src="/other/nameTitleFinal.png"
               alt="John Sang"
-              className="name-hover"
-              style={{ width: 420, objectFit: 'contain', display: 'block' }}
+              style={{
+                width: 420,
+                objectFit: 'contain',
+                display: 'block',
+                transition: 'transform 0.3s ease',
+                transform: nameHovered ? 'scale(1.06)' : 'scale(1)',
+              }}
             />
           </motion.div>
           <p style={{ fontFamily: "'Playfair Display', serif", fontSize: '1rem', color: 'grey', letterSpacing: '0.1em' }}>
-            what is 1000-7?
+            
           </p>
         </div>
 
@@ -63,13 +86,44 @@ export default function App() {
           transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut', delay: 0 }}
         />
 
-        {/* Image — fixed to right edge */}
-        <div className="fixed top-0 right-0 h-screen w-auto pointer-events-none">
+        {/* d4 background — below centipede */}
+        <div className="fixed inset-0 pointer-events-none" style={{ zIndex: -2 }}>
           <img
-            src="/background/selfieTYPSESHIT.png"
-            alt="selfie"
-            style={{ height: '55%', width: 'auto', objectFit: 'contain', objectPosition: 'right center', display: 'block' }}
+            ref={d4Ref}
+            src="/background/d4imgCropped.png"
+            alt=""
+            style={{
+              width: 200,
+              height: 'auto',
+              objectFit: 'contain',
+              objectPosition: 'left bottom',
+              display: 'block',
+              position: 'absolute',
+              bottom: 180,
+              left: 100,
+              pointerEvents: 'auto',
+              transition: 'transform 0.3s ease',
+              transformOrigin: 'left bottom',
+              transform: d4Hovered ? 'scale(1.08)' : 'scale(1)',
+            }}
           />
+        </div>
+
+        {/* Image — fixed to right edge */}
+        <div className="fixed top-0 right-0 h-screen flex items-center pointer-events-none" style={{ padding: '20px', paddingBottom: '140px' }}>
+          <div style={{
+            padding: '8px',
+            border: '1px solid rgba(255,255,255,0.15)',
+            boxShadow: '0 0 0 1px rgba(255,255,255,0.05), inset 0 0 20px rgba(255,255,255,0.03), 0 0 30px rgba(100,100,255,0.08)',
+            background: 'rgba(255,255,255,0.02)',
+            backdropFilter: 'blur(2px)',
+          }}>
+            <img
+              src="/background/selfieTYPSESHIT.png"
+              alt="selfie"
+              style={{ height: '65vh', width: 'auto', objectFit: 'contain', display: 'block' }}
+            />
+          </div>
         </div>
 
       </main>
