@@ -39,12 +39,12 @@ const [phase, setPhase] = useState<'idle' | 'playing'>('idle')
           onMouseEnter={() => setTextHovered(true)}
           onMouseLeave={() => setTextHovered(false)}
           style={{
-            fontFamily: "'Playfair Display', serif",
+            fontFamily: 'Arial, sans-serif',
             fontWeight: 400,
-            fontStyle: 'italic',
-            fontSize: 'clamp(2.5rem, 6vw, 5.5rem)',
+            fontStyle: 'normal',
+            fontSize: 'clamp(1.25rem, 3vw, 2rem)',
             color: textHovered ? 'rgba(255,255,255,0.65)' : '#fff',
-            letterSpacing: '0.12em',
+            letterSpacing: '0.04em',
             userSelect: 'none',
             cursor: 'none',
             transition: 'color 0.2s ease, text-shadow 0.2s ease',
@@ -53,7 +53,7 @@ const [phase, setPhase] = useState<'idle' | 'playing'>('idle')
               : 'none',
           }}
         >
-          click me
+          Enter my cave
         </motion.p>
       )}
 

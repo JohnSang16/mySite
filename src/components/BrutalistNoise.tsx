@@ -12,7 +12,7 @@ const COMMENTS = [
 const COORDS = [
   { text: '[33.74, -84.38]', corner: 'bottom-left'  },
   { text: 'BUILD_v2.0.4',    corner: 'top-left'     },
-  { text: 'STATUS: ONLINE',  corner: 'top-right'    },
+  { text: 'built 3.31.2026 3am',    corner: 'top-right'    },
   { text: 'LAT 33° N',       corner: 'bottom-right' },
 ]
 
