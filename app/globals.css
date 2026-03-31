@@ -1,0 +1,75 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-bebas: 'Bebas Neue', Impact, sans-serif;
+  --font-jetbrains: 'JetBrains Mono', monospace;
+}
+
+* {
+  cursor: none;
+}
+
+body {
+  background-color: #000000;
+  color: #ffffff;
+  font-family: var(--font-jetbrains);
+  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
+}
+
+/* Pure black base — image is rendered inline on the page */
+
+/* Halftone dot texture — ≤8% opacity */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: radial-gradient(circle, #ffffff 1px, transparent 1px);
+  background-size: 20px 20px;
+  opacity: 0.08;
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* Manga panel base — transparent */
+.panel {
+  @apply border-2 border-white relative overflow-hidden;
+  background: transparent;
+  backdrop-filter: blur(2px);
+}
+
+.panel:hover {
+  @apply border-4;
+  box-shadow: 0 0 0 2px #39FF14;
+}
+
+/* Neon glow on hover */
+.glow-hover:hover {
+  text-shadow: 0 0 8px #39FF14, 0 0 20px #39FF14;
+  color: #39FF14;
+  transition: all 0.15s ease;
+}
+
+/* SFX katakana reveal */
+.sfx {
+  @apply absolute font-display text-accent opacity-0 pointer-events-none select-none;
+  transition: opacity 0.1s ease;
+}
+
+.panel:hover .sfx {
+  opacity: 1;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 4px;
+}
+::-webkit-scrollbar-track {
+  background: #000;
+}
+::-webkit-scrollbar-thumb {
+  background: #39FF14;
+}
