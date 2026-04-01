@@ -64,7 +64,7 @@ export default function App() {
           >
             <img
               ref={nameRef}
-              src="/other/nameTitleFinal.png"
+              src="/other/finalNamept2 (1).png"
               alt="John Sang"
               style={{
                 width: 420,

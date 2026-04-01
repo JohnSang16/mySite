@@ -41,7 +41,7 @@ html {
 }
 
 body {
-  background-color: #000000;
+  background-color: #2c2929;
   color: #ffffff;
   font-family: 'JetBrains Mono', monospace;
   overflow-x: hidden;
@@ -53,7 +53,8 @@ body {
 body::after {
   content: '';
   position: fixed;
-  height: 50%;
+  margin-top: 4vh;
+  height: 35%;
   width: 50%;
   inset: 0;
   background-image: url('/background/centipedeBG.jpg');
@@ -62,6 +63,7 @@ body::after {
   background-repeat: no-repeat;
   pointer-events: none;
   z-index: -1;
+  mix-blend-mode: screen;
 }
 
 /* Full-screen grey border */
