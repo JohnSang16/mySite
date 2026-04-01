@@ -42,6 +42,10 @@ html {
 
 body {
   background-color: #1b1515;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+  background-size: 48px 48px;
   color: #ffffff;
   font-family: 'JetBrains Mono', monospace;
   overflow-x: hidden;
@@ -49,13 +53,17 @@ body {
   padding: 0;
 }
 
+body.no-centipede::after {
+  display: none;
+}
+
 /* Centipede — right side */
 body::after {
   content: '';
   position: fixed;
-  top: 85%;
-  right: -2%;
-  transform: translateY(-50%);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(30deg);
   height: 55%;
   width: 35%;
   background-image: url('/background/centipedeBG.jpg');

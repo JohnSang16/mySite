@@ -2,22 +2,15 @@ import { useState, useRef } from 'react'
 import { motion } from 'framer-motion'
 import CustomCursor from '@/components/CustomCursor'
 import BrutalistNoise from '@/components/BrutalistNoise'
+import MangaPanel from '@/components/MangaPanel'
 import Intro from '@/components/Intro'
-import HubPage from '@/components/HubPage'
 import IPod from '@/components/IPod'
 import { useAlphaHover } from '@/hooks/useAlphaHover'
 
 export default function App() {
   const [showIntro] = useState(false)
   const [isPlaying, setIsPlaying] = useState(false)
-  const [page, setPage] = useState<'main' | 'transitioning' | 'hub'>('main')
   const audioRef = useRef<HTMLAudioElement>(null)
-
-  const handleEnterHub = () => {
-    if (page !== 'main') return
-    setPage('transitioning')
-
-  }
 
   const handleIntroDone = () => {
     audioRef.current?.play()
@@ -35,49 +28,38 @@ export default function App() {
       <BrutalistNoise />
       <main className="relative min-h-screen" style={{ zIndex: 2 }}>
 
+        {/* Name — overlaying selfie */}
+        <motion.div
+          className="fixed"
+          style={{ top: '-10%', left: '20%', transform: 'translate(-50%, -50%)', zIndex: 5, pointerEvents: 'auto' }}
+          animate={{ y: [0, -4, 0] }}
+          transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut', delay: 1.5 }}
+        >
+          <img
+            ref={nameRef}
+            src="/other/finalNamept2 (1).png"
+            alt="John Sang"
+            style={{
+              width: 280,
+              objectFit: 'contain',
+              display: 'block',
+              transition: 'transform 0.3s ease',
+              transform: nameHovered ? 'scale(1.06)' : 'scale(1)',
+            }}
+          />
+        </motion.div>
 
-        {/* Center title + text */}
-        <div className="fixed inset-0 flex flex-col items-center justify-end gap-1" style={{ zIndex: 5, pointerEvents: 'none', paddingBottom: '4vh' }}>
-          <motion.div
-            animate={{ y: [0, -4, 0] }}
-            transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut', delay: 1.5 }}
-            style={{ pointerEvents: 'auto' }}
-          >
-            <img
-              ref={nameRef}
-              src="/other/finalNamept2 (1).png"
-              alt="John Sang"
-              style={{
-                width: 420,
-                objectFit: 'contain',
-                display: 'block',
-                transition: 'transform 0.3s ease',
-                transform: nameHovered ? 'scale(1.06)' : 'scale(1)',
-              }}
-            />
-          </motion.div>
-          <motion.p
-            style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.85rem', letterSpacing: '0.2em', color: 'rgba(224,218,218,0.5)', textTransform: 'uppercase', whiteSpace: 'nowrap', pointerEvents: 'auto', cursor: 'none', fontWeight: 'bold' }}
-            animate={{ opacity: [0.3, 1, 0.3] }}
-            transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
-            onClick={handleEnterHub}
-          >
-            click me to enter
-          </motion.p>
-        </div>
-
-        {/* Floating ichigo mask — independently centered, clickable */}
+        {/* Floating ichigo mask — independently centered */}
         <motion.img
           src="/other/ichigoMaskNoBG.png"
           alt="ichigo mask"
-          className="fixed"
-          style={{ width: 160, height: 160, objectFit: 'contain', top: '65%', left: '50%', transform: 'translate(-50%, -50%)', zIndex: 6, cursor: 'none', pointerEvents: 'auto' }}
+          className="fixed pointer-events-none"
+          style={{ width: 160, height: 160, objectFit: 'contain', top: '65%', left: '50%', transform: 'translate(-50%, -50%)', zIndex: 6 }}
           animate={{ y: [0, -14, 0] }}
           transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut', delay: 0 }}
-          onClick={handleEnterHub}
         />
 
-        {/* Reminder column — behind name, overlapping selfie */}
+        {/* Reminder column */}
         <div
           className="fixed pointer-events-auto select-none flex flex-col items-start gap-1"
           style={{ zIndex: 4, left: '72%', top: '60%', transform: 'translate(-50%, -50%)', maxWidth: '28%', textAlign: 'left' }}
@@ -90,6 +72,22 @@ export default function App() {
           <p className="font-mono text-xs text-white/70 reminder-hover" style={{ pointerEvents: 'auto' }}>give more than you get</p>
         </div>
 
+        {/* 3 panels — top right */}
+        <div className="fixed top-4 right-4 flex flex-col gap-3" style={{ zIndex: 10, width: '220px' }}>
+          <MangaPanel sfx="ドン！">
+            <h2 className="font-display text-xs tracking-widest mb-1 text-center">abt me</h2>
+            <p className="font-mono text-xs text-white/80 text-center">wpm 155 · lol midlane d2 · progsuhq director · professional larper</p>
+          </MangaPanel>
+          <MangaPanel sfx="バン！">
+            <h2 className="font-display text-xs tracking-widest mb-1 text-center">training arc</h2>
+            <p className="font-mono text-xs text-white/80 text-center">land a swe internship · hit 80 coffeechats · build git · credit score maxx</p>
+          </MangaPanel>
+          <MangaPanel sfx="スゥ">
+            <h2 className="font-display text-xs tracking-widest mb-1 text-center">knowledge</h2>
+            <p className="font-mono text-xs text-white/80 text-center">grokking algorithms · competitive programmer's handbook</p>
+          </MangaPanel>
+        </div>
+
         {/* Selfie — centered */}
         <div className="fixed pointer-events-none" style={{ top: '32%', left: '33%', transform: 'translate(-50%, -50%)', zIndex: -100 }}>
           <img
@@ -99,7 +97,7 @@ export default function App() {
           />
         </div>
 
-        {/* d4 background — below centipede */}
+        {/* d4 background */}
         <div className="fixed inset-0 pointer-events-none" style={{ zIndex: -2 }}>
           <img
             ref={d4Ref}
@@ -124,7 +122,6 @@ export default function App() {
 
         {/* Images — fixed to right edge */}
         <div className="fixed top-0 right-0 h-screen flex items-center gap-4" style={{ padding: '20px', paddingBottom: '140px' }}>
-          {/* Ulquiorra image */}
           <div style={{
             padding: '0px',
             border: '5px solid rgba(0,0,0,0.85)',
@@ -144,13 +141,12 @@ export default function App() {
               style={{ height: '25vh', width: 'auto', objectFit: 'contain', display: 'block' }}
             />
           </div>
-
         </div>
 
       </main>
 
-      {/* Stop music text control — appears after intro ends, hidden during transition */}
-      {!showIntro && page === 'main' && (
+      {/* Stop music text control */}
+      {!showIntro && (
         <div className="fixed z-[5000] pointer-events-auto" style={{ left: '32%', top: '50%', transform: 'translate(-50%, -50%)' }}>
           <button
             data-clickable
@@ -164,9 +160,6 @@ export default function App() {
                   audio.pause()
                   setIsPlaying(false)
                 }
-              } else {
-                // eslint-disable-next-line no-console
-                console.warn('stop/start music: audio element not found')
               }
             }}
             style={{
@@ -191,21 +184,7 @@ export default function App() {
         </div>
       )}
 
-      {/* Ulquiorra transition video overlay */}
-      {page === 'transitioning' && (
-        <video
-          autoPlay
-          src="/videos/ulquiorraCiferTeleport.mp4"
-          onEnded={() => setPage('hub')}
-          playsInline
-          style={{ position: 'fixed', inset: 0, width: '100%', height: '100%', objectFit: 'cover', zIndex: 2000, pointerEvents: 'none' }}
-        />
-      )}
-
-      <IPod visible={isPlaying && page === 'main'} />
-
-      {/* Hub page */}
-      {page === 'hub' && <HubPage onBack={() => setPage('main')} />}
+      <IPod visible={isPlaying} />
     </>
   )
 }
