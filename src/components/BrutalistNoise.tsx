@@ -1,12 +1,18 @@
 import { useEffect, useRef } from 'react'
 
 const COMMENTS = [
-  { text: 'lock in bro', x: '8%',  y: '18%', rotate: -12 },
-  { text: '1000-7?',     x: '14%', y: '72%', rotate: 8  },
-  { text: 'ur lazy',     x: '72%', y: '82%', rotate: -6 },
-  { text: 'gm.',         x: '82%', y: '14%', rotate: 10 },
-  { text: 'focus.',      x: '38%', y: '88%', rotate: -9 },
-  { text: 'ship it',     x: '5%',  y: '44%', rotate: 5  },
+  { text: 'lock in bro',  x: '8%',  y: '18%', rotate: -12 },
+  { text: '1000-7?',      x: '14%', y: '72%', rotate: 8   },
+  { text: 'ur lazy',      x: '72%', y: '82%', rotate: -6  },
+  { text: 'gm.',          x: '82%', y: '14%', rotate: 10  },
+  { text: 'focus.',       x: '38%', y: '88%', rotate: -9  },
+  { text: 'ship it',      x: '5%',  y: '44%', rotate: 5   },
+  { text: 'mid diff',     x: '62%', y: '28%', rotate: -8  },
+  { text: 'just grind',   x: '78%', y: '55%', rotate: 7   },
+  { text: 'no excuses',   x: '20%', y: '35%', rotate: -4  },
+  { text: 'diff player',  x: '50%', y: '12%', rotate: 11  },
+  { text: 'stay locked',  x: '30%', y: '60%', rotate: -14 },
+  { text: 'touch grass?', x: '88%', y: '68%', rotate: 6   },
 ]
 
 const COORDS = [
@@ -47,15 +53,20 @@ export default function BrutalistNoise() {
       <div
         ref={layerRef}
         className="fixed inset-0 pointer-events-none select-none"
-        style={{ zIndex: 1, transition: 'transform 0.1s linear' }}
+        style={{ zIndex: 9990, transition: 'transform 0.1s linear' }}
       >
 
         {/* Floating toxic comments */}
         {COMMENTS.map((c, i) => (
           <span
             key={i}
-            className="absolute font-mono text-white/10 text-xs"
-            style={{ left: c.x, top: c.y, transform: `rotate(${c.rotate}deg)` }}
+            className="absolute font-mono text-xs"
+            style={{
+              left: c.x,
+              top: c.y,
+              transform: `rotate(${c.rotate}deg)`,
+              color: 'rgba(255,255,255,0.18)',
+            }}
           >
             {c.text}
           </span>
