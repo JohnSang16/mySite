@@ -8,13 +8,25 @@ import IPod from '@/components/IPod'
 import { useAlphaHover } from '@/hooks/useAlphaHover'
 
 export default function App() {
-  const [showIntro] = useState(false)
+  const [showIntro, setShowIntro] = useState(true)
   const [isPlaying, setIsPlaying] = useState(false)
+  const [showIpod, setShowIpod] = useState(false)
   const audioRef = useRef<HTMLAudioElement>(null)
 
+  const handlePlayPause = () => {
+    const audio = (audioRef.current as HTMLMediaElement) ?? (document.querySelector('audio') as HTMLMediaElement | null)
+    if (!audio) return
+    if (audio.paused) {
+      audio.play().catch(() => {})
+      setIsPlaying(true)
+    } else {
+      audio.pause()
+      setIsPlaying(false)
+    }
+  }
+
   const handleIntroDone = () => {
-    audioRef.current?.play()
-    setIsPlaying(true)
+    setShowIntro(false)
   }
   const { imgRef: nameRef, hovered: nameHovered } = useAlphaHover()
   const { imgRef: d4Ref, hovered: d4Hovered } = useAlphaHover()
@@ -64,6 +76,7 @@ export default function App() {
           <a href="https://www.linkedin.com/in/johnsang-/" target="_blank" rel="noreferrer" className="font-mono text-xs text-white/50 reminder-hover" style={{ pointerEvents: 'auto', textDecoration: 'none', letterSpacing: '0.1em' }}>linkedin ↗</a>
           <a href="https://github.com/JohnSang16" target="_blank" rel="noreferrer" className="font-mono text-xs text-white/50 reminder-hover" style={{ pointerEvents: 'auto', textDecoration: 'none', letterSpacing: '0.1em' }}>github ↗</a>
           <a href="https://www.instagram.com/john.sang0/" target="_blank" rel="noreferrer" className="font-mono text-xs text-white/50 reminder-hover" style={{ pointerEvents: 'auto', textDecoration: 'none', letterSpacing: '0.1em' }}>instagram ↗</a>
+          <a href="https://www.tiktok.com/@john.sang0" target="_blank" rel="noreferrer" className="font-mono text-xs text-white/50 reminder-hover" style={{ pointerEvents: 'auto', textDecoration: 'none', letterSpacing: '0.1em' }}>tiktok ↗</a>
         </div>
 
         {/* Reminder column */}
@@ -83,7 +96,7 @@ export default function App() {
         <div className="fixed top-4 right-4 flex flex-col gap-3" style={{ zIndex: 10, width: '220px' }}>
           <MangaPanel sfx="ドン！">
             <h2 className="font-display text-xs tracking-widest mb-1 text-center">abt me</h2>
-            <p className="font-mono text-xs text-white/80 text-center">wpm 155 · lol midlane d2 · progsuhq director · professional larper</p>
+            <p className="font-mono text-xs text-white/80 text-center"> lol midlane d2 · progsuhq director · professional larper · wpm 155</p>
           </MangaPanel>
           <MangaPanel sfx="バン！">
             <h2 className="font-display text-xs tracking-widest mb-1 text-center">training arc</h2>
@@ -100,7 +113,7 @@ export default function App() {
           <img
             src="/background/selfieTYPSESHIT.png"
             alt="selfie"
-            style={{ height: '45vh', width: 'auto', objectFit: 'contain', display: 'block', border: '2px solid rgba(0,0,0,0.85)' }}
+            style={{ height: '45vh', width: 'auto', objectFit: 'contain', display: 'block', border: '2px solid rgba(255,255,255,0.85)' }}
           />
         </div>
 
@@ -131,7 +144,7 @@ export default function App() {
         <div className="fixed top-0 right-0 h-screen flex items-center gap-4" style={{ padding: '20px', paddingBottom: '140px' }}>
           <div style={{
             padding: '0px',
-            border: '5px solid rgba(0,0,0,0.85)',
+            border: '2px solid rgba(250, 243, 243, 0.85)',
             boxShadow: '0 0 0 1px rgba(255,255,255,0.05), inset 0 0 20px rgba(255,255,255,0.03), 0 0 30px rgba(100,100,255,0.08)',
             background: 'rgba(255,255,255,0.02)',
             backdropFilter: 'blur(2px)',
@@ -157,18 +170,7 @@ export default function App() {
         <div className="fixed z-[5000] pointer-events-auto" style={{ bottom: 16, right: 16 }}>
           <button
             data-clickable
-            onClick={() => {
-              const audio = (audioRef.current as HTMLMediaElement) ?? (document.querySelector('audio') as HTMLMediaElement | null)
-              if (audio) {
-                if (audio.paused) {
-                  audio.play().catch(() => {})
-                  setIsPlaying(true)
-                } else {
-                  audio.pause()
-                  setIsPlaying(false)
-                }
-              }
-            }}
+            onClick={() => setShowIpod(v => !v)}
             style={{
               background: 'rgba(255,255,255,0.08)',
               border: 'none',
@@ -183,15 +185,15 @@ export default function App() {
               outline: 'none',
               boxShadow: '0 0 0 0 transparent',
             }}
-            aria-pressed={isPlaying}
-            aria-label={isPlaying ? 'Stop music' : 'Start music'}
+            aria-pressed={showIpod}
+            aria-label={showIpod ? 'Hide iPod' : 'Show iPod'}
           >
-            {isPlaying ? '⏸ ipod' : '▶ ipod'}
+            ipod
           </button>
         </div>
       )}
 
-      <IPod visible={isPlaying} />
+      <IPod visible={showIpod} isPlaying={isPlaying} onPlayPause={handlePlayPause} />
     </>
   )
 }

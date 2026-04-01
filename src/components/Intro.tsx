@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { useRef } from 'react'
 import { motion } from 'framer-motion'
 
 interface IntroProps {
@@ -7,73 +7,46 @@ interface IntroProps {
 
 export default function Intro({ onDone }: IntroProps) {
   const videoRef = useRef<HTMLVideoElement>(null)
-const [phase, setPhase] = useState<'idle' | 'playing'>('idle')
-  const [textHovered, setTextHovered] = useState(false)
-
-  const handleClick = () => {
-    if (phase !== 'idle') return
-    setPhase('playing')
-    videoRef.current!.play()
-  }
-
-  const handleEnded = () => {
-    onDone()
-  }
 
   return (
-    <div
-      className="fixed inset-0 flex items-center justify-center"
-      style={{ background: '#000', zIndex: 1000, cursor: 'none' }}
-      onClick={handleClick}
-    >
-      {/* Click me text */}
-      {phase === 'idle' && (
-        <motion.p
-          initial={{ scale: 0.85, opacity: 0 }}
-          animate={{ scale: [0.85, 1.04, 1], opacity: 1, y: [0, -10, 0] }}
-          transition={{
-            scale: { duration: 2.4, ease: 'easeOut' },
-            opacity: { duration: 1.2, ease: 'easeOut' },
-            y: { duration: 4, repeat: Infinity, ease: 'easeInOut', delay: 1.5 },
-          }}
-          onMouseEnter={() => setTextHovered(true)}
-          onMouseLeave={() => setTextHovered(false)}
-          style={{
-            fontFamily: 'Arial, sans-serif',
-            fontWeight: 400,
-            fontStyle: 'normal',
-            fontSize: 'clamp(1.25rem, 3vw, 2rem)',
-            color: textHovered ? 'rgba(255,255,255,0.65)' : '#fff',
-            letterSpacing: '0.04em',
-            userSelect: 'none',
-            cursor: 'none',
-            transition: 'color 0.2s ease, text-shadow 0.2s ease',
-            textShadow: textHovered
-              ? '0 0 30px rgba(255,255,255,0.4), 0 0 60px rgba(255,255,255,0.15)'
-              : 'none',
-          }}
-        >
-          Enter my cave
-        </motion.p>
-      )}
-
-      {/* Video — hidden until clicked */}
+    <div className="fixed inset-0" style={{ background: '#000', zIndex: 99999, cursor: 'none' }}>
       <video
         ref={videoRef}
         src="/videos/ulquiorraCiferTeleport.mp4"
-        onEnded={handleEnded}
+        autoPlay
+        muted
         playsInline
-        style={{
-          position: 'absolute',
-          inset: 0,
-          width: '100%',
-          height: '100%',
-          objectFit: 'cover',
-          display: phase === 'playing' ? 'block' : 'none',
-          pointerEvents: 'none',
-        }}
+        onEnded={onDone}
+        style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', pointerEvents: 'none' }}
       />
 
+      {/* Skip button */}
+      <motion.button
+        data-clickable
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1, duration: 0.5 }}
+        onClick={onDone}
+        style={{
+          position: 'absolute',
+          bottom: 24,
+          right: 24,
+          background: 'rgba(255,255,255,0.08)',
+          border: '1px solid rgba(255,255,255,0.2)',
+          borderRadius: '0.25rem',
+          padding: '0.35rem 0.9rem',
+          color: '#fff',
+          fontSize: '0.75rem',
+          fontFamily: "'JetBrains Mono', monospace",
+          letterSpacing: '0.15em',
+          textTransform: 'uppercase',
+          cursor: 'none',
+          pointerEvents: 'auto',
+          userSelect: 'none',
+        }}
+      >
+        skip
+      </motion.button>
     </div>
   )
 }

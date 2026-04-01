@@ -2,22 +2,24 @@ import { motion, AnimatePresence } from 'framer-motion'
 
 interface IPodProps {
   visible: boolean
+  isPlaying: boolean
+  onPlayPause: () => void
   trackName?: string
 }
 
-export default function IPod({ visible, trackName = 'Angel With A Shotgun' }: IPodProps) {
+export default function IPod({ visible, isPlaying, onPlayPause, trackName = 'Angel With A Shotgun' }: IPodProps) {
   return (
     <AnimatePresence>
       {visible && (
         <motion.div
-          initial={{ y: -320 }}
+          initial={{ y: '-60vh' }}
           animate={{ y: 0 }}
-          exit={{ y: -320 }}
+          exit={{ y: '-60vh' }}
           transition={{ type: 'spring', stiffness: 180, damping: 22 }}
-          className="fixed pointer-events-none"
-          style={{ top: 16, left: '50%', transform: 'translateX(-50%)', zIndex: 500 }}
+          className="fixed"
+          style={{ top: '30%', right: '22%', zIndex: 500, pointerEvents: 'none' }}
         >
-          <svg width="110" height="190" viewBox="0 0 110 190" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <svg width="130" height="230" viewBox="0 0 110 190" fill="none" xmlns="http://www.w3.org/2000/svg">
             {/* Body */}
             <rect x="1" y="1" width="108" height="188" rx="18" fill="#e8e8e8" stroke="#aaa" strokeWidth="1.5"/>
             {/* Screen bezel */}
@@ -36,16 +38,25 @@ export default function IPod({ visible, trackName = 'Angel With A Shotgun' }: IP
             <rect x="18" y="68" width="30" height="3" rx="1.5" fill="#fff" opacity="0.6"/>
             {/* Click wheel outer */}
             <circle cx="55" cy="140" r="38" fill="#d4d4d4" stroke="#bbb" strokeWidth="1"/>
-            {/* Click wheel inner */}
-            <circle cx="55" cy="140" r="16" fill="#c8c8c8" stroke="#aaa" strokeWidth="0.75"/>
             {/* Menu text */}
             <text x="55" y="112" textAnchor="middle" fill="#555" fontSize="7" fontFamily="monospace">MENU</text>
             {/* Skip fwd */}
-            <text x="88" y="144" textAnchor="middle" fill="#555" fontSize="9">▶▶</text>
+            <text x="83" y="144" textAnchor="middle" fill="#555" fontSize="9">▶▶</text>
             {/* Skip back */}
-            <text x="22" y="144" textAnchor="middle" fill="#555" fontSize="9">◀◀</text>
+            <text x="27" y="144" textAnchor="middle" fill="#555" fontSize="9">◀◀</text>
             {/* Play */}
             <text x="55" y="168" textAnchor="middle" fill="#555" fontSize="9">▶ ❚❚</text>
+            {/* Center circle — play/pause button */}
+            <circle
+              cx="55" cy="140" r="16"
+              fill={isPlaying ? '#bbb' : '#c8c8c8'}
+              stroke="#aaa" strokeWidth="0.75"
+              style={{ cursor: 'none', pointerEvents: 'auto' }}
+              onClick={onPlayPause}
+            />
+            <text x="55" y="144" textAnchor="middle" fill="#444" fontSize="10" style={{ pointerEvents: 'none' }}>
+              {isPlaying ? '❚❚' : '▶'}
+            </text>
           </svg>
         </motion.div>
       )}
