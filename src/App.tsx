@@ -59,10 +59,17 @@ export default function App() {
           transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut', delay: 0 }}
         />
 
+        {/* Social links — bottom left */}
+        <div className="fixed flex flex-col gap-1" style={{ zIndex: 10, top: '58%', left: '32%', transform: 'translateX(-50%)' }}>
+          <a href="https://www.linkedin.com/in/johnsang-/" target="_blank" rel="noreferrer" className="font-mono text-xs text-white/50 reminder-hover" style={{ pointerEvents: 'auto', textDecoration: 'none', letterSpacing: '0.1em' }}>linkedin ↗</a>
+          <a href="https://github.com/JohnSang16" target="_blank" rel="noreferrer" className="font-mono text-xs text-white/50 reminder-hover" style={{ pointerEvents: 'auto', textDecoration: 'none', letterSpacing: '0.1em' }}>github ↗</a>
+          <a href="https://www.instagram.com/john.sang0/" target="_blank" rel="noreferrer" className="font-mono text-xs text-white/50 reminder-hover" style={{ pointerEvents: 'auto', textDecoration: 'none', letterSpacing: '0.1em' }}>instagram ↗</a>
+        </div>
+
         {/* Reminder column */}
         <div
           className="fixed pointer-events-auto select-none flex flex-col items-start gap-1"
-          style={{ zIndex: 4, left: '72%', top: '60%', transform: 'translate(-50%, -50%)', maxWidth: '28%', textAlign: 'left' }}
+          style={{ zIndex: 4, left: 56, top: 116, maxWidth: '28%', textAlign: 'left' }}
         >
           <h3 className="font-display text-sm tracking-widest text-white reminder-hover" style={{ pointerEvents: 'auto' }}>reminders:</h3>
           <p className="font-mono text-xs text-white/70 reminder-hover" style={{ pointerEvents: 'auto' }}>stay goated</p>
@@ -147,7 +154,7 @@ export default function App() {
 
       {/* Stop music text control */}
       {!showIntro && (
-        <div className="fixed z-[5000] pointer-events-auto" style={{ left: '32%', top: '50%', transform: 'translate(-50%, -50%)' }}>
+        <div className="fixed z-[5000] pointer-events-auto" style={{ bottom: 16, right: 16 }}>
           <button
             data-clickable
             onClick={() => {
@@ -179,7 +186,7 @@ export default function App() {
             aria-pressed={isPlaying}
             aria-label={isPlaying ? 'Stop music' : 'Start music'}
           >
-            {isPlaying ? 'stop music' : 'start music'}
+            {isPlaying ? '⏸ ipod' : '▶ ipod'}
           </button>
         </div>
       )}
