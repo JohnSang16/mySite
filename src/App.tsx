@@ -1,25 +1,31 @@
 import { useState, useRef } from 'react'
 import { motion } from 'framer-motion'
 import CustomCursor from '@/components/CustomCursor'
-import MangaPanel from '@/components/MangaPanel'
 import BrutalistNoise from '@/components/BrutalistNoise'
 import Intro from '@/components/Intro'
+import HubPage from '@/components/HubPage'
+import IPod from '@/components/IPod'
 import { useAlphaHover } from '@/hooks/useAlphaHover'
 
 export default function App() {
-  const [showIntro, setShowIntro] = useState(true)
+  const [showIntro] = useState(false)
   const [isPlaying, setIsPlaying] = useState(false)
+  const [page, setPage] = useState<'main' | 'transitioning' | 'hub'>('main')
   const audioRef = useRef<HTMLAudioElement>(null)
+
+  const handleEnterHub = () => {
+    if (page !== 'main') return
+    setPage('transitioning')
+
+  }
 
   const handleIntroDone = () => {
     audioRef.current?.play()
     setIsPlaying(true)
-    setShowIntro(false)
   }
   const { imgRef: nameRef, hovered: nameHovered } = useAlphaHover()
   const { imgRef: d4Ref, hovered: d4Hovered } = useAlphaHover()
   const { imgRef: ulquiorraRef, hovered: ulquiorraHovered } = useAlphaHover()
-  const { imgRef: selfieRef, hovered: selfieHovered } = useAlphaHover()
 
   return (
     <>
@@ -29,34 +35,9 @@ export default function App() {
       <BrutalistNoise />
       <main className="relative min-h-screen" style={{ zIndex: 2 }}>
 
-        {/* Panels — fixed horizontal row at bottom right */}
-        <div className="fixed bottom-0 right-0 flex flex-row gap-2 px-4 pb-4" style={{ zIndex: 10 }}>
-
-          <MangaPanel sfx="ドン！">
-            <h2 className="font-display text-sm tracking-widest mb-1 text-center">abt me</h2>
-            <p className="font-mono text-xs text-white/80 text-center">
-              wpm 155 · lol midlane d2 · progsuhq director · professional larper
-            </p>
-          </MangaPanel>
-
-          <MangaPanel sfx="バン！">
-            <h2 className="font-display text-sm tracking-widest mb-1 text-center">training arc</h2>
-            <p className="font-mono text-xs text-white/80 text-center">
-              land a swe internship · hit 80 coffeechats · build git · credit score maxx
-            </p>
-          </MangaPanel>
-
-          <MangaPanel sfx="スゥ">
-            <h2 className="font-display text-sm tracking-widest mb-1 text-center">knowledge</h2>
-            <p className="font-mono text-xs text-white/80 text-center">
-              grokking algorithms · competitive programmer’s handbook 
-            </p>
-          </MangaPanel>
-
-        </div>
 
         {/* Center title + text */}
-        <div className="fixed inset-0 flex flex-col items-center justify-center gap-4" style={{ zIndex: 5, pointerEvents: 'none' }}>
+        <div className="fixed inset-0 flex flex-col items-center justify-end gap-1" style={{ zIndex: 5, pointerEvents: 'none', paddingBottom: '4vh' }}>
           <motion.div
             animate={{ y: [0, -4, 0] }}
             transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut', delay: 1.5 }}
@@ -75,19 +56,25 @@ export default function App() {
               }}
             />
           </motion.div>
-          <p style={{ fontFamily: "'Playfair Display', serif", fontSize: '1rem', color: 'grey', letterSpacing: '0.1em' }}>
-
-          </p>
+          <motion.p
+            style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.85rem', letterSpacing: '0.2em', color: 'rgba(224,218,218,0.5)', textTransform: 'uppercase', whiteSpace: 'nowrap', pointerEvents: 'auto', cursor: 'none', fontWeight: 'bold' }}
+            animate={{ opacity: [0.3, 1, 0.3] }}
+            transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
+            onClick={handleEnterHub}
+          >
+            click me to enter
+          </motion.p>
         </div>
 
-        {/* Floating ichigo mask — independently centered */}
+        {/* Floating ichigo mask — independently centered, clickable */}
         <motion.img
           src="/other/ichigoMaskNoBG.png"
           alt="ichigo mask"
-          className="fixed pointer-events-none"
-          style={{ width: 160, height: 160, objectFit: 'contain', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', zIndex: 6 }}
+          className="fixed"
+          style={{ width: 160, height: 160, objectFit: 'contain', top: '65%', left: '50%', transform: 'translate(-50%, -50%)', zIndex: 6, cursor: 'none', pointerEvents: 'auto' }}
           animate={{ y: [0, -14, 0] }}
           transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut', delay: 0 }}
+          onClick={handleEnterHub}
         />
 
         {/* Reminder column — behind name, overlapping selfie */}
@@ -103,6 +90,15 @@ export default function App() {
           <p className="font-mono text-xs text-white/70 reminder-hover" style={{ pointerEvents: 'auto' }}>give more than you get</p>
         </div>
 
+        {/* Selfie — centered */}
+        <div className="fixed pointer-events-none" style={{ top: '32%', left: '33%', transform: 'translate(-50%, -50%)', zIndex: -100 }}>
+          <img
+            src="/background/selfieTYPSESHIT.png"
+            alt="selfie"
+            style={{ height: '45vh', width: 'auto', objectFit: 'contain', display: 'block', border: '2px solid rgba(0,0,0,0.85)' }}
+          />
+        </div>
+
         {/* d4 background — below centipede */}
         <div className="fixed inset-0 pointer-events-none" style={{ zIndex: -2 }}>
           <img
@@ -116,7 +112,7 @@ export default function App() {
               objectPosition: 'left bottom',
               display: 'block',
               position: 'absolute',
-              bottom: 180,
+              bottom: 100,
               left: 100,
               pointerEvents: 'auto',
               transition: 'transform 0.3s ease',
@@ -130,11 +126,12 @@ export default function App() {
         <div className="fixed top-0 right-0 h-screen flex items-center gap-4" style={{ padding: '20px', paddingBottom: '140px' }}>
           {/* Ulquiorra image */}
           <div style={{
-            padding: '8px',
-            border: '1px solid rgba(255,255,255,0.15)',
+            padding: '0px',
+            border: '5px solid rgba(0,0,0,0.85)',
             boxShadow: '0 0 0 1px rgba(255,255,255,0.05), inset 0 0 20px rgba(255,255,255,0.03), 0 0 30px rgba(100,100,255,0.08)',
             background: 'rgba(255,255,255,0.02)',
             backdropFilter: 'blur(2px)',
+            marginRight: '510px',
             marginTop: '-30vh',
             transition: 'transform 0.3s ease',
             transform: ulquiorraHovered ? 'rotate(-3deg) scale(1.02)' : 'rotate(0deg) scale(1)',
@@ -144,34 +141,16 @@ export default function App() {
               ref={ulquiorraRef}
               src="/characters/† Ulquiorra Cifer.jpg"
               alt="Ulquiorra Cifer"
-              style={{ height: '35vh', width: 'auto', objectFit: 'contain', display: 'block' }}
+              style={{ height: '25vh', width: 'auto', objectFit: 'contain', display: 'block' }}
             />
           </div>
 
-          {/* Selfie image */}
-          <div style={{
-            padding: '8px',
-            border: '1px solid rgba(255,255,255,0.15)',
-            boxShadow: '0 0 0 1px rgba(255,255,255,0.05), inset 0 0 20px rgba(255,255,255,0.03), 0 0 30px rgba(100,100,255,0.08)',
-            background: 'rgba(255,255,255,0.02)',
-            backdropFilter: 'blur(2px)',
-            transition: 'transform 0.3s ease',
-            transform: selfieHovered ? 'rotate(3deg) scale(1.02)' : 'rotate(0deg) scale(1)',
-            pointerEvents: 'auto'
-          }}>
-            <img
-              ref={selfieRef}
-              src="/background/selfieTYPSESHIT.png"
-              alt="selfie"
-              style={{ height: '65vh', width: 'auto', objectFit: 'contain', display: 'block' }}
-            />
-          </div>
         </div>
 
       </main>
 
-      {/* Stop music text control — appears after intro ends */}
-      {!showIntro && (
+      {/* Stop music text control — appears after intro ends, hidden during transition */}
+      {!showIntro && page === 'main' && (
         <div className="fixed z-[5000] pointer-events-auto" style={{ left: '32%', top: '50%', transform: 'translate(-50%, -50%)' }}>
           <button
             data-clickable
@@ -212,6 +191,21 @@ export default function App() {
         </div>
       )}
 
+      {/* Ulquiorra transition video overlay */}
+      {page === 'transitioning' && (
+        <video
+          autoPlay
+          src="/videos/ulquiorraCiferTeleport.mp4"
+          onEnded={() => setPage('hub')}
+          playsInline
+          style={{ position: 'fixed', inset: 0, width: '100%', height: '100%', objectFit: 'cover', zIndex: 2000, pointerEvents: 'none' }}
+        />
+      )}
+
+      <IPod visible={isPlaying && page === 'main'} />
+
+      {/* Hub page */}
+      {page === 'hub' && <HubPage onBack={() => setPage('main')} />}
     </>
   )
 }

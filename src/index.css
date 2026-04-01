@@ -41,7 +41,7 @@ html {
 }
 
 body {
-  background-color: #2c2929;
+  background-color: #1b1515;
   color: #ffffff;
   font-family: 'JetBrains Mono', monospace;
   overflow-x: hidden;
@@ -49,21 +49,22 @@ body {
   padding: 0;
 }
 
-/* Centipede center background */
+/* Centipede — right side */
 body::after {
   content: '';
   position: fixed;
-  margin-top: 4vh;
-  height: 35%;
-  width: 50%;
-  inset: 0;
+  top: 85%;
+  right: -2%;
+  transform: translateY(-50%);
+  height: 55%;
+  width: 35%;
   background-image: url('/background/centipedeBG.jpg');
   background-size: contain;
-  background-position: center center;
+  background-position: right center;
   background-repeat: no-repeat;
   pointer-events: none;
-  z-index: -1;
-  mix-blend-mode: screen;
+  z-index: 100;
+  mix-blend-mode: lighten;
 }
 
 /* Full-screen grey border */
@@ -143,11 +144,18 @@ html::after {
   background: repeating-linear-gradient(
     0deg,
     transparent,
-    transparent 2px,
-    rgba(0,0,0,0.08) 2px,
-    rgba(0,0,0,0.08) 4px
+    transparent 3px,
+    rgba(0,0,0,0.18) 3px,
+    rgba(0,0,0,0.18) 4px
   );
   pointer-events: none;
   z-index: 9999;
+  animation: scanlineScroll 8s linear infinite;
 }
+
+@keyframes scanlineScroll {
+  from { background-position: 0 0; }
+  to   { background-position: 0 100px; }
+}
+
 
