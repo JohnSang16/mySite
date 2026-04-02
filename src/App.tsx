@@ -27,10 +27,10 @@ export default function App() {
   const ghoulScrollRef = useRef<HTMLDivElement>(null)
 
   const GHOUL_VIDEOS = [
-    '/videos/tokyoghoul/ghoul1.mp4',
-    '/videos/tokyoghoul/ghoul2.mp4',
-    '/videos/tokyoghoul/ghoul3.mp4',
-    '/videos/tokyoghoul/ghoul4.mp4',
+    '/videos/tokyoghoul/bghoul1.mp4',
+    '/videos/tokyoghoul/bghoul2.mp4',
+    '/videos/tokyoghoul/bghoul3.mp4',
+    '/videos/tokyoghoul/bghoul4.mp4',
   ]
 
   const handleGhoulEnded = (idx: number) => {
@@ -406,9 +406,11 @@ export default function App() {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
           >
-            <img
-              src="/videos/ichigo-vasto-lorde.gif"
-              alt="vasto lorde"
+            <video
+              src="/videos/ichigoVID.mp4"
+              autoPlay
+              playsInline
+              onEnded={() => setVastoActive(false)}
               style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', height: '100%', width: 'auto' }}
             />
             <motion.p
