@@ -149,6 +149,11 @@ export default function App() {
       <audio ref={audioRef} src={PLAYLIST[trackIndex].src} onEnded={handleTrackEnded} />
       <CustomCursor />
       {!vastoActive && !fakerActive && !auraActive && !ulqEditActive && !ghoulActive && <BrutalistNoise sm={sm} />}
+      {!vastoActive && !fakerActive && !auraActive && !ulqEditActive && !ghoulActive && (
+        <span className="fixed font-mono pointer-events-none select-none" style={{ top: '50%', left: '50%', transform: 'translate(-50%, -50%)', fontSize: '0.75rem', fontWeight: 700, letterSpacing: '0.12em', color: 'rgba(179,163,105,0.55)', zIndex: 4800 }}>
+          hint: click the gold items~
+        </span>
+      )}
       <main className="relative min-h-screen" style={{ zIndex: 2 }}>
 
         {/* Name — overlaying selfie */}
@@ -394,33 +399,6 @@ export default function App() {
         )}
       </AnimatePresence>
 
-      {/* Vasto Lorde overlay */}
-      <AnimatePresence>
-        {vastoActive && (
-          <motion.div
-            key="vasto-overlay"
-            className="fixed inset-0 pointer-events-none"
-            style={{ zIndex: 8000 }}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
-          >
-            <video
-              src="/videos/ichigoVID.mp4"
-              autoPlay
-              playsInline
-              onEnded={() => setVastoActive(false)}
-              style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', height: '100%', width: 'auto' }}
-            />
-            <motion.p
-              style={{ position: 'absolute', bottom: '6%', left: '50%', transform: 'translateX(-50%)', fontFamily: "'Montserrat', sans-serif", fontWeight: 700, fontSize: '1rem', color: '#020202', whiteSpace: 'nowrap', letterSpacing: '0.05em' }}
-            >
-              POV: MOM FORGOT TO BUY CHICKEN NUGGIES
-            </motion.p>
-          </motion.div>
-        )}
-      </AnimatePresence>
 
       {/* Faker calling overlay */}
       <AnimatePresence>
