@@ -111,7 +111,7 @@ export default function App() {
   const [trackIndex, setTrackIndex] = useState(0)
 
   const PLAYLIST = [
-    { src: '/sfx/Nightcore - Angel With A Shotgun.mp3', name: 'Angel With A Shotgun', art: '/background/cyberSigilGirlBG.jpg' },
+    { src: '/sfx/Nightcore - Angel With A Shotgun.mp3', name: 'Angel With A Shotgun', art: '/background/angelwithashotgunIMG.png' },
     { src: '/sfx/Nightcore - Clarity.mp3',              name: 'Clarity',              art: '/background/clarityIMG.png'       },
     { src: '/sfx/Nightcore - Just A Dream.mp3',         name: 'Just A Dream',         art: '/background/justadreamIMG.png'    },
     { src: '/sfx/Nightcore - Take A Hint.mp3',          name: 'Take A Hint',          art: '/background/takeahitIMG.png'      },
@@ -177,7 +177,7 @@ export default function App() {
           src="/other/ichigoMaskNoBG.png"
           alt="ichigo mask"
           className="fixed gold-glow img-mask ichigo-pos"
-          style={{ width: 160, height: 160, objectFit: 'contain', top: '65%', left: '35%', transform: 'translate(-50%, -50%)', zIndex: 5100, pointerEvents: 'auto', cursor: 'none' }}
+          style={{ width: 160, height: 160, objectFit: 'contain', top: '55%', left: '35%', transform: 'translate(-50%, -50%)', zIndex: 5100, pointerEvents: 'auto', cursor: 'none' }}
           animate={{ y: [0, -14, 0] }}
           transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut', delay: 0 }}
           onClick={triggerVasto}
