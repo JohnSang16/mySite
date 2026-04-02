@@ -1,5 +1,5 @@
 import { useState, useRef } from 'react'
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import CustomCursor from '@/components/CustomCursor'
 import BrutalistNoise from '@/components/BrutalistNoise'
 import MangaPanel from '@/components/MangaPanel'
@@ -11,6 +11,55 @@ export default function App() {
   const [showIntro, setShowIntro] = useState(true)
   const [isPlaying, setIsPlaying] = useState(false)
   const [showIpod, setShowIpod] = useState(false)
+  const [auraActive, setAuraActive] = useState(false)
+  const [fakerActive, setFakerActive] = useState(false)
+  const [vastoActive, setVastoActive] = useState(false)
+  const [ulqEditActive, setUlqEditActive] = useState(false)
+
+  const triggerFaker = () => {
+    if (fakerActive) return
+    setFakerActive(true)
+
+    const bgAudio = audioRef.current
+    const wasPlaying = bgAudio && !bgAudio.paused
+    if (wasPlaying) bgAudio!.pause()
+
+    const sfx = new Audio('/sfx/YOUR PHONE LINGING sound effect.mp3')
+    sfx.play().catch(() => {})
+
+    setTimeout(() => {
+      setFakerActive(false)
+      sfx.pause()
+      if (wasPlaying) bgAudio!.play().catch(() => {})
+    }, 6500)
+  }
+
+  const triggerAura = () => {
+    if (auraActive) return
+    setAuraActive(true)
+    const sfx = new Audio('/sfx/oui parody.mp3')
+    sfx.play().catch(() => {})
+    setTimeout(() => {
+      setAuraActive(false)
+      sfx.pause()
+    }, 4800)
+  }
+
+  const triggerVasto = () => {
+    if (vastoActive) return
+    setVastoActive(true)
+    const bgAudio = audioRef.current
+    const wasPlaying = bgAudio && !bgAudio.paused
+    if (wasPlaying) bgAudio!.pause()
+    const sfx = new Audio('/sfx/Bleach Vasto Lorde Scream (English Dub).mp3')
+    sfx.currentTime = 1.1
+    sfx.play().catch(() => {})
+    setTimeout(() => {
+      setVastoActive(false)
+      sfx.pause()
+      if (wasPlaying) bgAudio!.play().catch(() => {})
+    }, 6810)
+  }
   const audioRef = useRef<HTMLAudioElement>(null)
 
   const handlePlayPause = () => {
@@ -37,7 +86,7 @@ export default function App() {
       {showIntro && <Intro onDone={handleIntroDone} />}
       <audio ref={audioRef} src="/sfx/Nightcore - Angel With A Shotgun.mp3" loop />
       <CustomCursor />
-      <BrutalistNoise />
+      {!vastoActive && !fakerActive && !auraActive && !ulqEditActive && <BrutalistNoise />}
       <main className="relative min-h-screen" style={{ zIndex: 2 }}>
 
         {/* Name — overlaying selfie */}
@@ -65,10 +114,11 @@ export default function App() {
         <motion.img
           src="/other/ichigoMaskNoBG.png"
           alt="ichigo mask"
-          className="fixed pointer-events-none"
-          style={{ width: 160, height: 160, objectFit: 'contain', top: '65%', left: '50%', transform: 'translate(-50%, -50%)', zIndex: 6 }}
+          className="fixed gold-glow"
+          style={{ width: 160, height: 160, objectFit: 'contain', top: '65%', left: '50%', transform: 'translate(-50%, -50%)', zIndex: 6, pointerEvents: 'auto', cursor: 'none' }}
           animate={{ y: [0, -14, 0] }}
           transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut', delay: 0 }}
+          onClick={triggerVasto}
         />
 
         {/* Social links — bottom left */}
@@ -88,7 +138,7 @@ export default function App() {
           <p className="font-mono text-xs text-white/70 reminder-hover" style={{ pointerEvents: 'auto' }}>stay goated</p>
           <p className="font-mono text-xs text-white/70 reminder-hover" style={{ pointerEvents: 'auto' }}>leet code daily</p>
           <p className="font-mono text-xs text-white/70 reminder-hover" style={{ pointerEvents: 'auto' }}>do exciting shit</p>
-          <p className="font-mono text-xs text-white/70 reminder-hover" style={{ pointerEvents: 'auto' }}>aurafarm</p>
+          <p className="font-mono text-xs aurafarm-text" style={{ pointerEvents: 'auto', color: 'rgba(255,255,255,0.7)', transition: 'color 0.2s ease, text-shadow 0.2s ease' }} onClick={triggerAura}>aurafarm</p>
           <p className="font-mono text-xs text-white/70 reminder-hover" style={{ pointerEvents: 'auto' }}>give more than you get</p>
         </div>
 
@@ -103,8 +153,8 @@ export default function App() {
             <p className="font-mono text-xs text-white/80 text-center">land a swe internship · hit 80 coffeechats · build git · credit score maxx</p>
           </MangaPanel>
           <MangaPanel sfx="スゥ">
-            <h2 className="font-display text-xs tracking-widest mb-1 text-center">knowledge</h2>
-            <p className="font-mono text-xs text-white/80 text-center">grokking algorithms · competitive programmer's handbook</p>
+            <h2 className="font-display text-xs tracking-widest mb-1 text-center">skill tree</h2>
+            <p className="font-mono text-xs text-white/80 text-center">python · c · react · next.js · vercel </p>
           </MangaPanel>
         </div>
 
@@ -123,6 +173,7 @@ export default function App() {
             ref={d4Ref}
             src="/background/d4imgCropped.png"
             alt=""
+            className="gold-glow"
             style={{
               width: 200,
               height: 'auto',
@@ -137,6 +188,7 @@ export default function App() {
               transformOrigin: 'left bottom',
               transform: d4Hovered ? 'scale(1.08)' : 'scale(1)',
             }}
+            onClick={triggerFaker}
           />
         </div>
 
@@ -158,7 +210,9 @@ export default function App() {
               ref={ulquiorraRef}
               src="/characters/† Ulquiorra Cifer.jpg"
               alt="Ulquiorra Cifer"
-              style={{ height: '25vh', width: 'auto', objectFit: 'contain', display: 'block' }}
+              className="gold-glow"
+              style={{ height: '25vh', width: 'auto', objectFit: 'contain', display: 'block', cursor: 'none' }}
+              onClick={() => setUlqEditActive(true)}
             />
           </div>
         </div>
@@ -167,7 +221,7 @@ export default function App() {
 
       {/* Stop music text control */}
       {!showIntro && (
-        <div className="fixed z-[5000] pointer-events-auto" style={{ bottom: 16, right: 16 }}>
+        <div className="fixed z-[5000] pointer-events-auto" style={{ bottom: 48, right: 16 }}>
           <button
             data-clickable
             onClick={() => setShowIpod(v => !v)}
@@ -194,6 +248,106 @@ export default function App() {
       )}
 
       <IPod visible={showIpod} isPlaying={isPlaying} onPlayPause={handlePlayPause} />
+
+
+      {/* Ulquiorra edit overlay */}
+      <AnimatePresence>
+        {ulqEditActive && (
+          <motion.div
+            key="ulq-edit-overlay"
+            className="fixed inset-0 pointer-events-auto"
+            style={{ zIndex: 8000, background: '#000' }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            onClick={() => setUlqEditActive(false)}
+          >
+            <video
+              src="/videos/ulquiorra edit (2).mp4"
+              autoPlay
+              playsInline
+              onEnded={() => setUlqEditActive(false)}
+              style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'contain' }}
+            />
+            <span className="fixed pointer-events-none select-none font-mono" style={{ bottom: 12, right: 14, fontSize: '0.6rem', letterSpacing: '0.08em', color: 'rgba(255,255,255,0.3)', zIndex: 8001 }}>
+              credit: in7fv on tiktok
+            </span>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Vasto Lorde overlay */}
+      <AnimatePresence>
+        {vastoActive && (
+          <motion.div
+            key="vasto-overlay"
+            className="fixed inset-0 pointer-events-none"
+            style={{ zIndex: 8000 }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+          >
+            <img
+              src="/videos/ichigo-vasto-lorde.gif"
+              alt="vasto lorde"
+              style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', height: '100%', width: 'auto' }}
+            />
+            <motion.p
+              style={{ position: 'absolute', bottom: '6%', left: '50%', transform: 'translateX(-50%)', fontFamily: "'Montserrat', sans-serif", fontWeight: 700, fontSize: '1rem', color: '#020202', whiteSpace: 'nowrap', letterSpacing: '0.05em' }}
+            >
+              POV: MOM FORGOT TO BUY CHICKEN NUGGIES
+            </motion.p>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Faker calling overlay */}
+      <AnimatePresence>
+        {fakerActive && (
+          <motion.div
+            key="faker-overlay"
+            className="fixed inset-0 pointer-events-none flex items-center justify-center"
+            style={{ zIndex: 8000, padding: '2rem' }}
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 40 }}
+            transition={{ type: 'spring', stiffness: 200, damping: 20 }}
+          >
+            <img
+              src="/videos/faker-calling.gif"
+              alt="faker calling"
+              style={{ height: 'auto', width: '280px', borderRadius: '12px' }}
+            />
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Aura effect overlay */}
+      <AnimatePresence>
+        {auraActive && (
+          <motion.div
+            key="aura-overlay"
+            className="fixed inset-0 pointer-events-none"
+            style={{ zIndex: 8000 }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+          >
+            <motion.img
+              src="/videos/solo-leveling-sung-jin-woo.gif"
+              alt="aura"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.3 }}
+              style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', height: '100%', width: 'auto' }}
+            />
+          </motion.div>
+        )}
+      </AnimatePresence>
     </>
   )
 }

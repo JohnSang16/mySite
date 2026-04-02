@@ -110,6 +110,19 @@ export default function BrutalistNoise() {
       </div>
 
       {/* Corner coordinates — fixed, not in parallax layer */}
+      {/* Terminal block — bottom left */}
+      <div
+        className="fixed pointer-events-none select-none"
+        style={{ bottom: 32, left: 16, zIndex: 20, opacity: 0.1, filter: 'blur(0.4px)', fontFamily: "'JetBrains Mono', monospace", fontSize: '0.55rem', lineHeight: 1.6, color: '#39FF14' }}
+      >
+        <div>#include &lt;stdio.h&gt;</div>
+        <div>int main() {'{'}</div>
+        <div>&nbsp;&nbsp;int aura = 9999;</div>
+        <div>&nbsp;&nbsp;while(locked_in) grind();</div>
+        <div>&nbsp;&nbsp;return 0;</div>
+        <div>{'}'}</div>
+      </div>
+
       {COORDS.map((c, i) => {
         const pos: React.CSSProperties =
           c.corner === 'top-left'     ? { top: 12,    left: 14  } :

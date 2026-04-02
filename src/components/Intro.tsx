@@ -9,7 +9,7 @@ export default function Intro({ onDone }: IntroProps) {
   const videoRef = useRef<HTMLVideoElement>(null)
 
   return (
-    <div className="fixed inset-0" style={{ background: '#000', zIndex: 99999, cursor: 'none' }}>
+    <div className="fixed inset-0" style={{ background: '#000', zIndex: 99999 }}>
       <video
         ref={videoRef}
         src="/videos/ulquiorraCiferTeleport.mp4"
