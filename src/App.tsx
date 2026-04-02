@@ -15,6 +15,46 @@ export default function App() {
   const [fakerActive, setFakerActive] = useState(false)
   const [vastoActive, setVastoActive] = useState(false)
   const [ulqEditActive, setUlqEditActive] = useState(false)
+  const [ghoulActive, setGhoulActive] = useState(false)
+  const [ghoulIndex, setGhoulIndex] = useState(0)
+  const ghoulScrollRef = useRef<HTMLDivElement>(null)
+
+  const GHOUL_VIDEOS = [
+    '/videos/tokyoghoul/ghoul1.mp4',
+    '/videos/tokyoghoul/ghoul2.mp4',
+    '/videos/tokyoghoul/ghoul3.mp4',
+    '/videos/tokyoghoul/ghoul4.mp4',
+  ]
+
+  const handleGhoulEnded = (idx: number) => {
+    const next = (idx + 1) % GHOUL_VIDEOS.length
+    setGhoulIndex(next)
+    setTimeout(() => {
+      const videos = ghoulScrollRef.current?.querySelectorAll('video')
+      const el = videos?.[next] as HTMLVideoElement | undefined
+      el?.scrollIntoView({ behavior: 'smooth', block: 'center' })
+    }, 100)
+  }
+
+  const setupGhoulObserver = (container: HTMLDivElement | null) => {
+    if (!container) return
+    const videos = container.querySelectorAll('video')
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const visible = entry.target as HTMLVideoElement
+            videos.forEach((v) => { if (v !== visible) v.pause() })
+            visible.play().catch(() => {})
+            setGhoulIndex(Array.from(videos).indexOf(visible))
+          }
+        })
+      },
+      { root: container, threshold: 0.6 }
+    )
+    videos.forEach((v) => observer.observe(v))
+    return () => observer.disconnect()
+  }
 
   const triggerFaker = () => {
     if (fakerActive) return
@@ -86,7 +126,7 @@ export default function App() {
       {showIntro && <Intro onDone={handleIntroDone} />}
       <audio ref={audioRef} src="/sfx/Nightcore - Angel With A Shotgun.mp3" loop />
       <CustomCursor />
-      {!vastoActive && !fakerActive && !auraActive && !ulqEditActive && <BrutalistNoise />}
+      {!vastoActive && !fakerActive && !auraActive && !ulqEditActive && !ghoulActive && <BrutalistNoise />}
       <main className="relative min-h-screen" style={{ zIndex: 2 }}>
 
         {/* Name — overlaying selfie */}
@@ -115,7 +155,7 @@ export default function App() {
           src="/other/ichigoMaskNoBG.png"
           alt="ichigo mask"
           className="fixed gold-glow"
-          style={{ width: 160, height: 160, objectFit: 'contain', top: '65%', left: '50%', transform: 'translate(-50%, -50%)', zIndex: 6, pointerEvents: 'auto', cursor: 'none' }}
+          style={{ width: 160, height: 160, objectFit: 'contain', top: '65%', left: '35%', transform: 'translate(-50%, -50%)', zIndex: 6, pointerEvents: 'auto', cursor: 'none' }}
           animate={{ y: [0, -14, 0] }}
           transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut', delay: 0 }}
           onClick={triggerVasto}
@@ -167,30 +207,6 @@ export default function App() {
           />
         </div>
 
-        {/* d4 background */}
-        <div className="fixed inset-0 pointer-events-none" style={{ zIndex: -2 }}>
-          <img
-            ref={d4Ref}
-            src="/background/d4imgCropped.png"
-            alt=""
-            className="gold-glow"
-            style={{
-              width: 200,
-              height: 'auto',
-              objectFit: 'contain',
-              objectPosition: 'left bottom',
-              display: 'block',
-              position: 'absolute',
-              bottom: 100,
-              left: 100,
-              pointerEvents: 'auto',
-              transition: 'transform 0.3s ease',
-              transformOrigin: 'left bottom',
-              transform: d4Hovered ? 'scale(1.08)' : 'scale(1)',
-            }}
-            onClick={triggerFaker}
-          />
-        </div>
 
         {/* Images — fixed to right edge */}
         <div className="fixed top-0 right-0 h-screen flex items-center gap-4" style={{ padding: '20px', paddingBottom: '140px' }}>
@@ -218,6 +234,40 @@ export default function App() {
         </div>
 
       </main>
+
+      {/* d4 background */}
+      <img
+        ref={d4Ref}
+        src="/background/d4imgCropped.png"
+        alt=""
+        className="gold-glow"
+        style={{
+          width: 180,
+          height: 'auto',
+          objectFit: 'contain',
+          display: 'block',
+          position: 'fixed',
+          bottom: '55%',
+          left: '52%',
+          zIndex: 12,
+          pointerEvents: 'auto',
+          transition: 'transform 0.3s ease',
+          transformOrigin: 'left bottom',
+          transform: d4Hovered ? 'scale(1.08)' : 'scale(1)',
+          cursor: 'none',
+        }}
+        onClick={triggerFaker}
+      />
+
+      {/* Red lily — bottom center */}
+      <div className="fixed pointer-events-auto" style={{ bottom: 0, left: '60%', transform: 'translateX(-50%)', zIndex: 10 }} onClick={() => { setGhoulActive(true); setGhoulIndex(0) }}>
+        <img
+          src="/background/redlily.png"
+          alt="red lily"
+          className="gold-glow"
+          style={{ height: '28vh', width: 'auto', objectFit: 'contain', display: 'block', cursor: 'none' }}
+        />
+      </div>
 
       {/* Stop music text control */}
       {!showIntro && (
@@ -345,6 +395,67 @@ export default function App() {
               transition={{ duration: 0.3 }}
               style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', height: '100%', width: 'auto' }}
             />
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Tokyo Ghoul scroll overlay */}
+      <AnimatePresence>
+        {ghoulActive && (
+          <motion.div
+            key="ghoul-overlay"
+            className="fixed inset-0 pointer-events-auto"
+            style={{ zIndex: 8000, background: '#000' }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+          >
+            <div style={{ position: 'fixed', top: 0, left: 0, right: 0, zIndex: 8002, display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '14px 20px', background: 'rgba(0,0,0,0.6)', backdropFilter: 'blur(8px)' }}>
+              <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.85rem', color: 'rgba(255,255,255,0.75)', letterSpacing: '0.1em' }}>scroll break~</span>
+              <button
+                onClick={() => setGhoulActive(false)}
+                style={{ background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.2)', borderRadius: '0.25rem', padding: '0.3rem 0.8rem', color: '#fff', fontSize: '0.7rem', fontFamily: "'JetBrains Mono', monospace", letterSpacing: '0.1em', cursor: 'none' }}
+              >
+                close
+              </button>
+            </div>
+
+            <div
+              ref={(el) => { (ghoulScrollRef as React.MutableRefObject<HTMLDivElement | null>).current = el; setupGhoulObserver(el) }}
+              style={{ position: 'absolute', inset: 0, overflowY: 'auto', display: 'flex', flexDirection: 'column', scrollbarWidth: 'none', scrollSnapType: 'y mandatory' }}
+            >
+              {GHOUL_VIDEOS.map((src, i) => {
+                const credits = ['kuzaro__', 'lxzzzsss', 'switch_nt', 'shx.editz']
+                return (
+                  <div key={src} style={{ minHeight: '100vh', width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', scrollSnapAlign: 'start', flexShrink: 0, position: 'relative' }}>
+                    <span style={{ position: 'absolute', left: 'calc(50% - 420px)', bottom: 24, fontFamily: "'JetBrains Mono', monospace", fontSize: '0.65rem', color: 'rgba(255,255,255,0.45)', letterSpacing: '0.08em', whiteSpace: 'nowrap' }}>
+                      credit: {credits[i]}
+                    </span>
+                    <video
+                      src={src}
+                      playsInline
+                      style={{ width: 'auto', maxWidth: '70%', height: 'auto', maxHeight: '85vh', display: 'block', borderRadius: 4, cursor: 'none' }}
+                      onEnded={() => handleGhoulEnded(i)}
+                      onClick={(e) => { const v = e.currentTarget; v.paused ? v.play().catch(() => {}) : v.pause() }}
+                    />
+                    {/* Arrows to the right of video */}
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', marginLeft: '1rem' }}>
+                      {i > 0 && (
+                        <button onClick={() => { const items = ghoulScrollRef.current?.children; (items?.[i - 1] as HTMLElement)?.scrollIntoView({ behavior: 'smooth' }) }}
+                          style={{ background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.2)', borderRadius: '50%', width: 36, height: 36, color: '#fff', fontSize: '1rem', cursor: 'none', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                        >↑</button>
+                      )}
+                      {i < GHOUL_VIDEOS.length - 1 && (
+                        <button onClick={() => { const items = ghoulScrollRef.current?.children; (items?.[i + 1] as HTMLElement)?.scrollIntoView({ behavior: 'smooth' }) }}
+                          style={{ background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.2)', borderRadius: '50%', width: 36, height: 36, color: '#fff', fontSize: '1rem', cursor: 'none', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                        >↓</button>
+                      )}
+                    </div>
+                  </div>
+                )
+              })}
+            </div>
           </motion.div>
         )}
       </AnimatePresence>

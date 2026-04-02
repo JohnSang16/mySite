@@ -12,10 +12,7 @@ export default function CustomCursor() {
 
   useEffect(() => {
     const move = (e: MouseEvent) => {
-      // Clamp so the cursor image never gets clipped by the viewport
-      const x = Math.min(e.clientX, window.innerWidth  - SIZE + OFFSET_X)
-      const y = Math.min(e.clientY, window.innerHeight - SIZE + OFFSET_Y)
-      setPos({ x, y })
+      setPos({ x: e.clientX, y: e.clientY })
       setHasMoved(true)
 
       const target = e.target as Element

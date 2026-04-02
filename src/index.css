@@ -76,15 +76,6 @@ body::after {
   mix-blend-mode: lighten;
 }
 
-/* Full-screen grey border */
-body::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  border: 7px solid #181717;
-  pointer-events: none;
-  z-index: 9998;
-}
 
 /* Info panels — no border */
 .panel {
@@ -188,6 +179,11 @@ html::after {
 @keyframes scanlineScroll {
   from { background-position: 0 0; }
   to   { background-position: 0 100px; }
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); opacity: 0.4; }
+  50%       { transform: translateY(4px); opacity: 0.8; }
 }
 
 
