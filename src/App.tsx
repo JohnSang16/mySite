@@ -21,6 +21,7 @@ export default function App() {
   const [auraActive, setAuraActive] = useState(false)
   const [fakerActive, setFakerActive] = useState(false)
   const [vastoActive, setVastoActive] = useState(false)
+  const [vastoKey, setVastoKey] = useState(0)
   const [ulqEditActive, setUlqEditActive] = useState(false)
   const [ghoulActive, setGhoulActive] = useState(false)
   const [ghoulIndex, setGhoulIndex] = useState(0)
@@ -95,6 +96,7 @@ export default function App() {
   const triggerVasto = () => {
     if (vastoActive) return
     setVastoActive(true)
+    setVastoKey(k => k + 1)
     const bgAudio = audioRef.current
     const wasPlaying = bgAudio && !bgAudio.paused
     if (wasPlaying) bgAudio!.pause()
@@ -432,7 +434,8 @@ export default function App() {
             transition={{ duration: 0.3 }}
           >
             <img
-              src="/videos/ichigo-vasto-lorde.gif"
+              key={vastoKey}
+              src={`/videos/ichigo-vasto-lorde.gif?k=${vastoKey}`}
               alt="ichigo vasto lorde"
               style={{ height: '100%', width: 'auto' }}
             />

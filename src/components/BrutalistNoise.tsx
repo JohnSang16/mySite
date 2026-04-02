@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react'
 
 const COMMENTS = [
-  { text: 'lock in bro',          x: '8%',  y: '18%', rotate: -12, href: undefined },
+  { text: 'lock in bro',          x: '8%',  y: '18%', rotate: -12, href: 'https://www.youtube.com/watch?v=nmcmx2sLa-4' },
   { text: '1000-7?',              x: '14%', y: '72%', rotate: 8,   href: 'https://www.youtube.com/watch?v=oPMoUP09RPQ' },
   { text: 'midbeast',             x: '72%', y: '82%', rotate: -6,  href: 'https://www.youtube.com/channel/UC6mWuX4R9Yn5y0fWCwzqiSg' },
   { text: 'faker what was that!?',x: '72%', y: '14%', rotate: 10,  href: 'https://www.youtube.com/watch?v=ZPCfoCVCx3U' },
