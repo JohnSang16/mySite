@@ -71,7 +71,7 @@ export default function App() {
     const wasPlaying = bgAudio && !bgAudio.paused
     if (wasPlaying) bgAudio!.pause()
 
-    const sfx = new Audio('/sfx/YOUR PHONE LINGING sound effect.mp3')
+    const sfx = new Audio('/sfx/phone-ringing.mp3')
     sfx.play().catch(() => {})
 
     setTimeout(() => {
@@ -84,7 +84,7 @@ export default function App() {
   const triggerAura = () => {
     if (auraActive) return
     setAuraActive(true)
-    const sfx = new Audio('/sfx/oui parody.mp3')
+    const sfx = new Audio('/sfx/oui-parody.mp3')
     sfx.play().catch(() => {})
     setTimeout(() => {
       setAuraActive(false)
@@ -98,7 +98,7 @@ export default function App() {
     const bgAudio = audioRef.current
     const wasPlaying = bgAudio && !bgAudio.paused
     if (wasPlaying) bgAudio!.pause()
-    const sfx = new Audio('/sfx/Bleach Vasto Lorde Scream (English Dub).mp3')
+    const sfx = new Audio('/sfx/vasto-lorde-scream.mp3')
     sfx.currentTime = 1.1
     sfx.play().catch(() => {})
     setTimeout(() => {
@@ -160,7 +160,7 @@ export default function App() {
         >
           <img
             ref={nameRef}
-            src="/other/finalNamept2 (1).png"
+            src="/other/finalNamept2-1.png"
             alt="John Sang"
             style={{
               width: 280,
@@ -254,7 +254,7 @@ export default function App() {
             }}>
               <img
                 ref={ulquiorraRef}
-                src="/characters/† Ulquiorra Cifer.jpg"
+                src="/characters/ulquiorra-cifer.jpg"
                 alt="Ulquiorra Cifer"
                 className="gold-glow img-ulq"
                 style={{ height: '30vh', width: 'auto', objectFit: 'contain', display: 'block', cursor: 'none' }}
@@ -381,7 +381,7 @@ export default function App() {
             onClick={() => setUlqEditActive(false)}
           >
             <video
-              src="/videos/ulquiorra edit (2).mp4"
+              src="/videos/ulquiorra-edit.mp4"
               autoPlay
               playsInline
               onEnded={() => setUlqEditActive(false)}
