@@ -127,6 +127,25 @@ body li:hover {
   pointer-events: auto;
 }
 
+/* Responsive overrides — 375×667 and similar small viewports */
+@media (max-width: 768px) {
+  .img-mask    { width: 90px !important; height: 90px !important; }
+  .img-d4      { width: 55vw !important; }
+  .img-ulq     { height: 18vh !important; }
+  .img-selfie  { height: 28vh !important; }
+  .ichigo-pos  { left: 62% !important; }
+  .skill-panel { top: 250px !important; right: 0 !important; }
+  .abt-panel   { top: auto !important; bottom: 16px !important; left: 16px !important; right: auto !important; }
+}
+
+/* Ghoul scroll arrows */
+.ghoul-arrow:hover {
+  background: rgba(255,255,255,0.25) !important;
+  border-color: rgba(255,255,255,0.6) !important;
+  color: #B3A369 !important;
+  box-shadow: 0 0 12px rgba(179,163,105,0.4) !important;
+}
+
 /* iPod button hover */
 .ipod-btn:hover {
   background: rgba(255,255,255,0.12) !important;

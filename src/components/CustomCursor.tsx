@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 
 const SIZE = 120
 const OFFSET_X = 58
-const OFFSET_Y = 16
+const OFFSET_Y = 28
 
 export default function CustomCursor() {
   const [pos, setPos] = useState({ x: -200, y: -200 })

@@ -1,18 +1,18 @@
 import { useEffect, useRef } from 'react'
 
 const COMMENTS = [
-  { text: 'lock in bro',  x: '8%',  y: '18%', rotate: -12 },
-  { text: '1000-7?',      x: '14%', y: '72%', rotate: 8   },
-  { text: 'midbeast',               x: '72%', y: '82%', rotate: -6  },
-  { text: 'faker what was that!?',  x: '82%', y: '14%', rotate: 10  },
-  { text: 'focus.',                 x: '38%', y: '88%', rotate: -9  },
-  { text: 'ship it',               x: '5%',  y: '44%', rotate: 5   },
-  { text: 'cracked dev type shi',  x: '62%', y: '28%', rotate: -8  },
-  { text: 'just grind',            x: '78%', y: '55%', rotate: 7   },
-  { text: 'liam elison',           x: '20%', y: '35%', rotate: -4  },
-  { text: 'diff player',           x: '50%', y: '12%', rotate: 11  },
-  { text: 'stay locked',           x: '30%', y: '60%', rotate: -14 },
-  { text: 'touch grass?',          x: '88%', y: '68%', rotate: 6   },
+  { text: 'lock in bro',          x: '8%',  y: '18%', rotate: -12, href: undefined },
+  { text: '1000-7?',              x: '14%', y: '72%', rotate: 8,   href: 'https://www.youtube.com/watch?v=oPMoUP09RPQ' },
+  { text: 'midbeast',             x: '72%', y: '82%', rotate: -6,  href: 'https://www.youtube.com/channel/UC6mWuX4R9Yn5y0fWCwzqiSg' },
+  { text: 'faker what was that!?',x: '72%', y: '14%', rotate: 10,  href: 'https://www.youtube.com/watch?v=ZPCfoCVCx3U' },
+  { text: 'focus.',               x: '38%', y: '88%', rotate: -9,  href: undefined },
+  { text: 'cracked dev type shi', x: '62%', y: '28%', rotate: -8,  href: 'https://www.linkedin.com/in/johnsang-/' },
+  { text: 'liam elison',          x: '20%', y: '35%', rotate: -4,  href: 'https://www.linkedin.com/in/liam-ellison/' },
+  { text: 'diff player',          x: '55%', y: '12%', rotate: 11,  href: 'https://op.gg/lol/summoners/na/ZeroadTV-NA1' },
+  { text: 'stay locked',          x: '30%', y: '60%', rotate: -14, href: undefined },
+  { text: 'touch grass?',         x: '88%', y: '68%', rotate: 6,   href: undefined },
+  { text: 'jared beresford',      x: '55%', y: '75%', rotate: -5,  href: 'https://www.linkedin.com/in/jaredberesford/' },
+  { text: 'progsuhq',             x: '65%', y: '52%', rotate: 7,   href: 'https://www.linkedin.com/company/progsu/posts/?feedView=all' },
 ]
 
 const COORDS = [
@@ -29,7 +29,7 @@ const WIREFRAMES = [
   { x: 420, y: 500, w: 70, h: 40,  skew: -6 },
 ]
 
-export default function BrutalistNoise() {
+export default function BrutalistNoise({ sm = false }: { sm?: boolean }) {
   const layerRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -55,22 +55,6 @@ export default function BrutalistNoise() {
         className="fixed inset-0 pointer-events-none select-none"
         style={{ zIndex: 9990, transition: 'transform 0.1s linear' }}
       >
-
-        {/* Floating toxic comments */}
-        {COMMENTS.map((c, i) => (
-          <span
-            key={i}
-            className="absolute font-mono text-xs"
-            style={{
-              left: c.x,
-              top: c.y,
-              transform: `rotate(${c.rotate}deg)`,
-              color: 'rgba(255,255,255,0.45)',
-            }}
-          >
-            {c.text}
-          </span>
-        ))}
 
         {/* Geometric wireframe SVGs */}
         {WIREFRAMES.map((w, i) => (
@@ -107,6 +91,26 @@ export default function BrutalistNoise() {
           <circle cx="14" cy="14" r="5" stroke="rgba(255,255,255,0.1)" strokeWidth="0.75"/>
         </svg>
 
+        {/* Floating toxic comments */}
+        {COMMENTS.map((c, i) => {
+          const x = sm && c.text === '1000-7?' ? '5%' : c.x
+          const y = sm && c.text === '1000-7?' ? '45%' : c.y
+          const style: React.CSSProperties = {
+            left: x, top: y,
+            transform: `rotate(${c.rotate}deg)`,
+            color: 'rgba(255,255,255,0.45)',
+            position: 'absolute',
+          }
+          return c.href ? (
+            <a key={i} href={c.href} target="_blank" rel="noopener noreferrer"
+              className="font-mono text-xs"
+              style={{ ...style, textDecoration: 'none', pointerEvents: 'auto', cursor: 'none', outline: 'none' }}
+            >{c.text}</a>
+          ) : (
+            <span key={i} className="font-mono text-xs" style={style}>{c.text}</span>
+          )
+        })}
+
       </div>
 
       {/* Corner coordinates — fixed, not in parallax layer */}
@@ -139,12 +143,6 @@ export default function BrutalistNoise() {
           </span>
         )
       })}
-      <span
-        className="fixed font-mono pointer-events-none select-none"
-        style={{ top: '65%', left: '50%', transform: 'translate(-50%, -50%)', fontSize: '0.75rem', fontWeight: 700, letterSpacing: '0.12em', color: 'rgba(179,163,105,0.55)', zIndex: 20 }}
-      >
-        hint: click the gold items~
-      </span>
     </>
   )
 }

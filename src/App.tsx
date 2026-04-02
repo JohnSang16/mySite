@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import CustomCursor from '@/components/CustomCursor'
 import BrutalistNoise from '@/components/BrutalistNoise'
@@ -9,6 +9,13 @@ import { useAlphaHover } from '@/hooks/useAlphaHover'
 
 export default function App() {
   const [showIntro, setShowIntro] = useState(true)
+  const [winW, setWinW] = useState(window.innerWidth)
+  useEffect(() => {
+    const onResize = () => setWinW(window.innerWidth)
+    window.addEventListener('resize', onResize)
+    return () => window.removeEventListener('resize', onResize)
+  }, [])
+  const sm = winW < 768
   const [isPlaying, setIsPlaying] = useState(false)
   const [showIpod, setShowIpod] = useState(false)
   const [auraActive, setAuraActive] = useState(false)
@@ -104,10 +111,10 @@ export default function App() {
   const [trackIndex, setTrackIndex] = useState(0)
 
   const PLAYLIST = [
-    { src: '/sfx/Nightcore - Angel With A Shotgun.mp3', name: 'Angel With A Shotgun' },
-    { src: '/sfx/Nightcore - Clarity.mp3',              name: 'Clarity' },
-    { src: '/sfx/Nightcore - Just A Dream.mp3',         name: 'Just A Dream' },
-    { src: '/sfx/Nightcore - Take A Hint.mp3',          name: 'Take A Hint' },
+    { src: '/sfx/Nightcore - Angel With A Shotgun.mp3', name: 'Angel With A Shotgun', art: '/background/cyberSigilGirlBG.jpg' },
+    { src: '/sfx/Nightcore - Clarity.mp3',              name: 'Clarity',              art: '/background/clarityIMG.png'       },
+    { src: '/sfx/Nightcore - Just A Dream.mp3',         name: 'Just A Dream',         art: '/background/justadreamIMG.png'    },
+    { src: '/sfx/Nightcore - Take A Hint.mp3',          name: 'Take A Hint',          art: '/background/takeahitIMG.png'      },
   ]
 
   const handleTrackEnded = () => {
@@ -141,7 +148,7 @@ export default function App() {
       {showIntro && <Intro onDone={handleIntroDone} />}
       <audio ref={audioRef} src={PLAYLIST[trackIndex].src} onEnded={handleTrackEnded} />
       <CustomCursor />
-      {!vastoActive && !fakerActive && !auraActive && !ulqEditActive && !ghoulActive && <BrutalistNoise />}
+      {!vastoActive && !fakerActive && !auraActive && !ulqEditActive && !ghoulActive && <BrutalistNoise sm={sm} />}
       <main className="relative min-h-screen" style={{ zIndex: 2 }}>
 
         {/* Name — overlaying selfie */}
@@ -169,15 +176,15 @@ export default function App() {
         <motion.img
           src="/other/ichigoMaskNoBG.png"
           alt="ichigo mask"
-          className="fixed gold-glow"
-          style={{ width: 160, height: 160, objectFit: 'contain', top: '65%', left: '35%', transform: 'translate(-50%, -50%)', zIndex: 6, pointerEvents: 'auto', cursor: 'none' }}
+          className="fixed gold-glow img-mask ichigo-pos"
+          style={{ width: 160, height: 160, objectFit: 'contain', top: '65%', left: '35%', transform: 'translate(-50%, -50%)', zIndex: 5100, pointerEvents: 'auto', cursor: 'none' }}
           animate={{ y: [0, -14, 0] }}
           transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut', delay: 0 }}
           onClick={triggerVasto}
         />
 
         {/* Social links — bottom left */}
-        <div className="fixed flex flex-col gap-1" style={{ zIndex: 10, top: '58%', left: '32%', transform: 'translateX(-50%)' }}>
+        <div className="fixed flex flex-col gap-1" style={{ zIndex: 10, top: '55%', left: '27%', transform: 'translateX(-50%)' }}>
           <a href="https://www.linkedin.com/in/johnsang-/" target="_blank" rel="noreferrer" className="font-mono text-xs text-white/50 reminder-hover" style={{ pointerEvents: 'auto', textDecoration: 'none', letterSpacing: '0.1em' }}>linkedin ↗</a>
           <a href="https://github.com/JohnSang16" target="_blank" rel="noreferrer" className="font-mono text-xs text-white/50 reminder-hover" style={{ pointerEvents: 'auto', textDecoration: 'none', letterSpacing: '0.1em' }}>github ↗</a>
           <a href="https://www.instagram.com/john.sang0/" target="_blank" rel="noreferrer" className="font-mono text-xs text-white/50 reminder-hover" style={{ pointerEvents: 'auto', textDecoration: 'none', letterSpacing: '0.1em' }}>instagram ↗</a>
@@ -197,19 +204,29 @@ export default function App() {
           <p className="font-mono text-xs text-white/70 reminder-hover" style={{ pointerEvents: 'auto' }}>give more than you get</p>
         </div>
 
-        {/* 3 panels — top right */}
-        <div className="fixed top-4 right-4 flex flex-col gap-3" style={{ zIndex: 10, width: '220px' }}>
+        {/* abt me + training arc — top right, above skill tree */}
+        <div className="fixed flex flex-col gap-3 abt-panel" style={{ top: 16, right: 16, zIndex: 10, width: '220px' }}>
           <MangaPanel sfx="ドン！">
             <h2 className="font-display text-xs tracking-widest mb-1 text-center">abt me</h2>
-            <p className="font-mono text-xs text-white/80 text-center"> lol midlane d2 · progsuhq director · professional larper · wpm 155</p>
+            <p className="font-mono text-xs text-white/80 text-center"> lol midlane d2 · progsuhq vice president · professional larper · wpm 155</p>
           </MangaPanel>
           <MangaPanel sfx="バン！">
             <h2 className="font-display text-xs tracking-widest mb-1 text-center">training arc</h2>
             <p className="font-mono text-xs text-white/80 text-center">land a swe internship · hit 80 coffeechats · build git · credit score maxx</p>
           </MangaPanel>
+        </div>
+
+        {/* skill tree + goated ppl — top right, below abt me */}
+        <div className="fixed flex flex-col gap-3 skill-panel" style={{ top: 280, right: 16, zIndex: 10, width: '220px' }}>
           <MangaPanel sfx="スゥ">
             <h2 className="font-display text-xs tracking-widest mb-1 text-center">skill tree</h2>
-            <p className="font-mono text-xs text-white/80 text-center">python · c · react · next.js · vercel </p>
+            <p className="font-mono text-xs text-white/80 text-center">python · c · react · next.js · vercel · claude</p>
+          </MangaPanel>
+          <MangaPanel sfx="ドン！">
+            <h2 className="font-display text-xs tracking-widest mb-1 text-center">goated ppl</h2>
+            <p className="font-mono text-xs text-white/80 text-center">
+              <a href="https://www.linkedin.com/in/joeyzhangdev/" target="_blank" rel="noopener noreferrer" style={{ color: 'inherit', textDecoration: 'none', cursor: 'none' }}>yaohui zhang</a> · ichigo kurosaki · faker · beifeng
+            </p>
           </MangaPanel>
         </div>
 
@@ -219,13 +236,14 @@ export default function App() {
             <img
               src="/background/selfieTYPSESHIT.png"
               alt="selfie"
+              className="img-selfie"
               style={{ height: '45vh', width: 'auto', objectFit: 'contain', display: 'block', border: '2px solid rgba(255,255,255,0.85)' }}
             />
             {/* Ulquiorra overlapping bottom-right of selfie */}
             <div style={{
               position: 'absolute',
-              bottom: '90px',
-              right: '-140px',
+              bottom: '60px',
+              right: '-210px',
               border: '2px solid rgba(250,243,243,0.85)',
               boxShadow: '0 0 0 1px rgba(255,255,255,0.05), inset 0 0 20px rgba(255,255,255,0.03)',
               background: 'rgba(255,255,255,0.02)',
@@ -238,8 +256,8 @@ export default function App() {
                 ref={ulquiorraRef}
                 src="/characters/† Ulquiorra Cifer.jpg"
                 alt="Ulquiorra Cifer"
-                className="gold-glow"
-                style={{ height: '25vh', width: 'auto', objectFit: 'contain', display: 'block', cursor: 'none' }}
+                className="gold-glow img-ulq"
+                style={{ height: '30vh', width: 'auto', objectFit: 'contain', display: 'block', cursor: 'none' }}
                 onClick={() => setUlqEditActive(true)}
               />
             </div>
@@ -253,15 +271,15 @@ export default function App() {
         ref={d4Ref}
         src="/background/d4imgCropped.png"
         alt=""
-        className="gold-glow"
+        className="gold-glow img-d4"
         style={{
-          width: 180,
+          width: 200,
           height: 'auto',
           objectFit: 'contain',
           display: 'block',
           position: 'fixed',
-          bottom: '55%',
-          left: '52%',
+          bottom: '43%',
+          left: '39%',
           zIndex: 12,
           pointerEvents: 'auto',
           transition: 'transform 0.3s ease',
@@ -273,7 +291,15 @@ export default function App() {
       />
 
       {/* Red lily — bottom center */}
-      <div className="fixed pointer-events-auto" style={{ bottom: 0, left: '60%', transform: 'translateX(-50%)', zIndex: 10 }} onClick={() => { setGhoulActive(true); setGhoulIndex(0) }}>
+      <div className="fixed pointer-events-auto" style={{ bottom: 0, left: '60%', transform: 'translateX(-50%)', zIndex: 10 }} onClick={() => {
+  setGhoulActive(true)
+  setGhoulIndex(0)
+  setTimeout(() => {
+    const videos = ghoulScrollRef.current?.querySelectorAll('video')
+    const first = videos?.[0] as HTMLVideoElement | undefined
+    first?.play().catch(() => {})
+  }, 150)
+}}>
         <img
           src="/background/redlily.png"
           alt="red lily"
@@ -284,7 +310,7 @@ export default function App() {
 
       {/* Stop music text control */}
       {!showIntro && (
-        <div className="fixed z-[5000] pointer-events-auto" style={{ top: '70%', left: '50%', transform: 'translate(-50%, -50%)' }}>
+        <div className="fixed z-[4900] pointer-events-auto" style={{ top: '70%', left: '50%', transform: 'translate(-50%, -50%)' }}>
           <button
             data-clickable
             onClick={() => setShowIpod(v => !v)}
@@ -314,7 +340,31 @@ export default function App() {
         </div>
       )}
 
-      <IPod visible={showIpod} isPlaying={isPlaying} onPlayPause={handlePlayPause} trackName={PLAYLIST[trackIndex].name} />
+      <IPod
+        visible={showIpod}
+        isPlaying={isPlaying}
+        onPlayPause={handlePlayPause}
+        trackName={PLAYLIST[trackIndex].name}
+        albumArt={PLAYLIST[trackIndex].art}
+        onSkipNext={() => {
+          const next = (trackIndex + 1) % PLAYLIST.length
+          setTrackIndex(next)
+          setIsPlaying(true)
+          setTimeout(() => audioRef.current?.play().catch(() => {}), 50)
+        }}
+        onSkipPrev={() => {
+          const prev = (trackIndex - 1 + PLAYLIST.length) % PLAYLIST.length
+          setTrackIndex(prev)
+          setIsPlaying(true)
+          setTimeout(() => audioRef.current?.play().catch(() => {}), 50)
+        }}
+        onSeekForward={() => {
+          if (audioRef.current) audioRef.current.currentTime = Math.min(audioRef.current.duration, audioRef.current.currentTime + 15)
+        }}
+        onSeekBack={() => {
+          if (audioRef.current) audioRef.current.currentTime = Math.max(0, audioRef.current.currentTime - 15)
+        }}
+      />
 
 
       {/* Ulquiorra edit overlay */}
@@ -335,9 +385,9 @@ export default function App() {
               autoPlay
               playsInline
               onEnded={() => setUlqEditActive(false)}
-              style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'contain' }}
+              style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'contain', objectPosition: '60% center' }}
             />
-            <span className="fixed pointer-events-none select-none font-mono" style={{ bottom: 12, right: 14, fontSize: '0.6rem', letterSpacing: '0.08em', color: 'rgba(255,255,255,0.3)', zIndex: 8001 }}>
+            <span className="fixed pointer-events-none select-none" style={{ bottom: 24, left: 'calc(50% - 420px)', fontSize: '0.65rem', letterSpacing: '0.08em', color: 'rgba(255,255,255,0.45)', fontFamily: "'JetBrains Mono', monospace", whiteSpace: 'nowrap', zIndex: 8001 }}>
               credit: in7fv on tiktok
             </span>
           </motion.div>
@@ -452,6 +502,7 @@ export default function App() {
                     <video
                       src={src}
                       playsInline
+                      autoPlay={i === 0}
                       style={{ width: 'auto', maxWidth: '70%', height: 'auto', maxHeight: '85vh', display: 'block', borderRadius: 4, cursor: 'none' }}
                       onEnded={() => handleGhoulEnded(i)}
                       onClick={(e) => { const v = e.currentTarget; v.paused ? v.play().catch(() => {}) : v.pause() }}
@@ -460,12 +511,14 @@ export default function App() {
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', marginLeft: '1rem' }}>
                       {i > 0 && (
                         <button onClick={() => { const items = ghoulScrollRef.current?.children; (items?.[i - 1] as HTMLElement)?.scrollIntoView({ behavior: 'smooth' }) }}
-                          style={{ background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.2)', borderRadius: '50%', width: 36, height: 36, color: '#fff', fontSize: '1rem', cursor: 'none', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                          className="ghoul-arrow"
+                          style={{ background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.2)', borderRadius: '50%', width: 36, height: 36, color: '#fff', fontSize: '1rem', cursor: 'none', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'all 0.15s ease' }}
                         >↑</button>
                       )}
                       {i < GHOUL_VIDEOS.length - 1 && (
                         <button onClick={() => { const items = ghoulScrollRef.current?.children; (items?.[i + 1] as HTMLElement)?.scrollIntoView({ behavior: 'smooth' }) }}
-                          style={{ background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.2)', borderRadius: '50%', width: 36, height: 36, color: '#fff', fontSize: '1rem', cursor: 'none', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                          className="ghoul-arrow"
+                          style={{ background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.2)', borderRadius: '50%', width: 36, height: 36, color: '#fff', fontSize: '1rem', cursor: 'none', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'all 0.15s ease' }}
                         >↓</button>
                       )}
                     </div>
