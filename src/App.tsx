@@ -149,11 +149,9 @@ export default function App() {
       <audio ref={audioRef} src={PLAYLIST[trackIndex].src} onEnded={handleTrackEnded} />
       <CustomCursor />
       {!vastoActive && !fakerActive && !auraActive && !ulqEditActive && !ghoulActive && <BrutalistNoise sm={sm} />}
-      {!vastoActive && !fakerActive && !auraActive && !ulqEditActive && !ghoulActive && (
-        <span className="fixed font-mono pointer-events-none select-none" style={{ top: '78%', left: '50%', transform: 'translate(-50%, -50%)', fontSize: '0.75rem', fontWeight: 700, letterSpacing: '0.12em', color: 'rgba(179,163,105,0.9)', zIndex: 10000 }}>
-          hint: click the gold items~
-        </span>
-      )}
+      <span className="fixed font-mono pointer-events-none select-none" style={{ top: '78%', left: '50%', transform: 'translate(-50%, -50%)', fontSize: '0.75rem', fontWeight: 700, letterSpacing: '0.12em', color: 'rgba(179,163,105,0.9)', zIndex: 10000 }}>
+        hint: click the gold items~
+      </span>
       <main className="relative min-h-screen" style={{ zIndex: 2 }}>
 
         {/* Name — overlaying selfie */}
