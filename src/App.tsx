@@ -151,8 +151,8 @@ export default function App() {
       <audio ref={audioRef} src={PLAYLIST[trackIndex].src} onEnded={handleTrackEnded} />
       <CustomCursor />
       {!vastoActive && !fakerActive && !auraActive && !ulqEditActive && !ghoulActive && <BrutalistNoise sm={sm} />}
-      <span className="fixed font-mono pointer-events-none select-none" style={{ bottom: 24, left: '50%', transform: 'translateX(-50%)', fontSize: '0.75rem', fontWeight: 700, letterSpacing: '0.12em', color: 'rgba(179,163,105,0.9)', zIndex: 10000 }}>
-        hint: click the golden items~
+      <span className="fixed font-mono pointer-events-none select-none" style={{ bottom: 220, left: '55%', transform: 'translateX(-50%)', fontSize: '0.75rem', fontWeight: 700, letterSpacing: '0.12em', color: 'rgba(179,163,105,0.9)', zIndex: 10000 }}>
+        hint: click the golden icons & bg comments~
       </span>
       {/* Floating ichigo mask — outside main to avoid stacking context conflicts */}
       <motion.img
