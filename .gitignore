@@ -18,3 +18,10 @@ npm-debug.log*
 # TypeScript
 *.tsbuildinfo
 next-env.d.ts
+
+.vercel
+.env*.local
+
+# ignores dist for safety 
+dist/
+dist

@@ -98,7 +98,7 @@ export default function App() {
     const bgAudio = audioRef.current
     const wasPlaying = bgAudio && !bgAudio.paused
     if (wasPlaying) bgAudio!.pause()
-    const sfx = new Audio('/sfx/vasto-lorde-scream.mp3')
+    const sfx = new Audio('/videos/Bleach Vasto Lorde Scream (English Dub).mp3')
     sfx.currentTime = 1.1
     sfx.play().catch(() => {})
     setTimeout(() => {
@@ -149,9 +149,19 @@ export default function App() {
       <audio ref={audioRef} src={PLAYLIST[trackIndex].src} onEnded={handleTrackEnded} />
       <CustomCursor />
       {!vastoActive && !fakerActive && !auraActive && !ulqEditActive && !ghoulActive && <BrutalistNoise sm={sm} />}
-      <span className="fixed font-mono pointer-events-none select-none" style={{ top: '78%', left: '50%', transform: 'translate(-50%, -50%)', fontSize: '0.75rem', fontWeight: 700, letterSpacing: '0.12em', color: 'rgba(179,163,105,0.9)', zIndex: 10000 }}>
-        hint: click the gold items~
+      <span className="fixed font-mono pointer-events-none select-none" style={{ bottom: 24, left: '50%', transform: 'translateX(-50%)', fontSize: '0.75rem', fontWeight: 700, letterSpacing: '0.12em', color: 'rgba(179,163,105,0.9)', zIndex: 10000 }}>
+        hint: click the golden items~
       </span>
+      {/* Floating ichigo mask — outside main to avoid stacking context conflicts */}
+      <motion.img
+        src="/other/ichigoMaskNoBG.png"
+        alt="ichigo mask"
+        className="fixed gold-glow img-mask ichigo-pos"
+        style={{ width: 160, height: 160, objectFit: 'contain', top: '55%', left: '35%', transform: 'translate(-50%, -50%)', zIndex: 5100, pointerEvents: 'auto', cursor: 'none' }}
+        animate={{ y: [0, -14, 0] }}
+        transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut', delay: 0 }}
+        onClick={triggerVasto}
+      />
       <main className="relative min-h-screen" style={{ zIndex: 2 }}>
 
         {/* Name — overlaying selfie */}
@@ -175,16 +185,6 @@ export default function App() {
           />
         </motion.div>
 
-        {/* Floating ichigo mask — independently centered */}
-        <motion.img
-          src="/other/ichigoMaskNoBG.png"
-          alt="ichigo mask"
-          className="fixed gold-glow img-mask ichigo-pos"
-          style={{ width: 160, height: 160, objectFit: 'contain', top: '55%', left: '35%', transform: 'translate(-50%, -50%)', zIndex: 5100, pointerEvents: 'auto', cursor: 'none' }}
-          animate={{ y: [0, -14, 0] }}
-          transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut', delay: 0 }}
-          onClick={triggerVasto}
-        />
 
         {/* Social links — bottom left */}
         <div className="fixed flex flex-col gap-1" style={{ zIndex: 10, top: '55%', left: '27%', transform: 'translateX(-50%)' }}>
@@ -200,7 +200,7 @@ export default function App() {
           style={{ zIndex: 4, left: 56, top: 116, maxWidth: '28%', textAlign: 'left' }}
         >
           <h3 className="font-display text-sm tracking-widest text-white reminder-hover" style={{ pointerEvents: 'auto' }}>reminders:</h3>
-          <p className="font-mono text-xs text-white/70 reminder-hover" style={{ pointerEvents: 'auto' }}>stay goated</p>
+          <p className="font-mono text-xs text-white/70 reminder-hover" style={{ pointerEvents: 'auto' }}>stay </p>
           <p className="font-mono text-xs text-white/70 reminder-hover" style={{ pointerEvents: 'auto' }}>leet code daily</p>
           <p className="font-mono text-xs text-white/70 reminder-hover" style={{ pointerEvents: 'auto' }}>do exciting shit</p>
           <p className="font-mono text-xs aurafarm-text" style={{ pointerEvents: 'auto', color: 'rgba(255,255,255,0.7)', transition: 'color 0.2s ease, text-shadow 0.2s ease' }} onClick={triggerAura}>aurafarm</p>
@@ -414,6 +414,27 @@ export default function App() {
               src="/videos/faker-calling.gif"
               alt="faker calling"
               style={{ height: 'auto', width: '280px', borderRadius: '12px' }}
+            />
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Vasto Lorde gif overlay */}
+      <AnimatePresence>
+        {vastoActive && (
+          <motion.div
+            key="vasto-overlay"
+            className="fixed inset-0 pointer-events-none flex items-center justify-center"
+            style={{ zIndex: 8000 }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+          >
+            <img
+              src="/videos/ichigo-vasto-lorde.gif"
+              alt="ichigo vasto lorde"
+              style={{ height: '100%', width: 'auto' }}
             />
           </motion.div>
         )}
