@@ -12,9 +12,9 @@ export default function IPod({ visible, isPlaying, onPlayPause, trackName = 'Ang
     <AnimatePresence>
       {visible && (
         <motion.div
-          initial={{ y: '-60vh' }}
+          initial={{ y: '-110vh' }}
           animate={{ y: 0 }}
-          exit={{ y: '-60vh' }}
+          exit={{ y: '-110vh' }}
           transition={{ type: 'spring', stiffness: 180, damping: 22 }}
           className="fixed"
           style={{ top: '30%', right: '22%', zIndex: 500, pointerEvents: 'none' }}

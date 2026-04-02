@@ -101,9 +101,24 @@ export default function App() {
     }, 6810)
   }
   const audioRef = useRef<HTMLAudioElement>(null)
+  const [trackIndex, setTrackIndex] = useState(0)
+
+  const PLAYLIST = [
+    { src: '/sfx/Nightcore - Angel With A Shotgun.mp3', name: 'Angel With A Shotgun' },
+    { src: '/sfx/Nightcore - Clarity.mp3',              name: 'Clarity' },
+    { src: '/sfx/Nightcore - Just A Dream.mp3',         name: 'Just A Dream' },
+    { src: '/sfx/Nightcore - Take A Hint.mp3',          name: 'Take A Hint' },
+  ]
+
+  const handleTrackEnded = () => {
+    const next = (trackIndex + 1) % PLAYLIST.length
+    setTrackIndex(next)
+    setIsPlaying(true)
+    setTimeout(() => audioRef.current?.play().catch(() => {}), 50)
+  }
 
   const handlePlayPause = () => {
-    const audio = (audioRef.current as HTMLMediaElement) ?? (document.querySelector('audio') as HTMLMediaElement | null)
+    const audio = audioRef.current
     if (!audio) return
     if (audio.paused) {
       audio.play().catch(() => {})
@@ -124,7 +139,7 @@ export default function App() {
   return (
     <>
       {showIntro && <Intro onDone={handleIntroDone} />}
-      <audio ref={audioRef} src="/sfx/Nightcore - Angel With A Shotgun.mp3" loop />
+      <audio ref={audioRef} src={PLAYLIST[trackIndex].src} onEnded={handleTrackEnded} />
       <CustomCursor />
       {!vastoActive && !fakerActive && !auraActive && !ulqEditActive && !ghoulActive && <BrutalistNoise />}
       <main className="relative min-h-screen" style={{ zIndex: 2 }}>
@@ -132,7 +147,7 @@ export default function App() {
         {/* Name — overlaying selfie */}
         <motion.div
           className="fixed"
-          style={{ top: '-10%', left: '20%', transform: 'translate(-50%, -50%)', zIndex: 5, pointerEvents: 'auto' }}
+          style={{ top: '-10%', left: '20%', transform: 'translate(-50%, -50%)', zIndex: 15, pointerEvents: 'auto' }}
           animate={{ y: [0, -4, 0] }}
           transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut', delay: 1.5 }}
         >
@@ -198,38 +213,36 @@ export default function App() {
           </MangaPanel>
         </div>
 
-        {/* Selfie — centered */}
-        <div className="fixed pointer-events-none" style={{ top: '32%', left: '33%', transform: 'translate(-50%, -50%)', zIndex: -100 }}>
-          <img
-            src="/background/selfieTYPSESHIT.png"
-            alt="selfie"
-            style={{ height: '45vh', width: 'auto', objectFit: 'contain', display: 'block', border: '2px solid rgba(255,255,255,0.85)' }}
-          />
-        </div>
-
-
-        {/* Images — fixed to right edge */}
-        <div className="fixed top-0 right-0 h-screen flex items-center gap-4" style={{ padding: '20px', paddingBottom: '140px' }}>
-          <div style={{
-            padding: '0px',
-            border: '2px solid rgba(250, 243, 243, 0.85)',
-            boxShadow: '0 0 0 1px rgba(255,255,255,0.05), inset 0 0 20px rgba(255,255,255,0.03), 0 0 30px rgba(100,100,255,0.08)',
-            background: 'rgba(255,255,255,0.02)',
-            backdropFilter: 'blur(2px)',
-            marginRight: '510px',
-            marginTop: '-30vh',
-            transition: 'transform 0.3s ease',
-            transform: ulquiorraHovered ? 'rotate(-3deg) scale(1.02)' : 'rotate(0deg) scale(1)',
-            pointerEvents: 'auto'
-          }}>
+        {/* Selfie + Ulquiorra — shared container */}
+        <div className="fixed" style={{ top: '32%', left: '33%', transform: 'translate(-50%, -50%)', zIndex: 5, pointerEvents: 'none' }}>
+          <div style={{ position: 'relative', display: 'inline-block' }}>
             <img
-              ref={ulquiorraRef}
-              src="/characters/† Ulquiorra Cifer.jpg"
-              alt="Ulquiorra Cifer"
-              className="gold-glow"
-              style={{ height: '25vh', width: 'auto', objectFit: 'contain', display: 'block', cursor: 'none' }}
-              onClick={() => setUlqEditActive(true)}
+              src="/background/selfieTYPSESHIT.png"
+              alt="selfie"
+              style={{ height: '45vh', width: 'auto', objectFit: 'contain', display: 'block', border: '2px solid rgba(255,255,255,0.85)' }}
             />
+            {/* Ulquiorra overlapping bottom-right of selfie */}
+            <div style={{
+              position: 'absolute',
+              bottom: '90px',
+              right: '-140px',
+              border: '2px solid rgba(250,243,243,0.85)',
+              boxShadow: '0 0 0 1px rgba(255,255,255,0.05), inset 0 0 20px rgba(255,255,255,0.03)',
+              background: 'rgba(255,255,255,0.02)',
+              backdropFilter: 'blur(2px)',
+              transition: 'transform 0.3s ease',
+              transform: ulquiorraHovered ? 'rotate(-3deg) scale(1.02)' : 'rotate(0deg) scale(1)',
+              pointerEvents: 'auto',
+            }}>
+              <img
+                ref={ulquiorraRef}
+                src="/characters/† Ulquiorra Cifer.jpg"
+                alt="Ulquiorra Cifer"
+                className="gold-glow"
+                style={{ height: '25vh', width: 'auto', objectFit: 'contain', display: 'block', cursor: 'none' }}
+                onClick={() => setUlqEditActive(true)}
+              />
+            </div>
           </div>
         </div>
 
@@ -271,23 +284,27 @@ export default function App() {
 
       {/* Stop music text control */}
       {!showIntro && (
-        <div className="fixed z-[5000] pointer-events-auto" style={{ bottom: 48, right: 16 }}>
+        <div className="fixed z-[5000] pointer-events-auto" style={{ top: '70%', left: '50%', transform: 'translate(-50%, -50%)' }}>
           <button
             data-clickable
             onClick={() => setShowIpod(v => !v)}
+            className="ipod-btn"
             style={{
-              background: 'rgba(255,255,255,0.08)',
-              border: 'none',
-              borderRadius: '0.25rem',
-              padding: '0.35rem 0.8rem',
+              background: 'rgba(255,255,255,0.06)',
+              border: '1px solid rgba(255,255,255,0.18)',
+              borderRadius: '2rem',
+              padding: '0.4rem 1.4rem',
               margin: 0,
-              color: '#fff',
-              fontSize: '0.95rem',
-              fontFamily: "'Noto Serif', serif",
+              color: 'rgba(255,255,255,0.85)',
+              fontSize: '0.75rem',
+              fontFamily: "'JetBrains Mono', monospace",
+              letterSpacing: '0.18em',
               pointerEvents: 'auto',
               userSelect: 'none',
               outline: 'none',
-              boxShadow: '0 0 0 0 transparent',
+              backdropFilter: 'blur(8px)',
+              boxShadow: '0 0 12px rgba(255,255,255,0.04)',
+              transition: 'all 0.2s ease',
             }}
             aria-pressed={showIpod}
             aria-label={showIpod ? 'Hide iPod' : 'Show iPod'}
@@ -297,7 +314,7 @@ export default function App() {
         </div>
       )}
 
-      <IPod visible={showIpod} isPlaying={isPlaying} onPlayPause={handlePlayPause} />
+      <IPod visible={showIpod} isPlaying={isPlaying} onPlayPause={handlePlayPause} trackName={PLAYLIST[trackIndex].name} />
 
 
       {/* Ulquiorra edit overlay */}

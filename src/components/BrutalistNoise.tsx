@@ -3,16 +3,16 @@ import { useEffect, useRef } from 'react'
 const COMMENTS = [
   { text: 'lock in bro',  x: '8%',  y: '18%', rotate: -12 },
   { text: '1000-7?',      x: '14%', y: '72%', rotate: 8   },
-  { text: 'ur lazy',      x: '72%', y: '82%', rotate: -6  },
-  { text: 'gm.',          x: '82%', y: '14%', rotate: 10  },
-  { text: 'focus.',       x: '38%', y: '88%', rotate: -9  },
-  { text: 'ship it',      x: '5%',  y: '44%', rotate: 5   },
-  { text: 'mid diff',     x: '62%', y: '28%', rotate: -8  },
-  { text: 'just grind',   x: '78%', y: '55%', rotate: 7   },
-  { text: 'no excuses',   x: '20%', y: '35%', rotate: -4  },
-  { text: 'diff player',  x: '50%', y: '12%', rotate: 11  },
-  { text: 'stay locked',  x: '30%', y: '60%', rotate: -14 },
-  { text: 'touch grass?', x: '88%', y: '68%', rotate: 6   },
+  { text: 'midbeast',               x: '72%', y: '82%', rotate: -6  },
+  { text: 'faker what was that!?',  x: '82%', y: '14%', rotate: 10  },
+  { text: 'focus.',                 x: '38%', y: '88%', rotate: -9  },
+  { text: 'ship it',               x: '5%',  y: '44%', rotate: 5   },
+  { text: 'cracked dev type shi',  x: '62%', y: '28%', rotate: -8  },
+  { text: 'just grind',            x: '78%', y: '55%', rotate: 7   },
+  { text: 'liam elison',           x: '20%', y: '35%', rotate: -4  },
+  { text: 'diff player',           x: '50%', y: '12%', rotate: 11  },
+  { text: 'stay locked',           x: '30%', y: '60%', rotate: -14 },
+  { text: 'touch grass?',          x: '88%', y: '68%', rotate: 6   },
 ]
 
 const COORDS = [
@@ -65,7 +65,7 @@ export default function BrutalistNoise() {
               left: c.x,
               top: c.y,
               transform: `rotate(${c.rotate}deg)`,
-              color: 'rgba(255,255,255,0.18)',
+              color: 'rgba(255,255,255,0.45)',
             }}
           >
             {c.text}
@@ -113,13 +113,13 @@ export default function BrutalistNoise() {
       {/* Terminal block — bottom left */}
       <div
         className="fixed pointer-events-none select-none"
-        style={{ bottom: 32, right: 16, zIndex: 20, opacity: 0.1, filter: 'blur(0.4px)', fontFamily: "'JetBrains Mono', monospace", fontSize: '0.55rem', lineHeight: 1.6, color: '#39FF14' }}
+        style={{ bottom: 32, right: 16, zIndex: 20, opacity: 0.35, filter: 'blur(0.4px)', fontFamily: "'JetBrains Mono', monospace", fontSize: '0.55rem', lineHeight: 1.6, color: '#39FF14' }}
       >
         <div>#include &lt;stdio.h&gt;</div>
         <div>int main() {'{'}</div>
         <div>&nbsp;&nbsp;int aura = 9999;</div>
         <div>&nbsp;&nbsp;while(locked_in) grind();</div>
-        <div>&nbsp;&nbsp;return 0;</div>
+        <div>&nbsp;&nbsp;return "deez nuts";</div>
         <div>{'}'}</div>
       </div>
 
@@ -132,13 +132,19 @@ export default function BrutalistNoise() {
         return (
           <span
             key={i}
-            className="fixed font-mono text-white/20 pointer-events-none select-none"
+            className="fixed font-mono text-white/40 pointer-events-none select-none"
             style={{ fontSize: '0.6rem', letterSpacing: '0.08em', zIndex: 20, ...pos }}
           >
             {c.text}
           </span>
         )
       })}
+      <span
+        className="fixed font-mono pointer-events-none select-none"
+        style={{ top: '65%', left: '50%', transform: 'translate(-50%, -50%)', fontSize: '0.75rem', fontWeight: 700, letterSpacing: '0.12em', color: 'rgba(179,163,105,0.55)', zIndex: 20 }}
+      >
+        hint: click the gold items~
+      </span>
     </>
   )
 }
