@@ -49,7 +49,6 @@ body {
   background-size: 48px 48px;
   color: #ffffff;
   font-family: 'JetBrains Mono', monospace;
-  overflow-x: hidden;
   margin: 0;
   padding: 0;
 }

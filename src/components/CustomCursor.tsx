@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react'
-import { motion } from 'framer-motion'
 
 const SIZE = 120
 const OFFSET_X = 58
@@ -27,8 +26,6 @@ export default function CustomCursor() {
     return () => window.removeEventListener('mousemove', move)
   }, [])
 
-  const style = { left: pos.x, top: pos.y, transform: `translate(-${OFFSET_X}px, -${OFFSET_Y}px)` }
-
   return (
     <>
       {/* Glow orb */}
@@ -36,26 +33,32 @@ export default function CustomCursor() {
         <div
           className="fixed pointer-events-none z-[9998]"
           style={{
-            ...style,
+            left: 0,
+            top: 0,
             width: 80,
             height: 80,
             borderRadius: '50%',
             background: 'radial-gradient(circle, rgba(207, 226, 171, 0.15) 0%, transparent 70%)',
             filter: 'blur(15px)',
+            transform: `translate(${pos.x - OFFSET_X}px, ${pos.y - OFFSET_Y}px)`,
+            willChange: 'transform',
           }}
         />
       )}
 
       {/* Main cursor */}
-      <div className="fixed z-[999999] pointer-events-none" style={style}>
-        <motion.img
+      <div className="fixed z-[999999] pointer-events-none" style={{ left: 0, top: 0, transform: `translate(${pos.x - OFFSET_X}px, ${pos.y - OFFSET_Y}px)`, willChange: 'transform' }}>
+        <img
           src="/cursor/lol-cursor.png"
           alt=""
           width={SIZE}
           height={SIZE}
-          animate={{ scale: isPointer ? 1.08 : 1 }}
-          transition={{ duration: 0.05 }}
-          style={{ pointerEvents: 'none', display: 'block' }}
+          style={{
+            pointerEvents: 'none',
+            display: 'block',
+            transform: isPointer ? 'scale(1.08)' : 'scale(1)',
+            transition: 'transform 0.05s',
+          }}
           draggable={false}
         />
       </div>
