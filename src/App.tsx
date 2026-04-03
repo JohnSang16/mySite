@@ -607,7 +607,6 @@ export default function App() {
                     <video
                       src={src}
                       playsInline
-                      muted
                       autoPlay={i === 0}
                       style={{ width: 'auto', maxWidth: '70%', height: 'auto', maxHeight: '85vh', display: 'block', borderRadius: 4, cursor: 'none' }}
                       onEnded={() => handleGhoulEnded(i)}
