@@ -368,13 +368,13 @@ export default function App() {
                 onTouchEnd={e => (e.currentTarget.style.transform = 'translateX(-50%) scale(1)')}
                 style={{ position: 'absolute', top: '-22%', left: '50%', transform: 'translateX(-50%)', width: '95%', transition: 'transform 0.3s ease' }} />
               {/* Ulquiorra — 58% of selfie width, pushed right */}
-              <div style={{ position: 'absolute', top: '15%', left: '88%', width: '78%', border: '2px solid rgba(250,243,243,0.85)', background: 'rgba(255,255,255,0.02)', backdropFilter: 'blur(2px)' }} onClick={() => setUlqEditActive(true)}>
+              <div style={{ position: 'absolute', top: '15%', left: '88%', width: '78%', border: '2px solid rgba(250,243,243,0.85)', background: 'rgba(255,255,255,0.02)', backdropFilter: 'blur(2px)', transform: 'rotate(4deg)' }} onClick={() => setUlqEditActive(true)}>
                 <img src="/characters/ulquiorra-cifer.jpg" alt="Ulquiorra Cifer" className="gold-glow" style={{ width: '100%', height: 'auto', display: 'block' }} />
               </div>
               {/* Mask — bottom right, 36% of selfie width */}
               <motion.img src="/other/ichigoMaskNoBG.png" alt="ichigo mask" className="gold-glow" style={{ position: 'absolute', bottom: '-14%', right: '-55%', width: '66%', height: 'auto' }} animate={{ y: [0, -6, 0] }} transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }} onClick={triggerVasto} />
               {/* d4 — below mask, pulsing, 30% of selfie width */}
-              <motion.img src="/background/d4imgCropped.png" alt="" className="gold-glow" style={{ position: 'absolute', bottom: '-48%', left: '50%', width: '60%', height: 'auto', zIndex: 50 }} animate={{ scale: [1, 1.06, 1] }} transition={{ duration: 2.5, repeat: Infinity, ease: 'easeInOut' }} onClick={triggerFaker} />
+              <motion.img src="/background/d4imgCropped.png" alt="" className="gold-glow" style={{ position: 'absolute', bottom: '-38%', left: '50%', width: '60%', height: 'auto', zIndex: 50 }} animate={{ scale: [1, 1.06, 1] }} transition={{ duration: 2.5, repeat: Infinity, ease: 'easeInOut' }} onClick={triggerFaker} />
             </div>
 
             {/* Social links — row, left edge aligned with selfie */}
@@ -424,7 +424,7 @@ export default function App() {
                   ipod
                 </button>
               </div>
-              <span style={{ position: 'fixed', top: '76%', left: '18%', fontFamily: "'JetBrains Mono', monospace", fontSize: '0.6rem', color: 'rgba(179,163,105,0.6)', letterSpacing: '0.1em', zIndex: 20 }}>
+              <span className="hint-gold-glow" style={{ position: 'fixed', top: '76%', left: '3%', fontFamily: "'JetBrains Mono', monospace", fontSize: '0.6rem', letterSpacing: '0.1em', zIndex: 20 }}>
                 hint: tap the gold items~
               </span>
             </>

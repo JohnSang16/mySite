@@ -4,7 +4,7 @@ const COMMENTS = [
   { text: 'lock in bro',          x: '8%',  y: '18%', rotate: -12, href: 'https://www.youtube.com/watch?v=nmcmx2sLa-4' },
   { text: '1000-7?',              x: '14%', y: '72%', rotate: 8,   href: 'https://www.youtube.com/watch?v=oPMoUP09RPQ' },
   { text: 'midbeast',             x: '72%', y: '82%', rotate: -6,  href: 'https://www.youtube.com/channel/UC6mWuX4R9Yn5y0fWCwzqiSg' },
-  { text: 'faker what was that!?',x: '72%', y: '14%', rotate: 10,  href: 'https://www.youtube.com/watch?v=ZPCfoCVCx3U' },
+  { text: 'faker what was that!?',x: '72%', y: '8%',  rotate: 10,  href: 'https://www.youtube.com/watch?v=ZPCfoCVCx3U' },
   { text: 'focus.',               x: '38%', y: '88%', rotate: -9,  href: undefined },
   { text: 'cracked dev type shi', x: '62%', y: '28%', rotate: -8,  href: 'https://www.linkedin.com/in/johnsang-/' },
   { text: 'liam elison',          x: '20%', y: '35%', rotate: -4,  href: 'https://www.linkedin.com/in/liam-ellison/' },

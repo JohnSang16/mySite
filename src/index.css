@@ -219,3 +219,34 @@ html::after {
 }
 
 
+
+@keyframes gold-pulse {
+  0%, 100% { color: rgba(179,163,105,0.5); text-shadow: none; }
+  50%       { color: rgba(179,163,105,1); text-shadow: 0 0 8px rgba(179,163,105,0.8), 0 0 16px rgba(179,163,105,0.4); }
+}
+.hint-gold-glow {
+  animation: gold-pulse 2.5s ease-in-out infinite;
+}
+
+/* iPod shimmer swipe */
+@keyframes ipod-shimmer {
+  0%   { transform: translateX(-120%) skewX(-20deg); opacity: 0; }
+  10%  { opacity: 1; }
+  60%  { opacity: 1; }
+  100% { transform: translateX(220%) skewX(-20deg); opacity: 0; }
+}
+.ipod-btn {
+  position: relative;
+  overflow: hidden;
+}
+.ipod-btn::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 40%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
+  animation: ipod-shimmer 3s ease-in-out infinite;
+  pointer-events: none;
+}
