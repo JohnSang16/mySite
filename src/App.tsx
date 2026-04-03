@@ -155,7 +155,7 @@ export default function App() {
       {/* ── DESKTOP LAYOUT (≥768px) ── */}
       {!sm && (
       <>
-      <span className="fixed font-mono pointer-events-none select-none" style={{ bottom: 24, left: '55%', transform: 'translateX(-50%)', fontSize: '0.75rem', fontWeight: 700, letterSpacing: '0.12em', color: 'rgba(179,163,105,0.9)', zIndex: 10000 }}>
+      <span className="hint-gold-glow fixed font-mono pointer-events-none select-none" style={{ top: 'calc(70% + 2.5rem)', left: '50%', transform: 'translateX(-50%)', fontSize: '0.75rem', fontWeight: 700, letterSpacing: '0.12em', zIndex: 10000, whiteSpace: 'nowrap' }}>
         hint: click the golden icons & bg comments~
       </span>
       {/* Floating ichigo mask — outside main to avoid stacking context conflicts */}
@@ -226,7 +226,7 @@ export default function App() {
         </div>
 
         {/* skill tree + goated ppl — top right, below abt me */}
-        <div className="fixed flex flex-col gap-3 skill-panel" style={{ top: 280, right: 16, zIndex: 10, width: '220px' }}>
+        <div className="fixed flex flex-col gap-3 skill-panel" style={{ top: 200, right: 16, zIndex: 10, width: '220px' }}>
           <MangaPanel sfx="スゥ">
             <h2 className="font-display text-xs tracking-widest mb-1 text-center">skill tree</h2>
             <p className="font-mono text-xs text-white/80 text-center">python · c · react · next.js · vercel · claude</p>
@@ -258,7 +258,7 @@ export default function App() {
               background: 'rgba(255,255,255,0.02)',
               backdropFilter: 'blur(2px)',
               transition: 'transform 0.3s ease',
-              transform: ulquiorraHovered ? 'rotate(-3deg) scale(1.02)' : 'rotate(0deg) scale(1)',
+              transform: ulquiorraHovered ? 'rotate(1deg) scale(1.02)' : 'rotate(4deg) scale(1)',
               pointerEvents: 'auto',
             }}>
               <img
@@ -420,7 +420,7 @@ export default function App() {
           {!showIntro && (
             <>
               <div style={{ position: 'fixed', bottom: '28%', left: '50%', transform: 'translateX(-50%)', zIndex: 20 }}>
-                <button onClick={() => setShowIpod(v => !v)} style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.18)', borderRadius: '2rem', padding: '0.4rem 1.4rem', color: 'rgba(255,255,255,0.85)', fontSize: '0.75rem', fontFamily: "'JetBrains Mono', monospace", letterSpacing: '0.18em', outline: 'none', backdropFilter: 'blur(8px)' }} aria-pressed={showIpod}>
+                <button className="ipod-btn" onClick={() => setShowIpod(v => !v)} style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.18)', borderRadius: '2rem', padding: '0.4rem 1.4rem', color: 'rgba(255,255,255,0.85)', fontSize: '0.75rem', fontFamily: "'JetBrains Mono', monospace", letterSpacing: '0.18em', outline: 'none', backdropFilter: 'blur(8px)' }} aria-pressed={showIpod}>
                   ipod
                 </button>
               </div>
@@ -431,8 +431,8 @@ export default function App() {
           )}
 
           {/* Red lily — fixed bottom center */}
-          <div style={{ position: 'fixed', bottom: 0, left: '50%', transform: 'translateX(-50%)', zIndex: 10 }} onClick={() => { setGhoulActive(true); setGhoulIndex(0); setTimeout(() => { const videos = ghoulScrollRef.current?.querySelectorAll('video'); const first = videos?.[0] as HTMLVideoElement | undefined; first?.play().catch(() => {}) }, 150) }}>
-            <img src="/background/redlily.png" alt="red lily" className="gold-glow" style={{ height: '18vh', width: 'auto', objectFit: 'contain', display: 'block' }} />
+          <div style={{ position: 'fixed', bottom: 0, left: '50%', transform: 'translateX(-50%)', zIndex: 10, lineHeight: 0, fontSize: 0 }} onClick={() => { setGhoulActive(true); setGhoulIndex(0); setTimeout(() => { const videos = ghoulScrollRef.current?.querySelectorAll('video'); const first = videos?.[0] as HTMLVideoElement | undefined; first?.play().catch(() => {}) }, 150) }}>
+            <img src="/background/redlily.png" alt="red lily" className="gold-glow" style={{ height: '18vh', width: 'auto', display: 'block', margin: 0, padding: 0 }} />
           </div>
         </main>
       )}

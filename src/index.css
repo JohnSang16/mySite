@@ -67,8 +67,8 @@ body::after {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%) rotate(30deg);
-  height: 80%;
-  width: 78%;
+  height: 55%;
+  width: 42%;
   background-image: url('/background/centipedeBG.jpg');
   background-size: contain;
   background-position: right center;
@@ -83,7 +83,7 @@ body::after {
 
 /* Info panels — no border */
 .panel {
-  @apply relative overflow-hidden;
+  @apply relative overflow-visible;
   background: transparent;
   border: none;
 }
@@ -189,6 +189,10 @@ body dd:hover {
 
 .panel:hover .sfx {
   opacity: 1;
+}
+
+.panel:hover .sfx-reveal {
+  opacity: 1 !important;
 }
 
 /* CRT scanline overlay */

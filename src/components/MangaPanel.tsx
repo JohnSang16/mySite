@@ -15,7 +15,7 @@ export default function MangaPanel({
 }: MangaPanelProps) {
   return (
     <motion.div
-      className={`panel p-4 w-full ${className}`}
+      className={`panel p-2 w-full ${className}`}
       style={{ rotate: angle }}
       initial={{ opacity: 0, y: 24 }}
       whileInView={{ opacity: 1, y: 0 }}
@@ -23,12 +23,12 @@ export default function MangaPanel({
       transition={{ duration: 0.4, ease: 'easeOut' }}
       whileHover={{ scale: 1.01 }}
     >
+      {children}
       {sfx && (
-        <span className="sfx font-display text-2xl top-3 right-4 text-accent">
+        <span className="font-display sfx-reveal" style={{ position: 'absolute', bottom: '-1.4rem', left: 0, right: 0, textAlign: 'center', fontSize: '1.6rem', lineHeight: 1, color: '#ff2222', textShadow: '0 0 10px rgba(255,34,34,0.6)', width: '100%', opacity: 0, transition: 'opacity 0.2s ease', pointerEvents: 'none' }}>
           {sfx}
         </span>
       )}
-      {children}
     </motion.div>
   )
 }
