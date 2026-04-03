@@ -425,13 +425,13 @@ export default function App() {
           {/* iPod + hint */}
           {!showIntro && (
             <>
-              <div style={{ position: 'fixed', bottom: '28%', left: '50%', transform: 'translateX(-50%)', zIndex: 20 }}>
-                <button className="ipod-btn" onClick={() => setShowIpod(v => !v)} style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.18)', borderRadius: '2rem', padding: '0.4rem 1.4rem', color: 'rgba(255,255,255,0.85)', fontSize: '0.75rem', fontFamily: "'JetBrains Mono', monospace", letterSpacing: '0.18em', outline: 'none', backdropFilter: 'blur(8px)' }} aria-pressed={showIpod}>
+              <div style={{ position: 'fixed', bottom: '28%', left: '50%', transform: 'translateX(-50%)', zIndex: 200 }}>
+                <button className="ipod-btn" onClick={() => setShowIpod(v => !v)} style={{ background: 'transparent', border: '1px solid rgba(255,255,255,0.18)', borderRadius: '2rem', padding: '0.2rem 0.9rem', color: 'rgba(255,255,255,0.85)', fontSize: '0.7rem', fontFamily: "'JetBrains Mono', monospace", letterSpacing: '0.18em', outline: 'none' }} aria-pressed={showIpod}>
                   ipod
                 </button>
               </div>
               {!vastoActive && (
-                <span className="hint-gold-glow" style={{ position: 'fixed', top: '76%', left: '3%', fontFamily: "'JetBrains Mono', monospace", fontSize: '0.6rem', letterSpacing: '0.1em', zIndex: 20 }}>
+                <span className="hint-gold-glow" style={{ position: 'fixed', top: '76%', left: '3%', fontFamily: "'JetBrains Mono', monospace", fontSize: '0.6rem', letterSpacing: '0.1em', zIndex: 200 }}>
                   hint: tap the gold items~
                 </span>
               )}
@@ -492,7 +492,7 @@ export default function App() {
               onEnded={() => setUlqEditActive(false)}
               style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'contain', objectPosition: '60% center' }}
             />
-            <span className="fixed pointer-events-none select-none" style={{ bottom: 24, left: '1rem', fontSize: '0.65rem', letterSpacing: '0.08em', color: 'rgba(255,255,255,0.45)', fontFamily: "'JetBrains Mono', monospace", whiteSpace: 'nowrap', zIndex: 8001 }}>
+            <span className="fixed pointer-events-none select-none" style={{ bottom: 24, left: 0, right: 0, textAlign: 'center', fontSize: '0.65rem', letterSpacing: '0.08em', color: 'rgba(255,255,255,0.45)', fontFamily: "'JetBrains Mono', monospace", zIndex: 8001 }}>
               credit: in7fv on tiktok
             </span>
           </motion.div>
@@ -601,12 +601,13 @@ export default function App() {
                 const credits = ['kuzaro__', 'lxzzzsss', 'switch_nt', 'shx.editz']
                 return (
                   <div key={src} style={{ minHeight: '100vh', width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', scrollSnapAlign: 'start', flexShrink: 0, position: 'relative' }}>
-                    <span style={{ position: 'absolute', left: '1rem', bottom: 24, fontFamily: "'JetBrains Mono', monospace", fontSize: '0.65rem', color: 'rgba(255,255,255,0.45)', letterSpacing: '0.08em', whiteSpace: 'nowrap' }}>
+                    <span style={{ position: 'absolute', bottom: 24, left: 0, right: 0, textAlign: 'center', fontFamily: "'JetBrains Mono', monospace", fontSize: '0.65rem', color: 'rgba(255,255,255,0.45)', letterSpacing: '0.08em' }}>
                       credit: {credits[i]}
                     </span>
                     <video
                       src={src}
                       playsInline
+                      muted
                       autoPlay={i === 0}
                       style={{ width: 'auto', maxWidth: '70%', height: 'auto', maxHeight: '85vh', display: 'block', borderRadius: 4, cursor: 'none' }}
                       onEnded={() => handleGhoulEnded(i)}
