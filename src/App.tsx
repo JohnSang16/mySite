@@ -149,9 +149,13 @@ export default function App() {
     <>
       {showIntro && <Intro onDone={handleIntroDone} />}
       <audio ref={audioRef} src={PLAYLIST[trackIndex].src} onEnded={handleTrackEnded} />
-      <CustomCursor />
+      {!sm && <CustomCursor />}
       {!vastoActive && !fakerActive && !auraActive && !ulqEditActive && !ghoulActive && <BrutalistNoise sm={sm} />}
-      <span className="fixed font-mono pointer-events-none select-none" style={{ bottom: 220, left: '55%', transform: 'translateX(-50%)', fontSize: '0.75rem', fontWeight: 700, letterSpacing: '0.12em', color: 'rgba(179,163,105,0.9)', zIndex: 10000 }}>
+
+      {/* ── DESKTOP LAYOUT (≥768px) ── */}
+      {!sm && (
+      <>
+      <span className="fixed font-mono pointer-events-none select-none" style={{ bottom: 24, left: '55%', transform: 'translateX(-50%)', fontSize: '0.75rem', fontWeight: 700, letterSpacing: '0.12em', color: 'rgba(179,163,105,0.9)', zIndex: 10000 }}>
         hint: click the golden icons & bg comments~
       </span>
       {/* Floating ichigo mask — outside main to avoid stacking context conflicts */}
@@ -344,6 +348,94 @@ export default function App() {
           </button>
         </div>
       )}
+      </>
+      )}
+
+      {/* ── MOBILE LAYOUT (<768px) ── */}
+      {sm && (
+        <main style={{ height: '100dvh', overflow: 'hidden', padding: '2.5rem 0.25rem 2rem 1.5rem', display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: '1rem', zIndex: 2, position: 'relative' }}>
+
+          {/* Hero + socials — outer wrapper so socials left-align with selfie */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem', flexShrink: 0, alignSelf: 'flex-start', paddingLeft: '0' }}>
+
+            {/* Selfie container — single source of truth for all overlay sizing */}
+            <div style={{ position: 'relative', width: 'clamp(160px, 52vw, 260px)' }}>
+              {/* Selfie */}
+              <img src="/background/selfieTYPSESHIT.png" alt="selfie" style={{ width: '100%', height: 'auto', display: 'block', border: '2px solid rgba(255,255,255,0.85)' }} />
+              {/* Name — overlaid above face */}
+              <img src="/other/finalNamept2-1.png" alt="John Sang"
+                onTouchStart={e => (e.currentTarget.style.transform = 'translateX(-50%) scale(1.06)')}
+                onTouchEnd={e => (e.currentTarget.style.transform = 'translateX(-50%) scale(1)')}
+                style={{ position: 'absolute', top: '-22%', left: '50%', transform: 'translateX(-50%)', width: '95%', transition: 'transform 0.3s ease' }} />
+              {/* Ulquiorra — 58% of selfie width, pushed right */}
+              <div style={{ position: 'absolute', top: '15%', left: '88%', width: '78%', border: '2px solid rgba(250,243,243,0.85)', background: 'rgba(255,255,255,0.02)', backdropFilter: 'blur(2px)' }} onClick={() => setUlqEditActive(true)}>
+                <img src="/characters/ulquiorra-cifer.jpg" alt="Ulquiorra Cifer" className="gold-glow" style={{ width: '100%', height: 'auto', display: 'block' }} />
+              </div>
+              {/* Mask — bottom right, 36% of selfie width */}
+              <motion.img src="/other/ichigoMaskNoBG.png" alt="ichigo mask" className="gold-glow" style={{ position: 'absolute', bottom: '-14%', right: '-55%', width: '66%', height: 'auto' }} animate={{ y: [0, -6, 0] }} transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }} onClick={triggerVasto} />
+              {/* d4 — below mask, pulsing, 30% of selfie width */}
+              <motion.img src="/background/d4imgCropped.png" alt="" className="gold-glow" style={{ position: 'absolute', bottom: '-48%', left: '50%', width: '60%', height: 'auto', zIndex: 50 }} animate={{ scale: [1, 1.06, 1] }} transition={{ duration: 2.5, repeat: Infinity, ease: 'easeInOut' }} onClick={triggerFaker} />
+            </div>
+
+            {/* Social links — row, left edge aligned with selfie */}
+            <div style={{ display: 'flex', flexDirection: 'row', gap: '0.75rem', flexWrap: 'wrap' }}>
+              {[['linkedin', 'https://www.linkedin.com/in/johnsang-/'], ['github', 'https://github.com/JohnSang16'], ['instagram', 'https://www.instagram.com/john.sang0/'], ['tiktok', 'https://www.tiktok.com/@john.sang0']].map(([label, href]) => (
+                <a key={label} href={href} target="_blank" rel="noreferrer" style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.65rem', color: 'rgba(255,255,255,0.5)', textDecoration: 'none', letterSpacing: '0.05em' }}>{label}</a>
+              ))}
+            </div>
+          </div>
+
+          {/* Reminders (left) + Panels (right) */}
+          <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'flex-start', gap: '1rem', width: '100%', flex: 1, minHeight: 0, marginTop: '-0.75rem' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: '0.3rem', minWidth: '28%', flexShrink: 0, zIndex: 60, position: 'relative', opacity: 0.85 }}>
+              <h3 className="font-display text-xs tracking-widest text-white">reminders:</h3>
+              {['stay goated', 'leet code daily', 'do exciting shit', 'give more than you get'].map(r => (
+                <p key={r} className="font-mono text-white/70" style={{ fontSize: '0.6rem' }}>{r}</p>
+              ))}
+              <p className="font-mono aurafarm-text" style={{ fontSize: '0.6rem', color: 'rgba(255,255,255,0.7)', transition: 'color 0.2s ease, text-shadow 0.2s ease' }} onClick={triggerAura}>aurafarm</p>
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0', flex: 1, overflowY: 'auto', paddingRight: '0.25rem', scrollbarWidth: 'none', zIndex: 60, position: 'relative', opacity: 0.85 }}>
+              <MangaPanel sfx="ドン！">
+                <h2 className="font-display text-xs tracking-widest mb-1 text-center">abt me</h2>
+                <p className="font-mono text-white/70 text-center" style={{ fontSize: '0.6rem' }}>lol midlane d2 · progsuhq vice president · professional larper · wpm 155</p>
+              </MangaPanel>
+              <MangaPanel sfx="バン！">
+                <h2 className="font-display text-xs tracking-widest mb-1 text-center">training arc</h2>
+                <p className="font-mono text-white/70 text-center" style={{ fontSize: '0.6rem' }}>land a swe internship · hit 80 coffeechats · build git · credit score maxx</p>
+              </MangaPanel>
+              <MangaPanel sfx="スゥ">
+                <h2 className="font-display text-xs tracking-widest mb-1 text-center">skill tree</h2>
+                <p className="font-mono text-white/70 text-center" style={{ fontSize: '0.6rem' }}>python · c · react · next.js · vercel · claude</p>
+              </MangaPanel>
+              <MangaPanel sfx="ドン！">
+                <h2 className="font-display text-xs tracking-widest mb-1 text-center">goated ppl</h2>
+                <p className="font-mono text-white/70 text-center" style={{ fontSize: '0.6rem' }}>
+                  <a href="https://www.linkedin.com/in/joeyzhangdev/" target="_blank" rel="noopener noreferrer" style={{ color: 'inherit', textDecoration: 'none' }}>yaohui zhang</a> · ichigo kurosaki · faker · beifeng
+                </p>
+              </MangaPanel>
+            </div>
+          </div>
+
+          {/* iPod + hint */}
+          {!showIntro && (
+            <>
+              <div style={{ position: 'fixed', bottom: '28%', left: '50%', transform: 'translateX(-50%)', zIndex: 20 }}>
+                <button onClick={() => setShowIpod(v => !v)} style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.18)', borderRadius: '2rem', padding: '0.4rem 1.4rem', color: 'rgba(255,255,255,0.85)', fontSize: '0.75rem', fontFamily: "'JetBrains Mono', monospace", letterSpacing: '0.18em', outline: 'none', backdropFilter: 'blur(8px)' }} aria-pressed={showIpod}>
+                  ipod
+                </button>
+              </div>
+              <span style={{ position: 'fixed', top: '76%', left: '18%', fontFamily: "'JetBrains Mono', monospace", fontSize: '0.6rem', color: 'rgba(179,163,105,0.6)', letterSpacing: '0.1em', zIndex: 20 }}>
+                hint: tap the gold items~
+              </span>
+            </>
+          )}
+
+          {/* Red lily — fixed bottom center */}
+          <div style={{ position: 'fixed', bottom: 0, left: '50%', transform: 'translateX(-50%)', zIndex: 10 }} onClick={() => { setGhoulActive(true); setGhoulIndex(0); setTimeout(() => { const videos = ghoulScrollRef.current?.querySelectorAll('video'); const first = videos?.[0] as HTMLVideoElement | undefined; first?.play().catch(() => {}) }, 150) }}>
+            <img src="/background/redlily.png" alt="red lily" className="gold-glow" style={{ height: '18vh', width: 'auto', objectFit: 'contain', display: 'block' }} />
+          </div>
+        </main>
+      )}
 
       <IPod
         visible={showIpod}
@@ -392,7 +484,7 @@ export default function App() {
               onEnded={() => setUlqEditActive(false)}
               style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'contain', objectPosition: '60% center' }}
             />
-            <span className="fixed pointer-events-none select-none" style={{ bottom: 24, left: 'calc(50% - 420px)', fontSize: '0.65rem', letterSpacing: '0.08em', color: 'rgba(255,255,255,0.45)', fontFamily: "'JetBrains Mono', monospace", whiteSpace: 'nowrap', zIndex: 8001 }}>
+            <span className="fixed pointer-events-none select-none" style={{ bottom: 24, left: '1rem', fontSize: '0.65rem', letterSpacing: '0.08em', color: 'rgba(255,255,255,0.45)', fontFamily: "'JetBrains Mono', monospace", whiteSpace: 'nowrap', zIndex: 8001 }}>
               credit: in7fv on tiktok
             </span>
           </motion.div>
@@ -498,7 +590,7 @@ export default function App() {
                 const credits = ['kuzaro__', 'lxzzzsss', 'switch_nt', 'shx.editz']
                 return (
                   <div key={src} style={{ minHeight: '100vh', width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', scrollSnapAlign: 'start', flexShrink: 0, position: 'relative' }}>
-                    <span style={{ position: 'absolute', left: 'calc(50% - 420px)', bottom: 24, fontFamily: "'JetBrains Mono', monospace", fontSize: '0.65rem', color: 'rgba(255,255,255,0.45)', letterSpacing: '0.08em', whiteSpace: 'nowrap' }}>
+                    <span style={{ position: 'absolute', left: '1rem', bottom: 24, fontFamily: "'JetBrains Mono', monospace", fontSize: '0.65rem', color: 'rgba(255,255,255,0.45)', letterSpacing: '0.08em', whiteSpace: 'nowrap' }}>
                       credit: {credits[i]}
                     </span>
                     <video

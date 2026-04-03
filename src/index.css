@@ -67,8 +67,8 @@ body::after {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%) rotate(30deg);
-  height: 55%;
-  width: 35%;
+  height: 80%;
+  width: 78%;
   background-image: url('/background/centipedeBG.jpg');
   background-size: contain;
   background-position: right center;
@@ -77,7 +77,7 @@ body::after {
   z-index: 100;
   mix-blend-mode: lighten;
   opacity: .35;
-  filter: blur(1.1px);
+  filter: blur(0.5px);
 }
 
 

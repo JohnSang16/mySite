@@ -93,8 +93,16 @@ export default function BrutalistNoise({ sm = false }: { sm?: boolean }) {
 
         {/* Floating toxic comments */}
         {COMMENTS.map((c, i) => {
-          const x = sm && c.text === '1000-7?' ? '5%' : c.x
-          const y = sm && c.text === '1000-7?' ? '45%' : c.y
+          if (sm && c.text === 'cracked dev type shi') return null
+          const x = sm && c.text === '1000-7?' ? '5%'
+                  : sm && c.text === 'diff player' ? '72%'
+                  : sm && c.text === 'progsuhq' ? '18%'
+                  : sm && c.text === 'midbeast' ? '8%'
+                  : c.x
+          const y = sm && c.text === '1000-7?' ? '88%'
+                  : sm && c.text === 'diff player' ? '88%'
+                  : sm && c.text === 'progsuhq' ? '70%'
+                  : c.y
           const style: React.CSSProperties = {
             left: x, top: y,
             transform: `rotate(${c.rotate}deg)`,
@@ -117,7 +125,7 @@ export default function BrutalistNoise({ sm = false }: { sm?: boolean }) {
       {/* Terminal block — bottom left */}
       <div
         className="fixed pointer-events-none select-none"
-        style={{ bottom: 32, right: 16, zIndex: 20, opacity: 0.35, filter: 'blur(0.4px)', fontFamily: "'JetBrains Mono', monospace", fontSize: '0.55rem', lineHeight: 1.6, color: '#39FF14' }}
+        style={{ bottom: 32, right: '60%', zIndex: 20, opacity: 0.35, filter: 'blur(0.4px)', fontFamily: "'JetBrains Mono', monospace", fontSize: '0.55rem', lineHeight: 1.6, color: '#39FF14' }}
       >
         <div>#include &lt;stdio.h&gt;</div>
         <div>int main() {'{'}</div>
