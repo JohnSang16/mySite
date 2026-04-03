@@ -67,6 +67,7 @@ export default function App() {
   const triggerFaker = () => {
     if (fakerActive) return
     setFakerActive(true)
+    setShowIpod(false)
 
     const bgAudio = audioRef.current
     const wasPlaying = bgAudio && !bgAudio.paused
@@ -85,6 +86,7 @@ export default function App() {
   const triggerAura = () => {
     if (auraActive) return
     setAuraActive(true)
+    setShowIpod(false)
     const sfx = new Audio('/sfx/oui-parody.mp3')
     sfx.play().catch(() => {})
     setTimeout(() => {
@@ -96,6 +98,7 @@ export default function App() {
   const triggerVasto = () => {
     if (vastoActive) return
     setVastoActive(true)
+    setShowIpod(false)
     setVastoKey(k => k + 1)
     const bgAudio = audioRef.current
     const wasPlaying = bgAudio && !bgAudio.paused
@@ -155,9 +158,11 @@ export default function App() {
       {/* ── DESKTOP LAYOUT (≥768px) ── */}
       {!sm && (
       <>
-      <span className="hint-gold-glow fixed font-mono pointer-events-none select-none" style={{ top: 'calc(70% + 2.5rem)', left: '50%', transform: 'translateX(-50%)', fontSize: '0.75rem', fontWeight: 700, letterSpacing: '0.12em', zIndex: 10000, whiteSpace: 'nowrap' }}>
-        hint: click the golden icons & bg comments~
-      </span>
+      {!vastoActive && (
+        <span className="hint-gold-glow fixed font-mono pointer-events-none select-none" style={{ top: 'calc(70% + 2.5rem)', left: '50%', transform: 'translateX(-50%)', fontSize: '0.75rem', fontWeight: 700, letterSpacing: '0.12em', zIndex: 10000, whiteSpace: 'nowrap' }}>
+          hint: click the golden icons & bg comments~
+        </span>
+      )}
       {/* Floating ichigo mask — outside main to avoid stacking context conflicts */}
       <motion.img
         src="/other/ichigoMaskNoBG.png"
@@ -303,6 +308,7 @@ export default function App() {
       <div className="fixed pointer-events-auto" style={{ bottom: 0, left: '60%', transform: 'translateX(-50%)', zIndex: 10 }} onClick={() => {
   setGhoulActive(true)
   setGhoulIndex(0)
+  setShowIpod(false)
   setTimeout(() => {
     const videos = ghoulScrollRef.current?.querySelectorAll('video')
     const first = videos?.[0] as HTMLVideoElement | undefined
@@ -424,14 +430,16 @@ export default function App() {
                   ipod
                 </button>
               </div>
-              <span className="hint-gold-glow" style={{ position: 'fixed', top: '76%', left: '3%', fontFamily: "'JetBrains Mono', monospace", fontSize: '0.6rem', letterSpacing: '0.1em', zIndex: 20 }}>
-                hint: tap the gold items~
-              </span>
+              {!vastoActive && (
+                <span className="hint-gold-glow" style={{ position: 'fixed', top: '76%', left: '3%', fontFamily: "'JetBrains Mono', monospace", fontSize: '0.6rem', letterSpacing: '0.1em', zIndex: 20 }}>
+                  hint: tap the gold items~
+                </span>
+              )}
             </>
           )}
 
           {/* Red lily — fixed bottom center */}
-          <div style={{ position: 'fixed', bottom: 0, left: '50%', transform: 'translateX(-50%)', zIndex: 10, lineHeight: 0, fontSize: 0 }} onClick={() => { setGhoulActive(true); setGhoulIndex(0); setTimeout(() => { const videos = ghoulScrollRef.current?.querySelectorAll('video'); const first = videos?.[0] as HTMLVideoElement | undefined; first?.play().catch(() => {}) }, 150) }}>
+          <div style={{ position: 'fixed', bottom: 0, left: '50%', transform: 'translateX(-50%)', zIndex: 10, lineHeight: 0, fontSize: 0 }} onClick={() => { setGhoulActive(true); setGhoulIndex(0); setShowIpod(false); setTimeout(() => { const videos = ghoulScrollRef.current?.querySelectorAll('video'); const first = videos?.[0] as HTMLVideoElement | undefined; first?.play().catch(() => {}) }, 150) }}>
             <img src="/background/redlily.png" alt="red lily" className="gold-glow" style={{ height: '18vh', width: 'auto', display: 'block', margin: 0, padding: 0 }} />
           </div>
         </main>
@@ -531,6 +539,9 @@ export default function App() {
               alt="ichigo vasto lorde"
               style={{ height: '100%', width: 'auto' }}
             />
+            <span style={{ position: 'absolute', top: '90%', left: '50%', transform: 'translateX(-50%)', fontFamily: "'JetBrains Mono', monospace", fontSize: 'clamp(0.7rem, 2vw, 1rem)', color: 'rgba(255,255,255,0.9)', letterSpacing: '0.08em', whiteSpace: 'nowrap', textShadow: '0 0 12px rgba(0,0,0,0.9)', zIndex: 8001 }}>
+              POV: mom forgot to buy chicken nuggies
+            </span>
           </motion.div>
         )}
       </AnimatePresence>
