@@ -429,7 +429,7 @@ export default function App() {
           {/* iPod + hint */}
           {!showIntro && (
             <>
-              <div style={{ position: 'fixed', bottom: '28%', left: '50%', transform: 'translateX(-50%)', zIndex: 200 }}>
+              <div style={{ position: 'fixed', bottom: '32%', left: '50%', transform: 'translateX(-50%)', zIndex: 200 }}>
                 <button className="ipod-btn" onClick={() => setShowIpod(v => !v)} style={{ background: 'transparent', border: '1px solid rgba(255,255,255,0.18)', borderRadius: '2rem', padding: '0.2rem 0.9rem', color: 'rgba(255,255,255,0.85)', fontSize: '0.7rem', fontFamily: "'JetBrains Mono', monospace", letterSpacing: '0.18em', outline: 'none' }} aria-pressed={showIpod}>
                   ipod
                 </button>
