@@ -2,7 +2,6 @@ import type { Metadata } from 'next'
 import localFont from 'next/font/local'
 import './globals.css'
 import CustomCursor from '@/components/CustomCursor'
-import { Analytics } from '@vercel/analytics/next' 
 
 const animeAce = localFont({
   src: [
@@ -40,7 +39,6 @@ export default function RootLayout({
       <body>
         <CustomCursor />
         {children}
-        <Analytics /> 
       </body>
     </html>
   )

@@ -6,6 +6,8 @@ import MangaPanel from '@/components/MangaPanel'
 import Intro from '@/components/Intro'
 import IPod from '@/components/IPod'
 import { useAlphaHover } from '@/hooks/useAlphaHover'
+import { Analytics } from '@vercel/analytics/react'
+
 
 export default function App() {
   const [showIntro, setShowIntro] = useState(true)
@@ -638,6 +640,7 @@ export default function App() {
           </motion.div>
         )}
       </AnimatePresence>
+      <Analytics />
     </>
   )
 }
