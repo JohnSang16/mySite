@@ -361,19 +361,19 @@ export default function App() {
 
       {/* ── MOBILE LAYOUT (<768px) ── */}
       {sm && (
-        <main style={{ height: '100dvh', overflow: 'hidden', padding: '2.5rem 0.25rem 2rem 1.5rem', display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: '1rem', zIndex: 2, position: 'relative' }}>
+        <main style={{ height: '100dvh', overflow: 'hidden', padding: '0 0.25rem 2rem 1.5rem', display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: '1rem', zIndex: 2, position: 'relative' }}>
 
           {/* Hero + socials — outer wrapper so socials left-align with selfie */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem', flexShrink: 0, alignSelf: 'flex-start', paddingLeft: '0' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem', flexShrink: 0, alignSelf: 'flex-start', paddingLeft: '0', marginTop: '3rem' }}>
 
             {/* Selfie container — single source of truth for all overlay sizing */}
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: 'clamp(160px, 52vw, 260px)' }}>
-              {/* Name — above selfie */}
-              <img src="/other/finalNamept2-1.png" alt="John Sang"
-                onTouchStart={e => (e.currentTarget.style.transform = 'scale(1.06)')}
-                onTouchEnd={e => (e.currentTarget.style.transform = 'scale(1)')}
-                style={{ width: '80%', display: 'block', transition: 'transform 0.3s ease', marginBottom: '0.5rem', marginTop: '1rem' }} />
             <div style={{ position: 'relative', width: '100%' }}>
+              {/* Name — absolute, just above selfie */}
+              <img src="/other/finalNamept2-1.png" alt="John Sang"
+                onTouchStart={e => (e.currentTarget.style.transform = 'translateX(-50%) scale(1.06)')}
+                onTouchEnd={e => (e.currentTarget.style.transform = 'translateX(-50%) scale(1)')}
+                style={{ position: 'absolute', top: '-22%', left: '50%', transform: 'translateX(-50%)', width: '95%', transition: 'transform 0.3s ease', zIndex: 2 }} />
               {/* Selfie */}
               <img src="/background/selfieTYPSESHIT.png" alt="selfie" style={{ width: '100%', height: 'auto', display: 'block', border: '2px solid rgba(255,255,255,0.85)' }} />
               {/* Ulquiorra — 58% of selfie width, pushed right */}
