@@ -1,4 +1,4 @@
-import { useRef } from 'react'
+import { useRef, useEffect } from 'react'
 import { motion } from 'framer-motion'
 
 interface IntroProps {
@@ -7,6 +7,11 @@ interface IntroProps {
 
 export default function Intro({ onDone }: IntroProps) {
   const videoRef = useRef<HTMLVideoElement>(null)
+
+  useEffect(() => {
+    const v = videoRef.current
+    if (v) v.play().catch(() => onDone())
+  }, [])
 
   return (
     <div className="fixed inset-0" style={{ background: '#000', zIndex: 99999 }}>
