@@ -178,7 +178,7 @@ export default function App() {
         {/* Name — overlaying selfie */}
         <motion.div
           className="fixed"
-          style={{ top: '-10%', left: '20%', transform: 'translate(-50%, -50%)', zIndex: 15, pointerEvents: 'auto' }}
+          style={{ top: '-3%', left: '25%', transform: 'translate(-50%, -50%)', zIndex: 15, pointerEvents: 'auto' }}
           animate={{ y: [0, -4, 0] }}
           transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut', delay: 1.5 }}
         >
@@ -197,13 +197,6 @@ export default function App() {
         </motion.div>
 
 
-        {/* Social links — bottom left */}
-        <div className="fixed flex flex-col gap-1" style={{ zIndex: 10, top: '55%', left: '27%', transform: 'translateX(-50%)' }}>
-          <a href="https://www.linkedin.com/in/johnsang-/" target="_blank" rel="noreferrer" className="font-mono text-xs text-white/50 reminder-hover" style={{ pointerEvents: 'auto', textDecoration: 'none', letterSpacing: '0.1em' }}>linkedin ↗</a>
-          <a href="https://github.com/JohnSang16" target="_blank" rel="noreferrer" className="font-mono text-xs text-white/50 reminder-hover" style={{ pointerEvents: 'auto', textDecoration: 'none', letterSpacing: '0.1em' }}>github ↗</a>
-          <a href="https://www.instagram.com/john.sang0/" target="_blank" rel="noreferrer" className="font-mono text-xs text-white/50 reminder-hover" style={{ pointerEvents: 'auto', textDecoration: 'none', letterSpacing: '0.1em' }}>instagram ↗</a>
-          <a href="https://www.tiktok.com/@john.sang0" target="_blank" rel="noreferrer" className="font-mono text-xs text-white/50 reminder-hover" style={{ pointerEvents: 'auto', textDecoration: 'none', letterSpacing: '0.1em' }}>tiktok ↗</a>
-        </div>
 
         {/* Reminder column */}
         <div
@@ -231,7 +224,7 @@ export default function App() {
         </div>
 
         {/* skill tree + goated ppl — top right, below abt me */}
-        <div className="fixed flex flex-col gap-3 skill-panel" style={{ top: 200, right: 16, zIndex: 10, width: '220px' }}>
+        <div className="fixed flex flex-col gap-3 skill-panel" style={{ top: 230, right: 16, zIndex: 10, width: '220px' }}>
           <MangaPanel sfx="スゥ">
             <h2 className="font-display text-xs tracking-widest mb-1 text-center">skill tree</h2>
             <p className="font-mono text-xs text-white/80 text-center">python · c · react · next.js · vercel · claude</p>
@@ -245,7 +238,8 @@ export default function App() {
         </div>
 
         {/* Selfie + Ulquiorra — shared container */}
-        <div className="fixed" style={{ top: '32%', left: '33%', transform: 'translate(-50%, -50%)', zIndex: 5, pointerEvents: 'none' }}>
+        <div className="fixed" style={{ top: '38%', left: '33%', transform: 'translate(-50%, -50%)', zIndex: 5, pointerEvents: 'none' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: '0.5rem' }}>
           <div style={{ position: 'relative', display: 'inline-block' }}>
             <img
               src="/background/selfieTYPSESHIT.png"
@@ -275,6 +269,14 @@ export default function App() {
                 onClick={() => setUlqEditActive(true)}
               />
             </div>
+          </div>
+          {/* Social links — left-aligned under selfie */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.25rem', pointerEvents: 'auto' }}>
+            <a href="https://www.linkedin.com/in/johnsang-/" target="_blank" rel="noreferrer" className="font-mono text-xs text-white/50 reminder-hover" style={{ textDecoration: 'none', letterSpacing: '0.1em' }}>linkedin ↗</a>
+            <a href="https://github.com/JohnSang16" target="_blank" rel="noreferrer" className="font-mono text-xs text-white/50 reminder-hover" style={{ textDecoration: 'none', letterSpacing: '0.1em' }}>github ↗</a>
+            <a href="https://www.instagram.com/john.sang0/" target="_blank" rel="noreferrer" className="font-mono text-xs text-white/50 reminder-hover" style={{ textDecoration: 'none', letterSpacing: '0.1em' }}>instagram ↗</a>
+            <a href="https://www.tiktok.com/@john.sang0" target="_blank" rel="noreferrer" className="font-mono text-xs text-white/50 reminder-hover" style={{ textDecoration: 'none', letterSpacing: '0.1em' }}>tiktok ↗</a>
+          </div>
           </div>
         </div>
 
@@ -365,14 +367,15 @@ export default function App() {
           <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem', flexShrink: 0, alignSelf: 'flex-start', paddingLeft: '0' }}>
 
             {/* Selfie container — single source of truth for all overlay sizing */}
-            <div style={{ position: 'relative', width: 'clamp(160px, 52vw, 260px)' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: 'clamp(160px, 52vw, 260px)' }}>
+              {/* Name — above selfie */}
+              <img src="/other/finalNamept2-1.png" alt="John Sang"
+                onTouchStart={e => (e.currentTarget.style.transform = 'scale(1.06)')}
+                onTouchEnd={e => (e.currentTarget.style.transform = 'scale(1)')}
+                style={{ width: '80%', display: 'block', transition: 'transform 0.3s ease', marginBottom: '0.5rem', marginTop: '1rem' }} />
+            <div style={{ position: 'relative', width: '100%' }}>
               {/* Selfie */}
               <img src="/background/selfieTYPSESHIT.png" alt="selfie" style={{ width: '100%', height: 'auto', display: 'block', border: '2px solid rgba(255,255,255,0.85)' }} />
-              {/* Name — overlaid above face */}
-              <img src="/other/finalNamept2-1.png" alt="John Sang"
-                onTouchStart={e => (e.currentTarget.style.transform = 'translateX(-50%) scale(1.06)')}
-                onTouchEnd={e => (e.currentTarget.style.transform = 'translateX(-50%) scale(1)')}
-                style={{ position: 'absolute', top: '-22%', left: '50%', transform: 'translateX(-50%)', width: '95%', transition: 'transform 0.3s ease' }} />
               {/* Ulquiorra — 58% of selfie width, pushed right */}
               <div style={{ position: 'absolute', top: '15%', left: '88%', width: '78%', border: '2px solid rgba(250,243,243,0.85)', background: 'rgba(255,255,255,0.02)', backdropFilter: 'blur(2px)', transform: 'rotate(4deg)' }} onClick={() => setUlqEditActive(true)}>
                 <img src="/characters/ulquiorra-cifer.jpg" alt="Ulquiorra Cifer" className="gold-glow" style={{ width: '100%', height: 'auto', display: 'block' }} />
@@ -381,6 +384,7 @@ export default function App() {
               <motion.img src="/other/ichigoMaskNoBG.png" alt="ichigo mask" className="gold-glow" style={{ position: 'absolute', bottom: '-14%', right: '-55%', width: '66%', height: 'auto' }} animate={{ y: [0, -6, 0] }} transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }} onClick={triggerVasto} />
               {/* d4 — below mask, pulsing, 30% of selfie width */}
               <motion.img src="/background/d4imgCropped.png" alt="" className="gold-glow" style={{ position: 'absolute', bottom: '-38%', left: '50%', width: '60%', height: 'auto', zIndex: 50 }} animate={{ scale: [1, 1.06, 1] }} transition={{ duration: 2.5, repeat: Infinity, ease: 'easeInOut' }} onClick={triggerFaker} />
+            </div>
             </div>
 
             {/* Social links — row, left edge aligned with selfie */}
