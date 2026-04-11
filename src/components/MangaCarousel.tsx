@@ -2,8 +2,10 @@ import { useState, useEffect, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 
 const MANGA_IMAGES = [
-  { src: '/manga/musashiTUFFAH.jpg', alt: 'Musashi' },
-  // add more: { src: '/manga/yourImage.jpg', alt: 'Title' }
+  { src: '/manga/musashiTUFFAH.jpg', alt: 'Musashi',  height: '34vh', fit: 'cover'    as const, pos: 'center' },
+  { src: '/manga/mugetsu.jpg',        alt: 'Mugetsu',  height: '42vh', fit: 'cover'    as const, pos: 'left center' },
+  { src: '/manga/juuzou.jpg',         alt: 'Juuzou',   height: '34vh', fit: 'cover'    as const, pos: 'center' },
+  { src: '/manga/takizawa.jpg',       alt: 'Takizawa', height: '34vh', fit: 'cover'    as const, pos: 'center' },
 ]
 
 const INTERVAL_MS = 5000
@@ -68,7 +70,7 @@ export default function MangaCarousel() {
             <img
               src={MANGA_IMAGES[index].src}
               alt={MANGA_IMAGES[index].alt}
-              style={{ width: '100%', height: 'auto', display: 'block', objectFit: 'cover' }}
+              style={{ width: '100%', height: MANGA_IMAGES[index].height, display: 'block', objectFit: MANGA_IMAGES[index].fit, objectPosition: MANGA_IMAGES[index].pos }}
             />
           </motion.div>
         </AnimatePresence>
