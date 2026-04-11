@@ -5,6 +5,7 @@ import BrutalistNoise from '@/components/BrutalistNoise'
 import MangaPanel from '@/components/MangaPanel'
 import Intro from '@/components/Intro'
 import IPod from '@/components/IPod'
+import MangaCarousel from '@/components/MangaCarousel'
 import { useAlphaHover } from '@/hooks/useAlphaHover'
 import { Analytics } from '@vercel/analytics/react'
 
@@ -466,6 +467,8 @@ export default function App() {
           </div>
         </main>
       )}
+
+      {!sm && <MangaCarousel />}
 
       <IPod
         visible={showIpod}
