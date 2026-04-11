@@ -156,7 +156,7 @@ export default function App() {
       {showIntro && <Intro onDone={handleIntroDone} />}
       <audio ref={audioRef} src={PLAYLIST[trackIndex].src} onEnded={handleTrackEnded} />
       {!sm && <CustomCursor />}
-      {!vastoActive && !fakerActive && !auraActive && !ulqEditActive && !ghoulActive && <BrutalistNoise sm={sm} />}
+      {!vastoActive && !fakerActive && !auraActive && !ulqEditActive && !ghoulActive && <BrutalistNoise sm={sm} onAura={triggerAura} />}
 
       {/* ── DESKTOP LAYOUT (≥768px) ── */}
       {!sm && (
@@ -262,7 +262,7 @@ export default function App() {
           </MangaPanel>
         </motion.div>
 
-        {/* skill tree + goated ppl — top right, below abt me */}
+        {/* skill tree + goated ppl + manga recs — top right, below abt me */}
         <motion.div
           className="fixed flex flex-col gap-3 skill-panel"
           style={{ top: 230, right: 16, zIndex: 10, width: '220px' }}
@@ -278,6 +278,24 @@ export default function App() {
             <p className="font-mono text-xs text-white/80 text-center">
               <a href="https://www.linkedin.com/in/joeyzhangdev/" target="_blank" rel="noopener noreferrer" style={{ color: 'inherit', textDecoration: 'none', cursor: 'none' }}>yaohui zhang</a> · ichigo kurosaki · faker · beifeng
             </p>
+          </MangaPanel>
+          <MangaPanel sfx="バン！">
+            <h2 className="font-display text-xs tracking-widest mb-1 text-center">manga recs</h2>
+            <div className="flex flex-col gap-0.5">
+              {[
+                { label: 'vagabond',                  href: 'https://myanimelist.net/manga/656/Vagabond' },
+                { label: 'tokyo ghoul',               href: 'https://myanimelist.net/manga/33327/Tokyo_Ghoul' },
+                { label: 'aot',                       href: 'https://myanimelist.net/manga/23390/Shingeki_no_Kyojin' },
+                { label: 'one piece',                 href: 'https://myanimelist.net/manga/13/One_Piece' },
+                { label: 'bleach',                    href: 'https://myanimelist.net/manga/12/Bleach' },
+                { label: 'greatest estate developer', href: 'https://myanimelist.net/manga/147272/The_Greatest_Estate_Developer' },
+              ].map(({ label, href }) => (
+                <a key={label} href={href} target="_blank" rel="noopener noreferrer"
+                  className="font-mono text-xs text-white/80 text-center reminder-hover"
+                  style={{ textDecoration: 'none', cursor: 'none', display: 'block' }}
+                >{label}</a>
+              ))}
+            </div>
           </MangaPanel>
         </motion.div>
 
@@ -512,6 +530,15 @@ export default function App() {
       </>
       )}
 
+      {/* Cyber sigil 1 — mobile top right, outside main to avoid stacking context issues */}
+      {sm && !vastoActive && !ulqEditActive && !ghoulActive && !fakerActive && !auraActive && <img src="/background/cybersigil 1.jpg" alt="" style={{ position: 'fixed', top: 12, right: 12, width: '120px', height: 'auto', opacity: 0.9, mixBlendMode: 'screen', zIndex: 9999, pointerEvents: 'none' }} />}
+      {/* cgangel — mobile bottom left */}
+      {sm && <img src="/background/cgangel.jpg" alt="" aria-hidden="true" style={{ position: 'fixed', bottom: '0%', left: '0%', width: 'clamp(140px, 42vw, 220px)', height: 'auto', opacity: 0.3, zIndex: 1, pointerEvents: 'none', objectFit: 'contain', mixBlendMode: 'screen', filter: 'grayscale(20%)' }} />}
+      {/* flower1 — mobile top left */}
+      {sm && <img src="/background/flower1.jpg" alt="" aria-hidden="true" style={{ position: 'fixed', top: '2%', left: '2%', width: 'clamp(80px, 22vw, 140px)', height: 'auto', opacity: 0.35, zIndex: 1, pointerEvents: 'none', objectFit: 'contain', mixBlendMode: 'screen', filter: 'invert(1)' }} />}
+      {/* flower2 — mobile top center */}
+      {sm && <img src="/background/flower2.jpg" alt="" aria-hidden="true" style={{ position: 'fixed', top: '2%', left: '44%', width: 'clamp(80px, 22vw, 140px)', height: 'auto', opacity: 0.35, zIndex: 1, pointerEvents: 'none', objectFit: 'contain', mixBlendMode: 'screen', filter: 'invert(1)' }} />}
+
       {/* ── MOBILE LAYOUT (<768px) ── */}
       {sm && (
         <main style={{ height: '100dvh', overflow: 'hidden', padding: '0 0.25rem 2rem 1.5rem', display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: '1rem', zIndex: 2, position: 'relative' }}>
@@ -534,16 +561,16 @@ export default function App() {
                 <img src="/characters/ulquiorra-cifer.jpg" alt="Ulquiorra Cifer" className="gold-glow" style={{ width: '100%', height: 'auto', display: 'block' }} />
               </div>
               {/* Mask — bottom right, 36% of selfie width */}
-              <motion.img src="/other/ichigoMaskNoBG.png" alt="ichigo mask" className="gold-glow" style={{ position: 'absolute', bottom: '-14%', right: '-55%', width: '66%', height: 'auto' }} animate={{ y: [0, -6, 0] }} transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }} onClick={triggerVasto} />
+              <motion.img src="/other/ichigoMaskNoBG.png" alt="ichigo mask" className="gold-glow" style={{ position: 'absolute', bottom: '-6%', right: '-55%', width: '66%', height: 'auto' }} animate={{ y: [0, -6, 0] }} transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }} onClick={triggerVasto} />
               {/* d4 — below mask, pulsing, 30% of selfie width */}
-              <motion.img src="/background/d4imgCropped.png" alt="" className="gold-glow" style={{ position: 'absolute', bottom: '-38%', left: '50%', width: '60%', height: 'auto', zIndex: 50 }} animate={{ scale: [1, 1.06, 1] }} transition={{ duration: 2.5, repeat: Infinity, ease: 'easeInOut' }} onClick={triggerFaker} />
+              <motion.img src="/background/d4imgCropped.png" alt="" className="gold-glow" style={{ position: 'absolute', bottom: '-44%', left: '50%', width: '60%', height: 'auto', zIndex: 50 }} animate={{ scale: [1, 1.06, 1] }} transition={{ duration: 2.5, repeat: Infinity, ease: 'easeInOut' }} onClick={triggerFaker} />
             </div>
             </div>
 
             {/* Social links — row, left edge aligned with selfie */}
             <div style={{ display: 'flex', flexDirection: 'row', gap: '0.75rem', flexWrap: 'wrap' }}>
               {[['linkedin', 'https://www.linkedin.com/in/johnsang-/'], ['github', 'https://github.com/JohnSang16'], ['instagram', 'https://www.instagram.com/john.sang0/'], ['tiktok', 'https://www.tiktok.com/@john.sang0']].map(([label, href]) => (
-                <a key={label} href={href} target="_blank" rel="noreferrer" style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.65rem', color: 'rgba(255,255,255,0.5)', textDecoration: 'none', letterSpacing: '0.05em' }}>{label}</a>
+                <a key={label} href={href} target="_blank" rel="noreferrer" style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: '0.8rem', color: 'rgba(255,255,255,0.5)', textDecoration: 'none', letterSpacing: '0.05em' }}>{label}</a>
               ))}
             </div>
           </div>
@@ -551,13 +578,13 @@ export default function App() {
           {/* Reminders (left) + Panels (right) */}
           <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'flex-start', gap: '1rem', width: '100%', flex: 1, minHeight: 0, marginTop: '-0.75rem' }}>
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: '0.3rem', minWidth: '28%', flexShrink: 0, zIndex: 60, position: 'relative', opacity: 0.85 }}>
-              <h3 className="font-display text-xs tracking-widest text-white">reminders:</h3>
+              <h3 className="font-display text-xs tracking-widest text-white" style={{ marginTop: '0.75rem' }}>reminders:</h3>
               {['stay goated', 'leet code daily', 'do exciting shit', 'give more than you get'].map(r => (
                 <p key={r} className="font-mono text-white/70" style={{ fontSize: '0.6rem' }}>{r}</p>
               ))}
               <p className="font-mono aurafarm-text" style={{ fontSize: '0.6rem', color: 'rgba(255,255,255,0.7)', transition: 'color 0.2s ease, text-shadow 0.2s ease' }} onClick={triggerAura}>aurafarm</p>
             </div>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '0', flex: 1, overflowY: 'auto', paddingRight: '0.25rem', scrollbarWidth: 'none', zIndex: 60, position: 'relative', opacity: 0.85 }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0', flex: 1, overflowY: 'auto', overflowX: 'hidden', maxHeight: '100%', paddingRight: '0.25rem', scrollbarWidth: 'none', zIndex: 60, position: 'relative', opacity: 0.85 }}>
               <MangaPanel sfx="ドン！">
                 <h2 className="font-display text-xs tracking-widest mb-1 text-center">abt me</h2>
                 <p className="font-mono text-white/70 text-center" style={{ fontSize: '0.6rem' }}>lol midlane d2 · progsuhq vice president · professional larper · wpm 155</p>
@@ -575,6 +602,23 @@ export default function App() {
                 <p className="font-mono text-white/70 text-center" style={{ fontSize: '0.6rem' }}>
                   <a href="https://www.linkedin.com/in/joeyzhangdev/" target="_blank" rel="noopener noreferrer" style={{ color: 'inherit', textDecoration: 'none' }}>yaohui zhang</a> · ichigo kurosaki · faker · beifeng
                 </p>
+                <h2 className="font-display text-xs tracking-widest mt-2 mb-1 text-center">manga recs</h2>
+                <div className="flex flex-col gap-0.5">
+                  {[
+                    { label: 'vagabond',                  href: 'https://myanimelist.net/manga/656/Vagabond' },
+                    { label: 'tokyo ghoul',               href: 'https://myanimelist.net/manga/33327/Tokyo_Ghoul' },
+                    { label: 'aot',                       href: 'https://myanimelist.net/manga/23390/Shingeki_no_Kyojin' },
+                    { label: 'one piece',                 href: 'https://myanimelist.net/manga/13/One_Piece' },
+                    { label: 'bleach',                    href: 'https://myanimelist.net/manga/12/Bleach' },
+                    { label: 'greatest estate developer', href: 'https://myanimelist.net/manga/147272/The_Greatest_Estate_Developer' },
+                  ].map(({ label, href }) => (
+                    <a key={label} href={href} target="_blank" rel="noopener noreferrer"
+                      className="font-mono text-white/70 text-center reminder-hover"
+                      style={{ fontSize: '0.6rem', textDecoration: 'none' }}>
+                      {label}
+                    </a>
+                  ))}
+                </div>
               </MangaPanel>
             </div>
           </div>
@@ -589,16 +633,45 @@ export default function App() {
               </div>
               {!vastoActive && (
                 <span className="hint-gold-glow" style={{ position: 'fixed', top: '76%', left: '3%', fontFamily: "'JetBrains Mono', monospace", fontSize: '0.6rem', letterSpacing: '0.1em', zIndex: 200 }}>
-                  hint: tap the gold items~
+                  click around! you might like what you find..
                 </span>
               )}
             </>
           )}
 
-          {/* Red lily — fixed bottom center */}
-          <div style={{ position: 'fixed', bottom: 0, left: '50%', transform: 'translateX(-50%)', zIndex: 10, lineHeight: 0, fontSize: 0 }} onClick={() => { setGhoulActive(true); setGhoulIndex(0); setShowIpod(false); setTimeout(() => { const videos = ghoulScrollRef.current?.querySelectorAll('video'); const first = videos?.[0] as HTMLVideoElement | undefined; first?.play().catch(() => {}) }, 150) }}>
-            <img src="/background/redlily.png" alt="red lily" className="gold-glow" style={{ height: '18vh', width: 'auto', display: 'block', margin: 0, padding: 0 }} />
-          </div>
+          {/* Flower4 cluster — mobile */}
+          {[
+            { bottom: '-4%',  left: '20%', rotate: '-32deg' },
+            { bottom: '-2%',  left: '27%', rotate: '-22deg' },
+            { bottom: '0%',   left: '34%', rotate: '-10deg' },
+            { bottom: '0%',   left: '41%', rotate: '2deg'   },
+            { bottom: '0%',   left: '48%', rotate: '12deg'  },
+            { bottom: '-2%',  left: '55%', rotate: '22deg'  },
+            { bottom: '-4%',  left: '62%', rotate: '32deg'  },
+          ].map(({ bottom, left, rotate }, i) => (
+            <div
+              key={i}
+              className="fixed pointer-events-auto"
+              style={{ bottom, left, zIndex: 10, cursor: 'none', mixBlendMode: 'screen' }}
+              onClick={() => { setGhoulActive(true); setGhoulIndex(0); setShowIpod(false); setTimeout(() => { const videos = ghoulScrollRef.current?.querySelectorAll('video'); const first = videos?.[0] as HTMLVideoElement | undefined; first?.play().catch(() => {}) }, 150) }}
+            >
+              <img
+                src="/background/flower4.jpg"
+                alt=""
+                className="flower-cluster-img"
+                style={{
+                  width: 'clamp(70px, 16vw, 110px)',
+                  height: 'auto',
+                  objectFit: 'contain',
+                  display: 'block',
+                  cursor: 'none',
+                  transform: `rotate(${rotate})`,
+                  opacity: 0.35,
+                  mixBlendMode: 'screen',
+                }}
+              />
+            </div>
+          ))}
         </main>
       )}
 

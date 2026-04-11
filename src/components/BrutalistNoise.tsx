@@ -2,16 +2,14 @@ import { useEffect, useRef } from 'react'
 
 const COMMENTS = [
   { text: 'lock in bro',          x: '8%',  y: '18%', rotate: -12, href: 'https://www.youtube.com/watch?v=nmcmx2sLa-4' },
-  { text: '1000-7?',              x: '14%', y: '72%', rotate: 8,   href: 'https://www.youtube.com/watch?v=oPMoUP09RPQ' },
+  { text: '1000-7?',              x: '82%', y: '40%', rotate: 8,   href: 'https://www.youtube.com/watch?v=oPMoUP09RPQ' },
   { text: 'midbeast',             x: '72%', y: '82%', rotate: -6,  href: 'https://www.youtube.com/channel/UC6mWuX4R9Yn5y0fWCwzqiSg' },
   { text: 'faker what was that!?',x: '72%', y: '8%',  rotate: 10,  href: 'https://www.youtube.com/watch?v=ZPCfoCVCx3U' },
   { text: 'focus.',               x: '38%', y: '88%', rotate: -9,  href: undefined },
   { text: 'cracked dev type shi', x: '62%', y: '28%', rotate: -8,  href: 'https://www.linkedin.com/in/johnsang-/' },
   { text: 'liam elison',          x: '20%', y: '35%', rotate: -4,  href: 'https://www.linkedin.com/in/liam-ellison/' },
   { text: 'diff player',          x: '55%', y: '12%', rotate: 11,  href: 'https://op.gg/lol/summoners/na/ZeroadTV-NA1' },
-  { text: 'stay locked',          x: '30%', y: '60%', rotate: -14, href: undefined },
-  { text: 'touch grass?',         x: '88%', y: '68%', rotate: 6,   href: undefined },
-  { text: 'jared beresford',      x: '55%', y: '75%', rotate: -5,  href: 'https://www.linkedin.com/in/jaredberesford/' },
+  { text: 'touch grass?',         x: '38%', y: '62%', rotate: 6,   href: undefined },
   { text: 'progsuhq',             x: '65%', y: '52%', rotate: 7,   href: 'https://www.linkedin.com/company/progsu/posts/?feedView=all' },
 ]
 
@@ -29,7 +27,7 @@ const WIREFRAMES = [
   { x: 420, y: 500, w: 70, h: 40,  skew: -6 },
 ]
 
-export default function BrutalistNoise({ sm = false }: { sm?: boolean }) {
+export default function BrutalistNoise({ sm = false, onAura }: { sm?: boolean; onAura?: () => void }) {
   const layerRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -94,12 +92,12 @@ export default function BrutalistNoise({ sm = false }: { sm?: boolean }) {
         {/* Floating toxic comments */}
         {COMMENTS.map((c, i) => {
           if (sm && c.text === 'cracked dev type shi') return null
-          const x = sm && c.text === '1000-7?' ? '5%'
+          const x = sm && c.text === '1000-7?' ? '82%'
                   : sm && c.text === 'diff player' ? '72%'
                   : sm && c.text === 'progsuhq' ? '18%'
                   : sm && c.text === 'midbeast' ? '8%'
                   : c.x
-          const y = sm && c.text === '1000-7?' ? '88%'
+          const y = sm && c.text === '1000-7?' ? '45%'
                   : sm && c.text === 'diff player' ? '88%'
                   : sm && c.text === 'progsuhq' ? '70%'
                   : c.y
@@ -125,7 +123,7 @@ export default function BrutalistNoise({ sm = false }: { sm?: boolean }) {
       {/* Terminal block — bottom left */}
       <div
         className="fixed pointer-events-none select-none"
-        style={{ bottom: 32, right: '60%', zIndex: 20, opacity: 0.35, filter: 'blur(0.4px)', fontFamily: "'JetBrains Mono', monospace", fontSize: '0.8rem', lineHeight: 1.7, color: '#39FF14' }}
+        style={{ bottom: 32, right: '60%', zIndex: 20, opacity: 0.35, filter: 'blur(0.4px)', fontFamily: "'JetBrains Mono', monospace", fontSize: '0.55rem', lineHeight: 1.7, color: '#39FF14' }}
       >
         <div>#include &lt;stdio.h&gt;</div>
         <div>int main() {'{'}</div>
