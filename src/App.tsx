@@ -161,9 +161,15 @@ export default function App() {
       {!sm && (
       <>
       {!vastoActive && (
-        <span className="hint-gold-glow fixed font-mono pointer-events-none select-none" style={{ top: 'calc(70% + 2.5rem)', left: '50%', transform: 'translateX(-50%)', fontSize: '0.75rem', fontWeight: 700, letterSpacing: '0.12em', zIndex: 7999, whiteSpace: 'nowrap' }}>
-          hint: click the golden icons & bg comments~
-        </span>
+        <motion.span
+          className="hint-gold-glow fixed font-mono pointer-events-none select-none"
+          style={{ top: 'calc(70% + 2.5rem)', left: '32%', fontSize: '0.75rem', fontWeight: 700, letterSpacing: '0.12em', zIndex: 7999, whiteSpace: 'nowrap' }}
+          initial={{ opacity: 0, x: -30 }}
+          animate={{ opacity: [0, 1, 1, 0.6, 1], x: 0, skewX: [0, -3, 0, 2, 0] }}
+          transition={{ duration: 1.2, ease: 'easeOut', times: [0, 0.4, 0.6, 0.75, 1] }}
+        >
+          click around! you might like what you find..
+        </motion.span>
       )}
       {/* Floating ichigo mask — outside main to avoid stacking context conflicts */}
       <motion.img

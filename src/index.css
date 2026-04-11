@@ -225,11 +225,16 @@ html::after {
 
 
 @keyframes gold-pulse {
-  0%, 100% { color: rgba(179,163,105,0.5); text-shadow: none; }
-  50%       { color: rgba(179,163,105,1); text-shadow: 0 0 8px rgba(179,163,105,0.8), 0 0 16px rgba(179,163,105,0.4); }
+  0%   { color: rgba(179,163,105,0.4); text-shadow: none; letter-spacing: 0.12em; }
+  20%  { color: rgba(179,163,105,0.9); text-shadow: 0 0 6px rgba(179,163,105,0.6); letter-spacing: 0.14em; }
+  45%  { color: rgba(255,220,80,1);    text-shadow: 0 0 12px rgba(255,220,80,0.9), 0 0 28px rgba(179,163,105,0.5); letter-spacing: 0.16em; }
+  55%  { color: rgba(255,255,200,0.95); text-shadow: 0 0 4px #fff, 0 0 18px rgba(255,220,80,0.7); }
+  70%  { color: rgba(179,163,105,0.75); text-shadow: 0 0 8px rgba(179,163,105,0.4); letter-spacing: 0.12em; }
+  85%  { color: rgba(179,163,105,0.3); text-shadow: none; }
+  100% { color: rgba(179,163,105,0.4); text-shadow: none; letter-spacing: 0.12em; }
 }
 .hint-gold-glow {
-  animation: gold-pulse 2.5s ease-in-out infinite;
+  animation: gold-pulse 3.2s ease-in-out infinite;
 }
 
 /* iPod shimmer swipe */
