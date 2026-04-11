@@ -26,71 +26,101 @@ export default function IPod({ visible, isPlaying, onPlayPause, onSkipNext, onSk
           className="fixed"
           style={{ top: '30%', right: '22%', zIndex: 50000, pointerEvents: 'none' }}
         >
-          <svg width="300" height="338" viewBox="0 0 110 190" fill="none" xmlns="http://www.w3.org/2000/svg">
-            {/* Body */}
-            <rect x="1" y="1" width="108" height="188" rx="18" fill="#0d1b2a" stroke="#1e3a5f" strokeWidth="1.5"/>
-            {/* Subtle sheen */}
-            <rect x="1" y="1" width="108" height="94" rx="18" fill="url(#sheen)" opacity="0.15"/>
+          <svg width="220" height="422" viewBox="0 0 160 260" fill="none" xmlns="http://www.w3.org/2000/svg">
             <defs>
-              <linearGradient id="sheen" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stopColor="#fff"/>
-                <stop offset="100%" stopColor="transparent"/>
+              <linearGradient id="bodyGrad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stopColor="#1c1c1e"/>
+                <stop offset="100%" stopColor="#0a0a0c"/>
               </linearGradient>
-            </defs>
-            {/* Screen bezel */}
-            <rect x="12" y="14" width="86" height="72" rx="6" fill="#050d18"/>
-            {/* Screen */}
-            <rect x="14" y="16" width="82" height="68" rx="5" fill="#091524"/>
-            {/* Album art — full screen */}
-            <defs>
+              <linearGradient id="sheen" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stopColor="#ffffff" stopOpacity="0.08"/>
+                <stop offset="100%" stopColor="#ffffff" stopOpacity="0"/>
+              </linearGradient>
+              <linearGradient id="wheelGrad" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stopColor="#2a2a2e"/>
+                <stop offset="100%" stopColor="#1a1a1c"/>
+              </linearGradient>
+              <radialGradient id="wheelSheen" cx="40%" cy="30%" r="60%">
+                <stop offset="0%" stopColor="#ffffff" stopOpacity="0.1"/>
+                <stop offset="100%" stopColor="#ffffff" stopOpacity="0"/>
+              </radialGradient>
               <clipPath id="artClip">
-                <rect x="14" y="16" width="82" height="68" rx="5"/>
+                <rect x="16" y="18" width="128" height="106" rx="6"/>
               </clipPath>
+              <clipPath id="bodyClip">
+                <rect x="1" y="1" width="158" height="258" rx="22"/>
+              </clipPath>
+              <filter id="screenGlow">
+                <feGaussianBlur stdDeviation="1.5" result="blur"/>
+                <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+              </filter>
             </defs>
-            {albumArt && <image href={albumArt} x="14" y="16" width="82" height="68" clipPath="url(#artClip)" preserveAspectRatio="xMidYMid slice"/>}
-            {/* Text overlay on art */}
-            <rect x="14" y="63" width="82" height="21" fill="rgba(0,0,0,0.5)" clipPath="url(#artClip)"/>
-            <text x="55" y="73" textAnchor="middle" fill="#fff" fontSize="5" fontFamily="monospace">{trackName.slice(0, 18)}</text>
-            <text x="55" y="81" textAnchor="middle" fill="#ccc" fontSize="4" fontFamily="monospace">Nightcore</text>
-            {/* Progress bar bg */}
-            <rect x="18" y="86" width="74" height="3" rx="1.5" fill="#ccc"/>
+
+            {/* Body */}
+            <rect x="1" y="1" width="158" height="258" rx="22" fill="url(#bodyGrad)" stroke="#333336" strokeWidth="1.5"/>
+            {/* Body sheen */}
+            <rect x="1" y="1" width="158" height="130" rx="22" fill="url(#sheen)" clipPath="url(#bodyClip)"/>
+            {/* Side highlight */}
+            <rect x="1" y="20" width="2" height="220" rx="1" fill="#ffffff" opacity="0.04"/>
+
+            {/* Screen bezel */}
+            <rect x="14" y="16" width="132" height="110" rx="8" fill="#000" stroke="#2a2a2e" strokeWidth="1"/>
+            {/* Screen */}
+            <rect x="16" y="18" width="128" height="106" rx="6" fill="#050505"/>
+
+            {/* Album art */}
+            {albumArt && <image href={albumArt} x="16" y="18" width="128" height="106" clipPath="url(#artClip)" preserveAspectRatio="xMidYMid slice"/>}
+
+            {/* Track name overlay */}
+            <rect x="16" y="100" width="128" height="24" fill="rgba(0,0,0,0.65)" clipPath="url(#artClip)"/>
+            <text x="80" y="112" textAnchor="middle" fill="#ffffff" fontSize="6.5" fontFamily="monospace" fontWeight="bold">{trackName.slice(0, 22)}</text>
+            <text x="80" y="120" textAnchor="middle" fill="#aaaaaa" fontSize="5" fontFamily="monospace">Nightcore</text>
+
+            {/* Progress bar track */}
+            <rect x="20" y="132" width="120" height="2.5" rx="1.25" fill="#2a2a2e"/>
             {/* Progress bar fill */}
-            <rect x="18" y="86" width="30" height="3" rx="1.5" fill="#888" opacity="0.8"/>
-            {/* Click wheel outer */}
-            <circle cx="55" cy="140" r="38" fill="#112236" stroke="#1e3a5f" strokeWidth="1.5"/>
-            {/* Click wheel inner ring */}
-            <circle cx="55" cy="140" r="34" fill="none" stroke="#1a3350" strokeWidth="0.5"/>
+            <rect x="20" y="132" width="48" height="2.5" rx="1.25" fill="#e0e0e0" opacity="0.7"/>
+            {/* Progress dot */}
+            <circle cx="68" cy="133.25" r="3" fill="#ffffff" opacity="0.9"/>
 
-            {/* MENU */}
-            <text x="55" y="112" textAnchor="middle" fill="#555" fontSize="7" fontFamily="monospace">MENU</text>
+            {/* Time labels */}
+            <text x="20" y="143" fill="#666" fontSize="4.5" fontFamily="monospace">0:00</text>
+            <text x="140" y="143" textAnchor="end" fill="#666" fontSize="4.5" fontFamily="monospace">-3:30</text>
 
-            {/* Skip next (>>) — right */}
-            <text x="83" y="144" textAnchor="middle" fill="#555" fontSize="9" style={{ pointerEvents: 'none' }}>▶▶</text>
-            <circle cx="83" cy="140" r="12" fill="transparent" style={btnStyle} onClick={onSkipNext} />
+            {/* Click wheel housing */}
+            <circle cx="80" cy="198" r="52" fill="#111113" stroke="#2a2a2e" strokeWidth="1.5"/>
+            <circle cx="80" cy="198" r="52" fill="url(#wheelSheen)"/>
 
-            {/* Skip prev (<<) — left */}
-            <text x="27" y="144" textAnchor="middle" fill="#555" fontSize="9" style={{ pointerEvents: 'none' }}>◀◀</text>
-            <circle cx="27" cy="140" r="12" fill="transparent" style={btnStyle} onClick={onSkipPrev} />
+            {/* Wheel ring groove */}
+            <circle cx="80" cy="198" r="47" fill="none" stroke="#222224" strokeWidth="0.75"/>
+            <circle cx="80" cy="198" r="38" fill="url(#wheelGrad)" stroke="#1e1e20" strokeWidth="0.5"/>
 
-            {/* Seek forward (>) — bottom right quadrant */}
-            <text x="68" y="168" textAnchor="middle" fill="#555" fontSize="8" style={{ pointerEvents: 'none' }}>▶</text>
-            <circle cx="68" cy="165" r="10" fill="transparent" style={btnStyle} onClick={onSeekForward} />
+            {/* MENU label */}
+            <text x="80" y="162" textAnchor="middle" fill="#888" fontSize="7.5" fontFamily="monospace" letterSpacing="2">MENU</text>
 
-            {/* Seek back (<) — bottom left quadrant */}
-            <text x="42" y="168" textAnchor="middle" fill="#555" fontSize="8" style={{ pointerEvents: 'none' }}>◀</text>
-            <circle cx="42" cy="165" r="10" fill="transparent" style={btnStyle} onClick={onSeekBack} />
+            {/* Skip next — right */}
+            <text x="118" y="202" textAnchor="middle" fill="#777" fontSize="9" style={{ pointerEvents: 'none' }}>▶▶</text>
+            <circle cx="118" cy="198" r="14" fill="transparent" style={btnStyle} onClick={onSkipNext}/>
 
-            {/* Center circle — play/pause */}
-            <circle
-              cx="55" cy="140" r="16"
-              fill={isPlaying ? '#1a4a6e' : '#152f4a'}
-              stroke="#2a6090" strokeWidth="0.75"
-              style={btnStyle}
-              onClick={onPlayPause}
-            />
-            <text x="55" y="144" textAnchor="middle" fill="#7eb8d4" fontSize="10" style={{ pointerEvents: 'none' }}>
+            {/* Skip prev — left */}
+            <text x="42" y="202" textAnchor="middle" fill="#777" fontSize="9" style={{ pointerEvents: 'none' }}>◀◀</text>
+            <circle cx="42" cy="198" r="14" fill="transparent" style={btnStyle} onClick={onSkipPrev}/>
+
+            {/* Seek forward — bottom right */}
+            <text x="104" y="230" textAnchor="middle" fill="#777" fontSize="9" style={{ pointerEvents: 'none' }}>▶</text>
+            <circle cx="104" cy="227" r="12" fill="transparent" style={btnStyle} onClick={onSeekForward}/>
+
+            {/* Seek back — bottom left */}
+            <text x="56" y="230" textAnchor="middle" fill="#777" fontSize="9" style={{ pointerEvents: 'none' }}>◀</text>
+            <circle cx="56" cy="227" r="12" fill="transparent" style={btnStyle} onClick={onSeekBack}/>
+
+            {/* Center button */}
+            <circle cx="80" cy="198" r="18" fill={isPlaying ? '#1f1f22' : '#191919'} stroke="#333336" strokeWidth="1"/>
+            <circle cx="80" cy="198" r="18" fill="url(#wheelSheen)"/>
+            <text x="80" y="203" textAnchor="middle" fill={isPlaying ? '#dddddd' : '#999'} fontSize="11" style={{ pointerEvents: 'none' }}>
               {isPlaying ? '❚❚' : '▶'}
             </text>
+            <circle cx="80" cy="198" r="18" fill="transparent" style={btnStyle} onClick={onPlayPause}/>
           </svg>
         </motion.div>
       )}

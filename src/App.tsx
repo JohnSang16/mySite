@@ -123,6 +123,7 @@ export default function App() {
     { src: '/sfx/Nightcore - Clarity.mp3',              name: 'Clarity',              art: '/background/clarityIMG.png'       },
     { src: '/sfx/Nightcore - Just A Dream.mp3',         name: 'Just A Dream',         art: '/background/justadreamIMG.png'    },
     { src: '/sfx/Nightcore - Take A Hint.mp3',          name: 'Take A Hint',          art: '/background/takeahitIMG.png'      },
+    { src: "/sfx/Nightcore I'm Gonna Show You Crazy  Lyrics.mp3", name: "I'm Gonna Show You Crazy", art: '/background/juuzouimgonashowoyucrazyimage.jpg' },
   ]
 
   const handleTrackEnded = () => {
@@ -248,7 +249,7 @@ export default function App() {
         {/* abt me + training arc — top right, above skill tree */}
         <motion.div
           className="fixed flex flex-col gap-3 abt-panel"
-          style={{ top: 16, right: 16, zIndex: 10, width: '220px' }}
+          style={{ top: 40, right: 16, zIndex: 10, width: '220px' }}
           animate={{ y: [0, -10, 0] }}
           transition={{ duration: 3.5, repeat: Infinity, ease: 'easeInOut', delay: 0.4 }}
         >
@@ -265,7 +266,7 @@ export default function App() {
         {/* skill tree + goated ppl + manga recs — top right, below abt me */}
         <motion.div
           className="fixed flex flex-col gap-3 skill-panel"
-          style={{ top: 280, right: 16, zIndex: 10, width: '220px' }}
+          style={{ top: 304, right: 16, zIndex: 10, width: '220px' }}
           animate={{ y: [0, -10, 0] }}
           transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut', delay: 1.2 }}
         >
