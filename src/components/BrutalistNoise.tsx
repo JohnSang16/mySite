@@ -9,7 +9,7 @@ const COMMENTS = [
   { text: 'cracked dev type shi', x: '62%', y: '28%', rotate: -8,  href: 'https://www.linkedin.com/in/johnsang-/' },
   { text: 'liam elison',          x: '20%', y: '35%', rotate: -4,  href: 'https://www.linkedin.com/in/liam-ellison/' },
   { text: 'diff player',          x: '55%', y: '12%', rotate: 11,  href: 'https://op.gg/lol/summoners/na/ZeroadTV-NA1' },
-  { text: 'touch grass?',         x: '38%', y: '62%', rotate: 6,   href: undefined },
+  { text: 'touch grass?',         x: '8%',  y: '62%', rotate: 6,   href: undefined },
   { text: 'progsuhq',             x: '65%', y: '52%', rotate: 7,   href: 'https://www.linkedin.com/company/progsu/posts/?feedView=all' },
 ]
 
@@ -123,7 +123,7 @@ export default function BrutalistNoise({ sm = false, onAura }: { sm?: boolean; o
       {/* Terminal block — bottom left */}
       <div
         className="fixed pointer-events-none select-none"
-        style={{ bottom: 32, right: '60%', zIndex: 20, opacity: 0.35, filter: 'blur(0.4px)', fontFamily: "'JetBrains Mono', monospace", fontSize: '0.55rem', lineHeight: 1.7, color: '#39FF14' }}
+        style={{ bottom: 32, right: '60%', zIndex: 20, opacity: 0.35, filter: 'blur(0.4px)', fontFamily: "'JetBrains Mono', monospace", fontSize: '0.85rem', lineHeight: 1.7, color: '#39FF14' }}
       >
         <div>#include &lt;stdio.h&gt;</div>
         <div>int main() {'{'}</div>

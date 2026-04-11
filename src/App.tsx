@@ -265,7 +265,7 @@ export default function App() {
         {/* skill tree + goated ppl + manga recs — top right, below abt me */}
         <motion.div
           className="fixed flex flex-col gap-3 skill-panel"
-          style={{ top: 230, right: 16, zIndex: 10, width: '220px' }}
+          style={{ top: 280, right: 16, zIndex: 10, width: '220px' }}
           animate={{ y: [0, -10, 0] }}
           transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut', delay: 1.2 }}
         >
@@ -278,24 +278,6 @@ export default function App() {
             <p className="font-mono text-xs text-white/80 text-center">
               <a href="https://www.linkedin.com/in/joeyzhangdev/" target="_blank" rel="noopener noreferrer" style={{ color: 'inherit', textDecoration: 'none', cursor: 'none' }}>yaohui zhang</a> · ichigo kurosaki · faker · beifeng
             </p>
-          </MangaPanel>
-          <MangaPanel sfx="バン！">
-            <h2 className="font-display text-xs tracking-widest mb-1 text-center">manga recs</h2>
-            <div className="flex flex-col gap-0.5">
-              {[
-                { label: 'vagabond',                  href: 'https://myanimelist.net/manga/656/Vagabond' },
-                { label: 'tokyo ghoul',               href: 'https://myanimelist.net/manga/33327/Tokyo_Ghoul' },
-                { label: 'aot',                       href: 'https://myanimelist.net/manga/23390/Shingeki_no_Kyojin' },
-                { label: 'one piece',                 href: 'https://myanimelist.net/manga/13/One_Piece' },
-                { label: 'bleach',                    href: 'https://myanimelist.net/manga/12/Bleach' },
-                { label: 'greatest estate developer', href: 'https://myanimelist.net/manga/147272/The_Greatest_Estate_Developer' },
-              ].map(({ label, href }) => (
-                <a key={label} href={href} target="_blank" rel="noopener noreferrer"
-                  className="font-mono text-xs text-white/80 text-center reminder-hover"
-                  style={{ textDecoration: 'none', cursor: 'none', display: 'block' }}
-                >{label}</a>
-              ))}
-            </div>
           </MangaPanel>
         </motion.div>
 

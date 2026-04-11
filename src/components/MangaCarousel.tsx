@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 
 const MANGA_IMAGES = [
-  { src: '/manga/musashiTUFFAH.jpg', alt: 'Musashi',  height: '34vh', fit: 'cover'    as const, pos: 'center' },
+  { src: '/manga/musashiTUFFAH.jpg', alt: 'Musashi',  height: '34vh', fit: 'cover'    as const, pos: 'top left' },
   { src: '/manga/mugetsu.jpg',        alt: 'Mugetsu',  height: '42vh', fit: 'cover'    as const, pos: 'left center' },
   { src: '/manga/juuzou.jpg',         alt: 'Juuzou',   height: '34vh', fit: 'cover'    as const, pos: 'center' },
   { src: '/manga/takizawa.jpg',       alt: 'Takizawa', height: '34vh', fit: 'cover'    as const, pos: 'center' },
