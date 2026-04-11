@@ -123,7 +123,7 @@ export default function BrutalistNoise({ sm = false, onAura }: { sm?: boolean; o
       {/* Terminal block — bottom left */}
       <div
         className="fixed pointer-events-none select-none"
-        style={{ bottom: 32, right: '60%', zIndex: 20, opacity: 0.35, filter: 'blur(0.4px)', fontFamily: "'JetBrains Mono', monospace", fontSize: '0.85rem', lineHeight: 1.7, color: '#39FF14' }}
+        style={{ bottom: 32, right: '60%', zIndex: 20, opacity: 0.35, filter: 'blur(0.4px)', fontFamily: "'JetBrains Mono', monospace", fontSize: sm ? '0.58rem' : '0.85rem', lineHeight: 1.7, color: '#39FF14' }}
       >
         <div>#include &lt;stdio.h&gt;</div>
         <div>int main() {'{'}</div>

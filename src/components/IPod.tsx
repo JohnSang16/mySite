@@ -10,9 +10,11 @@ interface IPodProps {
   onSeekBack: () => void
   trackName?: string
   albumArt?: string
+  sm?: boolean
+  onClose?: () => void
 }
 
-export default function IPod({ visible, isPlaying, onPlayPause, onSkipNext, onSkipPrev, onSeekForward, onSeekBack, trackName = 'Angel With A Shotgun', albumArt }: IPodProps) {
+export default function IPod({ visible, isPlaying, onPlayPause, onSkipNext, onSkipPrev, onSeekForward, onSeekBack, trackName = 'Angel With A Shotgun', albumArt, sm = false, onClose }: IPodProps) {
   const btnStyle = { cursor: 'none' as const, pointerEvents: 'auto' as const }
 
   return (
@@ -20,13 +22,13 @@ export default function IPod({ visible, isPlaying, onPlayPause, onSkipNext, onSk
       {visible && (
         <motion.div
           initial={{ y: '-110vh' }}
-          animate={{ y: 0 }}
+          animate={{ y: '-50%' }}
           exit={{ y: '-110vh' }}
           transition={{ type: 'spring', stiffness: 180, damping: 22 }}
           className="fixed"
-          style={{ top: '30%', right: '22%', zIndex: 50000, pointerEvents: 'none' }}
+          style={{ top: '50%', left: '50%', x: '-50%', zIndex: 50000, pointerEvents: 'none' }}
         >
-          <svg width="220" height="422" viewBox="0 0 160 260" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <svg width={sm ? 170 : 220} height={sm ? 326 : 422} viewBox="0 0 160 260" fill="none" xmlns="http://www.w3.org/2000/svg">
             <defs>
               <linearGradient id="bodyGrad" x1="0" y1="0" x2="0" y2="1">
                 <stop offset="0%" stopColor="#1c1c1e"/>
@@ -95,8 +97,9 @@ export default function IPod({ visible, isPlaying, onPlayPause, onSkipNext, onSk
             <circle cx="80" cy="198" r="47" fill="none" stroke="#222224" strokeWidth="0.75"/>
             <circle cx="80" cy="198" r="38" fill="url(#wheelGrad)" stroke="#1e1e20" strokeWidth="0.5"/>
 
-            {/* MENU label */}
-            <text x="80" y="162" textAnchor="middle" fill="#888" fontSize="7.5" fontFamily="monospace" letterSpacing="2">MENU</text>
+            {/* EXIT label */}
+            <text x="80" y="162" textAnchor="middle" fill="#888" fontSize="7.5" fontFamily="monospace" letterSpacing="2" style={{ pointerEvents: 'auto', cursor: 'none' }} onClick={onClose}>EXIT</text>
+            <rect x="55" y="152" width="50" height="14" fill="transparent" style={{ pointerEvents: 'auto', cursor: 'none' }} onClick={onClose}/>
 
             {/* Skip next — right */}
             <text x="118" y="202" textAnchor="middle" fill="#777" fontSize="9" style={{ pointerEvents: 'none' }}>▶▶</text>

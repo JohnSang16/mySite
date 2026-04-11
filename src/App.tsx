@@ -663,6 +663,8 @@ export default function App() {
       <IPod
         visible={showIpod}
         isPlaying={isPlaying}
+        sm={sm}
+        onClose={() => setShowIpod(false)}
         onPlayPause={handlePlayPause}
         trackName={PLAYLIST[trackIndex].name}
         albumArt={PLAYLIST[trackIndex].art}
