@@ -26,7 +26,7 @@ export default function IPod({ visible, isPlaying, onPlayPause, onSkipNext, onSk
           className="fixed"
           style={{ top: '30%', right: '22%', zIndex: 50000, pointerEvents: 'none' }}
         >
-          <svg width="200" height="225" viewBox="0 0 110 190" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <svg width="300" height="338" viewBox="0 0 110 190" fill="none" xmlns="http://www.w3.org/2000/svg">
             {/* Body */}
             <rect x="1" y="1" width="108" height="188" rx="18" fill="#0d1b2a" stroke="#1e3a5f" strokeWidth="1.5"/>
             {/* Subtle sheen */}
