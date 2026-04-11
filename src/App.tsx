@@ -208,17 +208,42 @@ export default function App() {
 
 
         {/* Reminder column */}
-        <div
+        <motion.div
           className="fixed pointer-events-auto select-none flex flex-col items-start gap-1"
           style={{ zIndex: 4, left: 56, top: 116, maxWidth: '28%', textAlign: 'left' }}
+          animate={{ y: [0, -10, 0] }}
+          transition={{ duration: 3.8, repeat: Infinity, ease: 'easeInOut', delay: 0.8 }}
         >
           <h3 className="font-display text-sm tracking-widest text-white reminder-hover" style={{ pointerEvents: 'auto' }}>reminders:</h3>
           <p className="font-mono text-xs text-white/70 reminder-hover" style={{ pointerEvents: 'auto' }}>stay goated</p>
-          <p className="font-mono text-xs text-white/70 reminder-hover" style={{ pointerEvents: 'auto' }}>leet code daily</p>
+          <a href="https://leetcode.com/problemset/" target="_blank" rel="noopener noreferrer" className="font-mono text-xs text-white/70 reminder-hover" style={{ pointerEvents: 'auto', textDecoration: 'none', cursor: 'none' }}>leet code daily</a>
           <p className="font-mono text-xs text-white/70 reminder-hover" style={{ pointerEvents: 'auto' }}>do exciting shit</p>
           <p className="font-mono text-xs aurafarm-text" style={{ pointerEvents: 'auto', color: 'rgba(255,255,255,0.7)', transition: 'color 0.2s ease, text-shadow 0.2s ease' }} onClick={triggerAura}>aurafarm</p>
           <p className="font-mono text-xs text-white/70 reminder-hover" style={{ pointerEvents: 'auto' }}>give more than you get</p>
-        </div>
+        </motion.div>
+
+        {/* Manga recs column */}
+        <motion.div
+          className="fixed pointer-events-auto select-none flex flex-col items-start gap-1"
+          style={{ zIndex: 4, left: 56, top: 250, maxWidth: '28%', textAlign: 'left' }}
+          animate={{ y: [0, -10, 0] }}
+          transition={{ duration: 4.2, repeat: Infinity, ease: 'easeInOut', delay: 1.8 }}
+        >
+          <h3 className="font-display text-sm tracking-widest text-white reminder-hover" style={{ pointerEvents: 'auto' }}>manga recs:</h3>
+          {[
+            { label: 'vagabond',                   href: 'https://myanimelist.net/manga/656/Vagabond' },
+            { label: 'tokyo ghoul',                href: 'https://myanimelist.net/manga/33327/Tokyo_Ghoul' },
+            { label: 'aot',                        href: 'https://myanimelist.net/manga/23390/Shingeki_no_Kyojin' },
+            { label: 'one piece',                  href: 'https://myanimelist.net/manga/13/One_Piece' },
+            { label: 'bleach',                     href: 'https://myanimelist.net/manga/12/Bleach' },
+            { label: 'greatest estate developer',  href: 'https://myanimelist.net/manga/147272/The_Greatest_Estate_Developer' },
+          ].map(({ label, href }) => (
+            <a key={label} href={href} target="_blank" rel="noopener noreferrer"
+              className="font-mono text-xs text-white/70 reminder-hover"
+              style={{ pointerEvents: 'auto', textDecoration: 'none', cursor: 'none' }}
+            >{label}</a>
+          ))}
+        </motion.div>
 
         {/* abt me + training arc — top right, above skill tree */}
         <motion.div
@@ -290,11 +315,11 @@ export default function App() {
             </div>
           </div>
           {/* Social links — left-aligned under selfie */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.25rem', pointerEvents: 'auto' }}>
-            <a href="https://www.linkedin.com/in/johnsang-/" target="_blank" rel="noreferrer" className="font-mono text-xs text-white/50 reminder-hover" style={{ textDecoration: 'none', letterSpacing: '0.1em' }}>linkedin ↗</a>
-            <a href="https://github.com/JohnSang16" target="_blank" rel="noreferrer" className="font-mono text-xs text-white/50 reminder-hover" style={{ textDecoration: 'none', letterSpacing: '0.1em' }}>github ↗</a>
-            <a href="https://www.instagram.com/john.sang0/" target="_blank" rel="noreferrer" className="font-mono text-xs text-white/50 reminder-hover" style={{ textDecoration: 'none', letterSpacing: '0.1em' }}>instagram ↗</a>
-            <a href="https://www.tiktok.com/@john.sang0" target="_blank" rel="noreferrer" className="font-mono text-xs text-white/50 reminder-hover" style={{ textDecoration: 'none', letterSpacing: '0.1em' }}>tiktok ↗</a>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.35rem', pointerEvents: 'auto' }}>
+            <a href="https://www.linkedin.com/in/johnsang-/" target="_blank" rel="noreferrer" className="font-mono text-white/50 reminder-hover" style={{ textDecoration: 'none', letterSpacing: '0.1em', fontSize: '0.85rem' }}>linkedin ↗</a>
+            <a href="https://github.com/JohnSang16" target="_blank" rel="noreferrer" className="font-mono text-white/50 reminder-hover" style={{ textDecoration: 'none', letterSpacing: '0.1em', fontSize: '0.85rem' }}>github ↗</a>
+            <a href="https://www.instagram.com/john.sang0/" target="_blank" rel="noreferrer" className="font-mono text-white/50 reminder-hover" style={{ textDecoration: 'none', letterSpacing: '0.1em', fontSize: '0.85rem' }}>instagram ↗</a>
+            <a href="https://www.tiktok.com/@john.sang0" target="_blank" rel="noreferrer" className="font-mono text-white/50 reminder-hover" style={{ textDecoration: 'none', letterSpacing: '0.1em', fontSize: '0.85rem' }}>tiktok ↗</a>
           </div>
           </div>
         </div>
