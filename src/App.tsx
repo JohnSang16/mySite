@@ -220,7 +220,12 @@ export default function App() {
         </div>
 
         {/* abt me + training arc — top right, above skill tree */}
-        <div className="fixed flex flex-col gap-3 abt-panel" style={{ top: 16, right: 16, zIndex: 10, width: '220px' }}>
+        <motion.div
+          className="fixed flex flex-col gap-3 abt-panel"
+          style={{ top: 16, right: 16, zIndex: 10, width: '220px' }}
+          animate={{ y: [0, -10, 0] }}
+          transition={{ duration: 3.5, repeat: Infinity, ease: 'easeInOut', delay: 0.4 }}
+        >
           <MangaPanel sfx="ドン！">
             <h2 className="font-display text-xs tracking-widest mb-1 text-center">abt me</h2>
             <p className="font-mono text-xs text-white/80 text-center"> lol midlane d2 · progsuhq vice president · professional larper · wpm 155</p>
@@ -229,10 +234,15 @@ export default function App() {
             <h2 className="font-display text-xs tracking-widest mb-1 text-center">training arc</h2>
             <p className="font-mono text-xs text-white/80 text-center">land a swe internship · hit 80 coffeechats · build git · credit score maxx</p>
           </MangaPanel>
-        </div>
+        </motion.div>
 
         {/* skill tree + goated ppl — top right, below abt me */}
-        <div className="fixed flex flex-col gap-3 skill-panel" style={{ top: 230, right: 16, zIndex: 10, width: '220px' }}>
+        <motion.div
+          className="fixed flex flex-col gap-3 skill-panel"
+          style={{ top: 230, right: 16, zIndex: 10, width: '220px' }}
+          animate={{ y: [0, -10, 0] }}
+          transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut', delay: 1.2 }}
+        >
           <MangaPanel sfx="スゥ">
             <h2 className="font-display text-xs tracking-widest mb-1 text-center">skill tree</h2>
             <p className="font-mono text-xs text-white/80 text-center">python · c · react · next.js · vercel · claude</p>
@@ -243,7 +253,7 @@ export default function App() {
               <a href="https://www.linkedin.com/in/joeyzhangdev/" target="_blank" rel="noopener noreferrer" style={{ color: 'inherit', textDecoration: 'none', cursor: 'none' }}>yaohui zhang</a> · ichigo kurosaki · faker · beifeng
             </p>
           </MangaPanel>
-        </div>
+        </motion.div>
 
         {/* Selfie + Ulquiorra — shared container */}
         <div className="fixed" style={{ top: '38%', left: '33%', transform: 'translate(-50%, -50%)', zIndex: 5, pointerEvents: 'none' }}>
