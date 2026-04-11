@@ -161,6 +161,16 @@ body li:hover {
   transition: filter 0.2s ease;
 }
 
+/* Gold hover for inverted flower cluster */
+.flower-cluster-img {
+  filter: invert(1) brightness(1) saturate(1);
+  transition: filter 0.25s ease, opacity 0.25s ease;
+}
+.flower-cluster-img:hover {
+  filter: invert(1) brightness(2.2) saturate(2) hue-rotate(10deg);
+  opacity: 0.75 !important;
+}
+
 /* Aurafarm gold hover */
 .aurafarm-text:hover {
   color: #B3A369 !important;

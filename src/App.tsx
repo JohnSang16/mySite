@@ -301,6 +301,33 @@ export default function App() {
 
       </main>
 
+      {/* Flower background elements */}
+      {[
+        { src: '/background/flower1.jpg', top: '2%',  left: '2%',  size: 'clamp(120px, 14vw, 200px)' },
+        { src: '/background/flower2.jpg', top: '2%',  left: '44%', size: 'clamp(120px, 14vw, 200px)' },
+        { src: '/background/flower3.jpg', bottom: '2%', left: '2%', size: 'clamp(120px, 14vw, 200px)' },
+        { src: '/background/flower3.jpg', bottom: '2%', left: '6%', size: 'clamp(120px, 14vw, 200px)' },
+      ].map(({ src, size, ...pos }) => (
+        <img
+          key={src}
+          src={src}
+          alt=""
+          aria-hidden="true"
+          style={{
+            position: 'fixed',
+            ...pos,
+            width: size,
+            height: 'auto',
+            opacity: 0.35,
+            zIndex: 1,
+            pointerEvents: 'none',
+            objectFit: 'contain',
+            mixBlendMode: 'screen',
+            filter: 'invert(1)',
+          }}
+        />
+      ))}
+
       {/* Ambient background images */}
       <img
         src="/background/cybersigil 1.jpg"
@@ -381,24 +408,50 @@ export default function App() {
         onClick={triggerFaker}
       />
 
-      {/* Red lily — bottom center */}
-      <div className="fixed pointer-events-auto" style={{ bottom: 0, left: '60%', transform: 'translateX(-50%)', zIndex: 10 }} onClick={() => {
-  setGhoulActive(true)
-  setGhoulIndex(0)
-  setShowIpod(false)
-  setTimeout(() => {
-    const videos = ghoulScrollRef.current?.querySelectorAll('video')
-    const first = videos?.[0] as HTMLVideoElement | undefined
-    first?.play().catch(() => {})
-  }, 150)
-}}>
-        <img
-          src="/background/redlily.png"
-          alt="red lily"
-          className="gold-glow"
-          style={{ height: '28vh', width: 'auto', objectFit: 'contain', display: 'block', cursor: 'none' }}
-        />
-      </div>
+      {/* Flower4 cluster — replaces red lily */}
+      {[
+        { bottom: '-8%',  left: '38%', rotate: '-32deg' },
+        { bottom: '-5%',  left: '41%', rotate: '-22deg' },
+        { bottom: '-3%',  left: '44%', rotate: '-12deg' },
+        { bottom: '-1%',  left: '47%', rotate: '-4deg'  },
+        { bottom: '0%',   left: '50%', rotate: '4deg'   },
+        { bottom: '-1%',  left: '53%', rotate: '12deg'  },
+        { bottom: '-3%',  left: '56%', rotate: '20deg'  },
+        { bottom: '-5%',  left: '59%', rotate: '28deg'  },
+        { bottom: '-8%',  left: '62%', rotate: '36deg'  },
+      ].map(({ bottom, left, rotate }, i) => (
+        <div
+          key={i}
+          className="fixed pointer-events-auto"
+          style={{ bottom, left, zIndex: 10, cursor: 'none', mixBlendMode: 'screen' }}
+          onClick={() => {
+            setGhoulActive(true)
+            setGhoulIndex(0)
+            setShowIpod(false)
+            setTimeout(() => {
+              const videos = ghoulScrollRef.current?.querySelectorAll('video')
+              const first = videos?.[0] as HTMLVideoElement | undefined
+              first?.play().catch(() => {})
+            }, 150)
+          }}
+        >
+          <img
+            src="/background/flower4.jpg"
+            alt=""
+            className="flower-cluster-img"
+            style={{
+              width: 'clamp(120px, 14vw, 200px)',
+              height: 'auto',
+              objectFit: 'contain',
+              display: 'block',
+              cursor: 'none',
+              transform: `rotate(${rotate})`,
+              opacity: 0.35,
+              mixBlendMode: 'screen',
+            }}
+          />
+        </div>
+      ))}
 
       {/* Stop music text control */}
       {!showIntro && (
