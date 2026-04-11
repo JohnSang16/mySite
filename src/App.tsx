@@ -301,6 +301,62 @@ export default function App() {
 
       </main>
 
+      {/* Ambient background images */}
+      <img
+        src="/background/cybersigil 1.jpg"
+        alt=""
+        aria-hidden="true"
+        style={{
+          position: 'fixed',
+          top: 0,
+          right: 0,
+          width: 'clamp(220px, 24vw, 360px)',
+          height: 'auto',
+          opacity: 0.35,
+          zIndex: 1,
+          pointerEvents: 'none',
+          objectFit: 'contain',
+          mixBlendMode: 'screen',
+          filter: 'grayscale(30%)',
+        }}
+      />
+      <img
+        src="/background/cybersigil2.jpg"
+        alt=""
+        aria-hidden="true"
+        style={{
+          position: 'fixed',
+          top: '45%',
+          left: '24%',
+          width: 'clamp(160px, 18vw, 260px)',
+          height: 'auto',
+          opacity: 0.35,
+          zIndex: 20,
+          pointerEvents: 'none',
+          objectFit: 'contain',
+          mixBlendMode: 'screen',
+          filter: 'grayscale(30%)',
+        }}
+      />
+      <img
+        src="/background/cgangel.jpg"
+        alt=""
+        aria-hidden="true"
+        style={{
+          position: 'fixed',
+          top: '30%',
+          left: '48%',
+          width: 'clamp(200px, 22vw, 340px)',
+          height: 'auto',
+          opacity: 0.3,
+          zIndex: 1,
+          pointerEvents: 'none',
+          objectFit: 'contain',
+          mixBlendMode: 'screen',
+          filter: 'grayscale(20%)',
+        }}
+      />
+
       {/* d4 background */}
       <img
         ref={d4Ref}
