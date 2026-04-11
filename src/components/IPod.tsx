@@ -1,4 +1,5 @@
 import { motion, AnimatePresence } from 'framer-motion'
+import { useRef, useState, useCallback } from 'react'
 
 interface IPodProps {
   visible: boolean
@@ -8,14 +9,79 @@ interface IPodProps {
   onSkipPrev: () => void
   onSeekForward: () => void
   onSeekBack: () => void
+  onSeek?: (time: number) => void
   trackName?: string
   albumArt?: string
   sm?: boolean
   onClose?: () => void
+  currentTime?: number
+  duration?: number
 }
 
-export default function IPod({ visible, isPlaying, onPlayPause, onSkipNext, onSkipPrev, onSeekForward, onSeekBack, trackName = 'Angel With A Shotgun', albumArt, sm = false, onClose }: IPodProps) {
+function formatTime(s: number) {
+  if (!isFinite(s) || s < 0) return '0:00'
+  const m = Math.floor(s / 60)
+  const sec = Math.floor(s % 60)
+  return `${m}:${sec.toString().padStart(2, '0')}`
+}
+
+const BAR_X = 20
+const BAR_W = 120
+
+export default function IPod({ visible, isPlaying, onPlayPause, onSkipNext, onSkipPrev, onSeekForward, onSeekBack, onSeek, trackName = 'Angel With A Shotgun', albumArt, sm = false, onClose, currentTime = 0, duration = 0 }: IPodProps) {
   const btnStyle = { cursor: 'none' as const, pointerEvents: 'auto' as const }
+  const svgRef = useRef<SVGSVGElement>(null)
+  const [dragging, setDragging] = useState(false)
+  const [dragProgress, setDragProgress] = useState<number | null>(null)
+
+  const progress = duration > 0 ? currentTime / duration : 0
+  const displayProgress = dragProgress !== null ? dragProgress : progress
+  const fillW = displayProgress * BAR_W
+  const dotCx = BAR_X + fillW
+
+  const getSVGX = useCallback((clientX: number) => {
+    if (!svgRef.current) return null
+    const rect = svgRef.current.getBoundingClientRect()
+    const svgW = rect.width
+    const scale = 160 / svgW
+    const svgX = (clientX - rect.left) * scale
+    return Math.max(0, Math.min(1, (svgX - BAR_X) / BAR_W))
+  }, [])
+
+  const handleBarMouseDown = useCallback((e: React.MouseEvent) => {
+    e.preventDefault()
+    e.stopPropagation()
+    setDragging(true)
+    const p = getSVGX(e.clientX)
+    if (p !== null) setDragProgress(p)
+  }, [getSVGX])
+
+  const handleMouseMove = useCallback((e: React.MouseEvent) => {
+    if (!dragging) return
+    e.preventDefault()
+    const p = getSVGX(e.clientX)
+    if (p !== null) setDragProgress(p)
+  }, [dragging, getSVGX])
+
+  const handleMouseUp = useCallback((e: React.MouseEvent) => {
+    if (!dragging) return
+    e.preventDefault()
+    const p = getSVGX(e.clientX)
+    const finalP = p !== null ? p : (dragProgress ?? 0)
+    setDragging(false)
+    setDragProgress(null)
+    if (onSeek && duration > 0) onSeek(finalP * duration)
+  }, [dragging, dragProgress, getSVGX, onSeek, duration])
+
+  const handleMouseLeave = useCallback((e: React.MouseEvent) => {
+    if (!dragging) return
+    // commit on leave too so drag doesn't get stuck
+    const p = getSVGX(e.clientX)
+    const finalP = p !== null ? p : (dragProgress ?? 0)
+    setDragging(false)
+    setDragProgress(null)
+    if (onSeek && duration > 0) onSeek(finalP * duration)
+  }, [dragging, dragProgress, getSVGX, onSeek, duration])
 
   return (
     <AnimatePresence>
@@ -26,9 +92,20 @@ export default function IPod({ visible, isPlaying, onPlayPause, onSkipNext, onSk
           exit={{ y: '-110vh' }}
           transition={{ type: 'spring', stiffness: 180, damping: 22 }}
           className="fixed"
-          style={{ top: '50%', left: '50%', x: '-50%', zIndex: 50000, pointerEvents: 'none' }}
+          style={{ top: '50%', left: '50%', x: '-50%', zIndex: 50000, pointerEvents: 'auto' }}
         >
-          <svg width={sm ? 170 : 220} height={sm ? 326 : 422} viewBox="0 0 160 260" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <svg
+            ref={svgRef}
+            width={sm ? 170 : 220}
+            height={sm ? 326 : 422}
+            viewBox="0 0 160 260"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            onMouseMove={handleMouseMove}
+            onMouseUp={handleMouseUp}
+            onMouseLeave={handleMouseLeave}
+            style={{ display: 'block' }}
+          >
             <defs>
               <linearGradient id="bodyGrad" x1="0" y1="0" x2="0" y2="1">
                 <stop offset="0%" stopColor="#1c1c1e"/>
@@ -58,6 +135,9 @@ export default function IPod({ visible, isPlaying, onPlayPause, onSkipNext, onSk
               </filter>
             </defs>
 
+            {/* Invisible full-body blocker — prevents clicks passing through to elements behind */}
+            <rect x="1" y="1" width="158" height="258" rx="22" fill="transparent" style={{ pointerEvents: 'all' }}/>
+
             {/* Body */}
             <rect x="1" y="1" width="158" height="258" rx="22" fill="url(#bodyGrad)" stroke="#333336" strokeWidth="1.5"/>
             {/* Body sheen */}
@@ -79,15 +159,28 @@ export default function IPod({ visible, isPlaying, onPlayPause, onSkipNext, onSk
             <text x="80" y="120" textAnchor="middle" fill="#aaaaaa" fontSize="5" fontFamily="monospace">Nightcore</text>
 
             {/* Progress bar track */}
-            <rect x="20" y="132" width="120" height="2.5" rx="1.25" fill="#2a2a2e"/>
+            <rect x={BAR_X} y="132" width={BAR_W} height="2.5" rx="1.25" fill="#2a2a2e"/>
             {/* Progress bar fill */}
-            <rect x="20" y="132" width="48" height="2.5" rx="1.25" fill="#e0e0e0" opacity="0.7"/>
+            <rect x={BAR_X} y="132" width={fillW} height="2.5" rx="1.25" fill="#e0e0e0" opacity="0.7"/>
             {/* Progress dot */}
-            <circle cx="68" cy="133.25" r="3" fill="#ffffff" opacity="0.9"/>
+            <circle cx={dotCx} cy="133.25" r={dragging ? 4.5 : 3} fill="#ffffff" opacity="0.9" style={{ transition: dragging ? 'none' : 'r 0.1s' }}/>
+
+            {/* Scrubbing hit area — tall invisible rect over bar */}
+            <rect
+              x={BAR_X - 4}
+              y="126"
+              width={BAR_W + 8}
+              height="14"
+              fill="transparent"
+              style={{ pointerEvents: 'all', cursor: 'none' }}
+              onMouseDown={handleBarMouseDown}
+            />
 
             {/* Time labels */}
-            <text x="20" y="143" fill="#666" fontSize="4.5" fontFamily="monospace">0:00</text>
-            <text x="140" y="143" textAnchor="end" fill="#666" fontSize="4.5" fontFamily="monospace">-3:30</text>
+            <text x="20" y="143" fill="#666" fontSize="4.5" fontFamily="monospace">{formatTime(dragProgress !== null ? dragProgress * duration : currentTime)}</text>
+            <text x="140" y="143" textAnchor="end" fill="#666" fontSize="4.5" fontFamily="monospace">
+              {duration > 0 ? `-${formatTime(duration - (dragProgress !== null ? dragProgress * duration : currentTime))}` : '-0:00'}
+            </text>
 
             {/* Click wheel housing */}
             <circle cx="80" cy="198" r="52" fill="#111113" stroke="#2a2a2e" strokeWidth="1.5"/>
@@ -98,8 +191,8 @@ export default function IPod({ visible, isPlaying, onPlayPause, onSkipNext, onSk
             <circle cx="80" cy="198" r="38" fill="url(#wheelGrad)" stroke="#1e1e20" strokeWidth="0.5"/>
 
             {/* EXIT label */}
-            <text x="80" y="162" textAnchor="middle" fill="#888" fontSize="7.5" fontFamily="monospace" letterSpacing="2" style={{ pointerEvents: 'auto', cursor: 'none' }} onClick={onClose}>EXIT</text>
-            <rect x="55" y="152" width="50" height="14" fill="transparent" style={{ pointerEvents: 'auto', cursor: 'none' }} onClick={onClose}/>
+            <text x="80" y="162" textAnchor="middle" fill="#888" fontSize="7.5" fontFamily="monospace" letterSpacing="2" style={{ pointerEvents: 'all', cursor: 'none' }} onClick={onClose}>EXIT</text>
+            <rect x="55" y="152" width="50" height="14" fill="transparent" style={{ pointerEvents: 'all', cursor: 'none' }} onClick={onClose}/>
 
             {/* Skip next — right */}
             <text x="118" y="202" textAnchor="middle" fill="#777" fontSize="9" style={{ pointerEvents: 'none' }}>▶▶</text>

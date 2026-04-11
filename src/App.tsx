@@ -117,13 +117,16 @@ export default function App() {
   }
   const audioRef = useRef<HTMLAudioElement>(null)
   const [trackIndex, setTrackIndex] = useState(0)
+  const [audioCurrentTime, setAudioCurrentTime] = useState(0)
+  const [audioDuration, setAudioDuration] = useState(0)
 
   const PLAYLIST = [
+    { src: '/sfx/Nightcore - Play Date - (Lyrics).mp3', name: 'Play Date',             art: '/background/playdatebg.png'               },
+    { src: "/sfx/Nightcore I'm Gonna Show You Crazy  Lyrics.mp3", name: "I'm Gonna Show You Crazy", art: '/background/juuzouimgonashowoyucrazyimage.jpg' },
     { src: '/sfx/Nightcore - Angel With A Shotgun.mp3', name: 'Angel With A Shotgun', art: '/background/angelwithashotgunIMG.png' },
     { src: '/sfx/Nightcore - Clarity.mp3',              name: 'Clarity',              art: '/background/clarityIMG.png'       },
     { src: '/sfx/Nightcore - Just A Dream.mp3',         name: 'Just A Dream',         art: '/background/justadreamIMG.png'    },
     { src: '/sfx/Nightcore - Take A Hint.mp3',          name: 'Take A Hint',          art: '/background/takeahitIMG.png'      },
-    { src: "/sfx/Nightcore I'm Gonna Show You Crazy  Lyrics.mp3", name: "I'm Gonna Show You Crazy", art: '/background/juuzouimgonashowoyucrazyimage.jpg' },
   ]
 
   const handleTrackEnded = () => {
@@ -155,7 +158,13 @@ export default function App() {
   return (
     <>
       {showIntro && <Intro onDone={handleIntroDone} />}
-      <audio ref={audioRef} src={PLAYLIST[trackIndex].src} onEnded={handleTrackEnded} />
+      <audio
+        ref={audioRef}
+        src={PLAYLIST[trackIndex].src}
+        onEnded={handleTrackEnded}
+        onTimeUpdate={e => setAudioCurrentTime((e.target as HTMLAudioElement).currentTime)}
+        onLoadedMetadata={e => { setAudioDuration((e.target as HTMLAudioElement).duration); setAudioCurrentTime(0) }}
+      />
       {!sm && <CustomCursor />}
       {!vastoActive && !fakerActive && !auraActive && !ulqEditActive && !ghoulActive && <BrutalistNoise sm={sm} onAura={triggerAura} />}
 
@@ -246,6 +255,22 @@ export default function App() {
           ))}
         </motion.div>
 
+        {/* 777 + cross — to the left of right panels */}
+        <motion.div
+          className="fixed flex flex-col items-center gap-2"
+          style={{ top: 220, right: 390, zIndex: 10 }}
+          animate={{ y: [0, -10, 0] }}
+          transition={{ duration: 3.7, repeat: Infinity, ease: 'easeInOut', delay: 0.9 }}
+        >
+          {/* Cross */}
+          <svg width="36" height="48" viewBox="0 0 36 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="14" y="0" width="8" height="48" rx="2" fill="#ffffff" opacity="0.85"/>
+            <rect x="0" y="12" width="36" height="8" rx="2" fill="#ffffff" opacity="0.85"/>
+          </svg>
+          {/* 777 label */}
+          <a href="https://www.bible.com/" target="_blank" rel="noopener noreferrer" className="font-display text-white" style={{ fontSize: '1.5rem', letterSpacing: '0.15em', lineHeight: 1, textShadow: '0 0 12px #fff8, 0 0 4px #fff', textDecoration: 'none', cursor: 'none' }}>777</a>
+        </motion.div>
+
         {/* abt me + training arc — top right, above skill tree */}
         <motion.div
           className="fixed flex flex-col gap-3 abt-panel"
@@ -266,7 +291,7 @@ export default function App() {
         {/* skill tree + goated ppl + manga recs — top right, below abt me */}
         <motion.div
           className="fixed flex flex-col gap-3 skill-panel"
-          style={{ top: 304, right: 16, zIndex: 10, width: '220px' }}
+          style={{ top: 276, right: 16, zIndex: 10, width: '220px' }}
           animate={{ y: [0, -10, 0] }}
           transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut', delay: 1.2 }}
         >
@@ -668,6 +693,9 @@ export default function App() {
         onPlayPause={handlePlayPause}
         trackName={PLAYLIST[trackIndex].name}
         albumArt={PLAYLIST[trackIndex].art}
+        currentTime={audioCurrentTime}
+        duration={audioDuration}
+        onSeek={t => { if (audioRef.current) audioRef.current.currentTime = t }}
         onSkipNext={() => {
           const next = (trackIndex + 1) % PLAYLIST.length
           setTrackIndex(next)
